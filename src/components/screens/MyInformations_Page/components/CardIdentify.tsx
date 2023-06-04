@@ -1,57 +1,86 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { returnDayFormated } from '../../../../util/format';
 import requestUpdateUser from '../../../../util/requests/requestUpdateUser';
 import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
 import InputInfoField from '../../../shared/InputInfoField';
+import { User } from '../../../../hooks/useAuth';
+
+export interface UserDetails extends User {
+  cpf: string;
+  phone: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface UpdateDataUser {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+}
+
+interface CardIdentifyProps {
+  userDetails: UserDetails;
+  id: number;
+  requestKey: boolean;
+  setRequestKey: (value: boolean) => void;
+}
 
 export default function CardIdentify({
-  userAndAddressesInfo,
+  userDetails,
   id,
   requestKey,
   setRequestKey
-}) {
-  const [stateButton, setStateButton] = useState(true);
+}: CardIdentifyProps) {
+  const [stateButton, setStateButton] = useState<
+    '' | 'err' | 'loading' | 'sucess'
+  >('');
   const [editToggle, setEditToggle] = useState(false);
 
-  const dayCreatedAt = returnDayFormated(userAndAddressesInfo.createdAt);
-  const dayUpdatedAt = returnDayFormated(userAndAddressesInfo.updatedAt);
+  const dayCreatedAt = returnDayFormated(userDetails.createdAt);
+  const dayUpdatedAt = returnDayFormated(userDetails.updatedAt);
 
-  const [updateDataUser, setUpdateDataUser] = useState({
+  const [updateDataUser, setUpdateDataUser] = useState<UpdateDataUser>({
     name: '',
     email: '',
     cpf: '',
     phone: ''
   });
 
-  const handleChangeText = e => {
+  const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
     setUpdateDataUser({ ...updateDataUser, [e.target.name]: e.target.value });
   };
 
-  const sucess = () => {
+  const success = () => {
     setStateButton('sucess');
     setTimeout(() => {
-      setStateButton(true);
-    }, '3000');
+      setStateButton('');
+    }, 3000);
 
     setRequestKey(!requestKey);
 
     //aparecer uma popup aqui
   };
 
-  function updateUser(event) {
+  function updateUser(event: FormEvent) {
     event.preventDefault();
     setStateButton('loading');
-    requestUpdateUser({ updateDataUser, setUpdateDataUser, sucess, setStateButton, id });
+    requestUpdateUser({
+      updateDataUser,
+      setUpdateDataUser,
+      success,
+      setStateButton,
+      id
+    });
   }
-  console.log(updateDataUser);
   return (
     <CardIdentifyStyle>
       <form onSubmit={updateUser}>
         <InputInfoField
           nameInput={'Nome: '}
           editToggle={editToggle}
-          placeholder={userAndAddressesInfo.user.name}
+          placeholder={userDetails.name}
           name={'name'}
           value={updateDataUser.name}
           onChange={handleChangeText}
@@ -59,7 +88,7 @@ export default function CardIdentify({
         <InputInfoField
           nameInput={'Email: '}
           editToggle={editToggle}
-          placeholder={userAndAddressesInfo.user.email}
+          placeholder={userDetails.email}
           name={'email'}
           value={updateDataUser.email}
           onChange={handleChangeText}
@@ -67,11 +96,7 @@ export default function CardIdentify({
         <InputInfoField
           nameInput={editToggle ? 'CPF: (apenas números)' : 'CPF: '}
           editToggle={editToggle}
-          placeholder={
-            userAndAddressesInfo.user.cpf
-              ? userAndAddressesInfo.user.cpf
-              : 'não cadastrado'
-          }
+          placeholder={userDetails.cpf ? userDetails.cpf : 'não cadastrado'}
           name={'cpf'}
           value={updateDataUser.cpf}
           onChange={handleChangeText}
@@ -79,11 +104,7 @@ export default function CardIdentify({
         <InputInfoField
           nameInput={'Telefone: '}
           editToggle={editToggle}
-          placeholder={
-            userAndAddressesInfo.user.phone
-              ? userAndAddressesInfo.user.phone
-              : 'não cadastrado'
-          }
+          placeholder={userDetails.phone ? userDetails.phone : 'não cadastrado'}
           name={'phone'}
           value={updateDataUser.phone}
           onChange={handleChangeText}
@@ -119,10 +140,12 @@ const CardIdentifyStyle = styled.div`
   height: auto;
   border-radius: 10px;
   padding: 15px;
+
   section {
     display: flex;
     width: 100%;
     justify-content: start;
     align-items: center;
   }
+}
 `;

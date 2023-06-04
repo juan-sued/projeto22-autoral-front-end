@@ -1,39 +1,73 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAuth } from '../../../hooks/useAuth';
+import { User, useAuth } from '../../../hooks/useAuth';
 import requestMyInformations from '../../../util/requests/requestMyInformations';
 import Loading from '../../shared/Loading';
 import Main from '../../shared/Main';
 import TitlePage from '../../shared/TitlePage';
 import CardAddress from './components/CardAddress';
-import CardIdentify from './components/CardIdentify';
+import CardIdentify, { UserDetails } from './components/CardIdentify';
 import CardAddAddress from './components/CardAddAddress';
 import { MdAdd } from 'react-icons/md';
+
+interface Address {
+  street: string;
+  number: string;
+  city: string;
+  neighborhood: string;
+  state: string;
+  cep: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+interface UserAndAddressesInfo {
+  user: UserDetails;
+  addresses?: Address[];
+}
+
 export default function MyInformationPage() {
   const { userInfo } = useAuth();
-  const [userAndAddressesInfo, setUserAndAddressesInfo] = useState({});
+
+  const [userAndAddressesInfo, setUserAndAddressesInfo] =
+    useState<UserAndAddressesInfo>({
+      user: {
+        name: '',
+        email: '',
+        cpf: '',
+        phone: '',
+        createdAt: '',
+        updatedAt: ''
+      },
+
+      addresses: []
+    });
+
   const [requestKey, setRequestKey] = useState(false);
   const [editToggleCard, setEditToggleCard] = useState(false);
+
   useEffect(() => {
-    requestMyInformations(userAndAddressesInfo, setUserAndAddressesInfo, userInfo);
+    requestMyInformations(
+      userAndAddressesInfo,
+      setUserAndAddressesInfo,
+      userInfo
+    );
     return () => {
       setUserAndAddressesInfo({});
     };
   }, [requestKey]);
 
-  if (
-    userAndAddressesInfo.user !== undefined &&
-    userAndAddressesInfo.addresses !== undefined
-  )
+  if (userAndAddressesInfo.user && userAndAddressesInfo.addresses) {
     return (
       <>
         <TitlePage title={'Minha informações'} to={'/'} />
-        <Main>
+        <Main margin_top="0">
           <ContainerCard>
-            {userAndAddressesInfo.user !== undefined ? (
+            {userAndAddressesInfo.user ? (
               <CardIdentify
-                userAndAddressesInfo={userAndAddressesInfo}
-                id={userInfo.id}
+                userDetails={userAndAddressesInfo.user}
+                id={userInfo ? userInfo.id : 0}
                 requestKey={requestKey}
                 setRequestKey={setRequestKey}
               />
@@ -56,7 +90,7 @@ export default function MyInformationPage() {
               requestKey={requestKey}
               setRequestKey={setRequestKey}
             />
-            {userAndAddressesInfo.addresses !== undefined ? (
+            {userAndAddressesInfo.addresses ? (
               userAndAddressesInfo.addresses.map((address, index) => (
                 <CardAddress
                   key={index}
@@ -80,11 +114,12 @@ export default function MyInformationPage() {
         </Main>
       </>
     );
+  }
 
   return (
     <>
       <TitlePage title={'Minha informações'} to={'/'} />
-      <Main>
+      <Main margin_top="0">
         <ContainerCard>
           <Loading marginTop={'120px'} />
         </ContainerCard>
@@ -101,6 +136,7 @@ const ContainerCard = styled.div`
   height: 100%;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+
   button {
     :hover {
       cursor: pointer;
@@ -112,15 +148,15 @@ const TitleSession = styled.div`
   margin-top: 60px;
   display: flex;
   margin-bottom: 20px;
-
   justify-content: space-between;
+
   h1 {
     color: white;
     font-size: 30px;
   }
+
   .containerIcon {
     background-color: white;
-
     width: 60px;
     display: flex;
     justify-content: center;
@@ -134,6 +170,7 @@ const TitleSession = styled.div`
       border: solid 1px purple;
       background-color: #d196d1;
     }
+
     img {
       color: red;
       width: 23px;

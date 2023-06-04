@@ -1,9 +1,10 @@
+import React from 'react';
 import Main from '../../shared/Main';
 import InputsRegister from './InputsRegister';
-import ButtonOnlyWords from '../../shared/ButtonOnlyWords.js';
+import ButtonOnlyWords from '../../shared/ButtonOnlyWords';
 import logo from '../../../assets/logo.png';
 import { Link } from 'react-router-dom';
-import Background from '../../shared/Background.js';
+import Background from '../../shared/Background';
 import imageBoxIceCream from '../../../assets/imageboxicecream.webp';
 import { ImageBoxIceCream, Logo } from './styles';
 

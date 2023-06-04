@@ -5,10 +5,10 @@ interface InputInfoFieldProps {
   placeholder: string;
   nameInput: string;
   editToggle: boolean;
-  marginRight: string;
-  name: string;
-  value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  marginRight?: string;
+  name?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maxWidth?: string;
   type?: string;
 }
@@ -48,7 +48,7 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
 
 interface InputInfoFieldStyleProps {
   border: boolean;
-  marginRight: string;
+  marginRight?: string;
   maxWidth?: string;
 }
 

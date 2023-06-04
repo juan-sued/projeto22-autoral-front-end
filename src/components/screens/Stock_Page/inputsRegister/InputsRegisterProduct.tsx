@@ -40,18 +40,20 @@ export default function InputsRegisterProduct() {
 
   useEffect(() => {
     if (selectedCategory > 1) {
-      const productsByIdCategory: Product[] =
+      const productsByCategoryId: Product[] =
         productsAndCategories.productsList.filter(
           product => product.categoryId === selectedCategory
         );
 
-      setProductsForCategories(productsByIdCategory);
+      setProductsForCategories(productsByCategoryId);
     } else {
       setProductsForCategories([]);
     }
   }, [selectedCategory]);
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setObjNewProduct({ ...objNewProduct, [e.target.name]: e.target.value });
   };
 
@@ -162,8 +164,8 @@ export default function InputsRegisterProduct() {
             </div>
           </ContainerAddName>
           <InputClassDescription
-            cols="30"
-            rows="30"
+            cols={30}
+            rows={30}
             wrap="hard"
             heightToggle={productsForCategories.length > 0 ? '200px' : '50px'}
             placeholder="Notas"
@@ -324,8 +326,7 @@ const ContainerFormStyle = styled.div`
     display: flex;
     max-width: 100%;
     margin-bottom: 10px;
-
-    input:last-child {
+    hei input:last-child {
       max-width: 140px;
     }
 

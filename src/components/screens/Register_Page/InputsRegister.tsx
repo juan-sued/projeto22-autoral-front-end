@@ -1,16 +1,17 @@
-import { useState } from 'react';
-
+import { useState, ChangeEvent, FormEvent } from 'react';
 import Loading from '../../shared/Loading';
 import ButtonSubmit from '../../shared/ButtonSubmit';
 import { ContainerFormClass, InputClass } from './styles';
 import signUpRequest from './singUpRequest';
-import { useNavigate } from 'react-router-dom';
-//import components
+
+export interface SignUpData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export default function SignUpForm() {
-  const navigate = useNavigate();
-
-  const [signUpData, setSignUpdata] = useState({
+  const [signUpData, setSignUpData] = useState<SignUpData>({
     name: '',
     email: '',
     password: ''
@@ -18,39 +19,39 @@ export default function SignUpForm() {
 
   const [inputConfirmPassword, setInputConfirmPassword] = useState('');
 
-  const [stateColorButton, setStateCollorButton] = useState('#ffffff');
+  const [stateColorButton, setStateColorButton] = useState('#ffffff');
 
-  const [sucess, setSucess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  const handleChangText = e => {
-    if (e.target.name === 'confirmPassword') setInputConfirmPassword(e.target.value);
+  const handleChangText = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'confirmPassword')
+      setInputConfirmPassword(e.target.value);
 
-    setSignUpdata({
+    setSignUpData({
       ...signUpData,
       [e.target.name]: e.target.value
     });
   };
 
-  function newRegister(event) {
+  function newRegister(event: FormEvent) {
     event.preventDefault();
 
     if (inputConfirmPassword !== signUpData.password) {
       setInputConfirmPassword('');
-      setStateCollorButton('#e21a26');
-
+      setStateColorButton('#e21a26');
       return;
     }
 
-    signUpRequest({ signUpData, setStateCollorButton, setSucess });
-    if (signUpRequest) navigate('/sign-in');
+    signUpRequest({ signUpData, setStateColorButton });
   }
 
   if (
     (stateColorButton === '#e21a27' && signUpData.email.length > 0) ||
     (stateColorButton === '#e21a26' && inputConfirmPassword.length > 0)
   ) {
-    setStateCollorButton('#ffffff');
+    setStateColorButton('#ffffff');
   }
+
   return (
     <ContainerFormClass>
       <form onSubmit={newRegister}>
@@ -90,7 +91,7 @@ export default function SignUpForm() {
           {stateColorButton === '#e21a27' ? (
             'Usuário já cadastrado!'
           ) : stateColorButton === '#8a8893' ? (
-            <Loading height={20} width={20} />
+            <Loading height={'20'} width={'20'} />
           ) : stateColorButton === '#e21a26' ? (
             'Senhas diferentes'
           ) : (

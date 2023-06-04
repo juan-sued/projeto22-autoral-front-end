@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosI } from '../services/axios';
 
-interface User {
+export interface User {
+  id: number;
   name: string;
   email: string;
   isAdministrator: boolean;

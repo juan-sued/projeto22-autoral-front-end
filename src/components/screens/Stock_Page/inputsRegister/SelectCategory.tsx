@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { useProduct } from '../../../../hooks/useProducts';
 
 interface SelectCategoryProps {
-  setSelectedCategory: (value: string) => void;
-  selectedCategory: string;
+  setSelectedCategory: (value: number) => void;
+  selectedCategory: number;
 }
 
 export default function SelectCategory({
@@ -16,7 +16,7 @@ export default function SelectCategory({
       <label htmlFor="categories">Escolha uma categoria:</label>
       <select
         value={selectedCategory}
-        onChange={e => setSelectedCategory(e.target.value)}
+        onChange={e => setSelectedCategory(Number(e.target.value))}
         name="categories"
       >
         <option disabled value="">
