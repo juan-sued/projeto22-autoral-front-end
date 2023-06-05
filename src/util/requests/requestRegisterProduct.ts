@@ -6,12 +6,12 @@ interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
 }
 
-const navigate = useNavigate();
-
 async function requestRegisterProduct(
   objNewProduct: ObjNewProduct,
   setObjNewProduct: SetObjNewProduct
 ) {
+  const navigate = useNavigate();
+
   try {
     await axiosI.post(`/products`);
     navigate('/success-register');

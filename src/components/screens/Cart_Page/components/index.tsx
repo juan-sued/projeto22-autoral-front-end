@@ -14,12 +14,11 @@ import { useAuth } from '../../../../hooks/useAuth';
 import TitlePage from '../../../shared/TitlePage';
 
 interface CartProps {
-  to: string;
   message?: string;
   isSigned?: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({ to, message, isSigned = false }) => {
+const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
   const { userInfo, signOut } = useAuth();
 
   const navigate = useNavigate();

@@ -5,8 +5,10 @@ import Routes from '../Routes';
 import GlobalStyles from '../styles/globalStyles/globalStyles';
 import { CartProvider } from '../hooks/useCart';
 import { ProductProvider } from '../hooks/useProducts';
+import React from 'react';
 
 const App: React.FC = () => {
+  console.log('entrou');
   return (
     <CartProvider>
       <GlobalStyles />

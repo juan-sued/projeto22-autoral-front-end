@@ -54,7 +54,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 1,
         isFavorited: false,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 2,
@@ -63,7 +64,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 2,
         isFavorited: false,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 3,
@@ -72,7 +74,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 3,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 4,
@@ -81,7 +84,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 4,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 5,
@@ -90,7 +94,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 5,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 6,
@@ -99,7 +104,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 7,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       }
     ],
     listMoreOrders: [
@@ -110,7 +116,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 1,
         isFavorited: false,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 2,
@@ -119,7 +126,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 2,
         isFavorited: false,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 3,
@@ -128,7 +136,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 3,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 4,
@@ -137,7 +146,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 4,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 5,
@@ -146,7 +156,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 5,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       },
       {
         id: 6,
@@ -155,7 +166,8 @@ export default function HomePage() {
         image: 'https://asdasdasdasdasd',
         categoryId: 7,
         isFavorited: true,
-        description: '1 Litro'
+        description: '1 Litro',
+        amount: 10
       }
     ]
   };
@@ -179,11 +191,7 @@ export default function HomePage() {
 
         {signed ? (
           <CarouselListProduct
-            objctResponseAPI={
-              objHomeResponseAPI !== null
-                ? objHomeResponseAPI.listMyFavoriteds
-                : null
-            }
+            objctResponseAPI={objHomeResponseAPI?.listMyFavoriteds}
             titleSession={'Meus favoritos'}
             margin_top={50}
           />

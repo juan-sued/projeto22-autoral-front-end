@@ -5,20 +5,18 @@ import TitlePage from '../../shared/TitlePage';
 import { useState, useEffect } from 'react';
 import SearchBar from '../../shared/SearchBar';
 import ListCard from './ListCard';
-import {
-  requestGetProducts,
-  ProductData
-} from '../../../util/requests/requestGetProducts';
+import requestGetProducts from '../../../util/requests/requestGetProducts';
 import ButtonAdd from '../../shared/ButtonAdd';
 import Modal from '../../shared/Modal';
 import InputsRegisterProduct from './inputsRegister/InputsRegisterProduct';
+import { Product } from '../../../hooks/useProducts';
 
 interface SearchProduct {
   searchBar: string;
 }
 
 export default function StockPage() {
-  const [responseProducts, setResponseProducts] = useState<ProductData[]>([]);
+  const [responseProducts, setResponseProducts] = useState<Product[]>([]);
   const [searchProduct, setSearchProduct] = useState<SearchProduct>({
     searchBar: ''
   });
@@ -28,11 +26,7 @@ export default function StockPage() {
   };
 
   useEffect(() => {
-    requestGetProducts(searchProduct)
-      .then((response: ProductData[]) => setResponseProducts(response))
-      .catch((error: Error) => {
-        // handle error
-      });
+    requestGetProducts(searchProduct, setResponseProducts);
 
     return () => {
       // cleanup
@@ -58,7 +52,9 @@ export default function StockPage() {
       <SearchBar
         searchBar={searchProduct.searchBar}
         onChange={handleChangeText}
-        sendSearch={requestGetProducts}
+        sendSearch={() =>
+          requestGetProducts(searchProduct, setResponseProducts)
+        }
       />
 
       <Main margin_top={'80'}>

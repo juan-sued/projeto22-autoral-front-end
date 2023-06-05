@@ -3,7 +3,7 @@ import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 const Routes: React.FC = () => {
   const userInfo = false;
-  const signed = false;
+  const signed = true;
 
   if (signed) {
     return <AdministratorRoutes />;
