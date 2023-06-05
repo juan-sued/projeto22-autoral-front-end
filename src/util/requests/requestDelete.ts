@@ -1,6 +1,10 @@
 import { axiosI } from '../../services/axios';
 
-async function requestDeleteAddress(URL, requestKey, setRequestKey) {
+async function requestDeleteAddress(
+  URL: string,
+  requestKey: boolean,
+  setRequestKey: (value: boolean) => void
+) {
   axiosI
     .delete(URL)
     .then(({ data }) => {

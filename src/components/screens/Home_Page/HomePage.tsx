@@ -19,26 +19,19 @@ import { useAuth } from '../../../hooks/useAuth';
 import requestHomeContent from '../../../util/requests/requestHomeContent';
 import { axiosI } from '../../../services/axios';
 import requestFavoriteds from '../../../util/requests/requestFavoriteds';
+import { Product } from '../../../hooks/useProducts';
 
-interface Favorited {
-  image: string;
-  description: string;
-  price: string;
-  favorited?: boolean;
-}
-
-interface HomeResponseAPI {
-  listMyFavoriteds: Favorited[];
-  listMoreOrders: Favorited[];
+export interface HomeResponseAPI {
+  listMyFavoriteds: Product[];
+  listMoreOrders: Product[];
 }
 
 export default function HomePage() {
   const { userInfo, signOut, signed } = useAuth();
 
-  const [objHomeResponseAPI, setObjHomeResponseAPI] = useState<
-    HomeResponseAPI[]
-  >([]);
-  const [favoritedsList, setFavoritedsList] = useState<Favorited[]>([]);
+  const [objHomeResponseAPI, setObjHomeResponseAPI] =
+    useState<HomeResponseAPI | null>(null);
+  const [favoritedsList, setFavoritedsList] = useState<Product[]>([]);
 
   useEffect(() => {
     if (signed && axiosI.defaults.headers['Authorization'] !== undefined)
@@ -48,55 +41,121 @@ export default function HomePage() {
 
     return () => {
       setFavoritedsList([]);
-      setObjHomeResponseAPI([]);
+      setObjHomeResponseAPI(null);
     };
   }, []);
 
   const objctResponseAPITest: HomeResponseAPI = {
     listMyFavoriteds: [
       {
-        image: bowlacai,
-        description: '1 Litro',
-        price: '20,00'
+        id: 1,
+        name: 'e',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 1,
+        isFavorited: false,
+        description: '1 Litro'
       },
       {
-        image: copoHome2,
-        description: '1 Litro',
-        price: '20,00'
+        id: 2,
+        name: 'banana',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 2,
+        isFavorited: false,
+        description: '1 Litro'
       },
       {
-        image: copoHome2,
-        description: '1 Litro',
-        price: '20,00'
+        id: 3,
+        name: 'morango',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 3,
+        isFavorited: true,
+        description: '1 Litro'
       },
       {
-        image: copoHome2,
-        description: '1 Litro',
-        price: '20,00'
+        id: 4,
+        name: 'chocolate',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 4,
+        isFavorited: true,
+        description: '1 Litro'
+      },
+      {
+        id: 5,
+        name: 'morango',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 5,
+        isFavorited: true,
+        description: '1 Litro'
+      },
+      {
+        id: 6,
+        name: 'menta',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 7,
+        isFavorited: true,
+        description: '1 Litro'
       }
     ],
     listMoreOrders: [
       {
-        image: copoHome3,
-        description: '500 ml',
-        price: '20.60',
-        favorited: true
+        id: 1,
+        name: 'e',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 1,
+        isFavorited: false,
+        description: '1 Litro'
       },
       {
-        image: copoHome3,
-        description: '1 Litro',
-        price: '20,00'
+        id: 2,
+        name: 'banana',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 2,
+        isFavorited: false,
+        description: '1 Litro'
       },
       {
-        image: copoHome3,
-        description: '1 Litro',
-        price: '20,00',
-        favorited: true
+        id: 3,
+        name: 'morango',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 3,
+        isFavorited: true,
+        description: '1 Litro'
       },
       {
-        image: copoHome3,
-        description: '1 Litro',
-        price: '20,00'
+        id: 4,
+        name: 'chocolate',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 4,
+        isFavorited: true,
+        description: '1 Litro'
+      },
+      {
+        id: 5,
+        name: 'morango',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 5,
+        isFavorited: true,
+        description: '1 Litro'
+      },
+      {
+        id: 6,
+        name: 'menta',
+        price: 2.5,
+        image: 'https://asdasdasdasdasd',
+        categoryId: 7,
+        isFavorited: true,
+        description: '1 Litro'
       }
     ]
   };
@@ -113,16 +172,20 @@ export default function HomePage() {
         <Divider />
 
         <CarouselListProduct
-          objctResponseAPI={objHomeResponseAPI}
+          objctResponseAPI={objHomeResponseAPI?.listMoreOrders}
           titleSession={'Mais pedidos'}
-          margin_top={'50'}
+          margin_top={50}
         />
 
         {signed ? (
           <CarouselListProduct
-            objctResponseAPI={favoritedsList}
+            objctResponseAPI={
+              objHomeResponseAPI !== null
+                ? objHomeResponseAPI.listMyFavoriteds
+                : null
+            }
             titleSession={'Meus favoritos'}
-            margin_top={'50'}
+            margin_top={50}
           />
         ) : (
           ''

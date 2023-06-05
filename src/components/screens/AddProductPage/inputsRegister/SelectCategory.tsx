@@ -1,26 +1,33 @@
 import styled from 'styled-components';
-import { useProduct } from '../../../hooks/useProducts';
+import { useProduct } from '../../../../hooks/useProducts';
 
-export default function SelectCategory({ setSelectedCategory, selectedCategory }) {
+interface SelectCategoryProps {
+  setSelectedCategory: (value: number) => void;
+  selectedCategory: number;
+}
+
+export default function SelectCategory({
+  setSelectedCategory,
+  selectedCategory
+}: SelectCategoryProps) {
   const { productsAndCategories } = useProduct();
   return (
     <SelectCategoryStyle>
       <label htmlFor="categories">Escolha uma categoria:</label>
       <select
-        defaultValue={selectedCategory}
-        onChange={e => setSelectedCategory(e.target.value)}
+        value={selectedCategory}
+        onChange={e => setSelectedCategory(Number(e.target.value))}
         name="categories"
       >
-        <option defaultValue={''} disabled value={0}>
+        <option disabled value="">
           Categorias
         </option>
-        {productsAndCategories.categoriesList !== undefined
-          ? productsAndCategories.categoriesList.map((category, index) => (
-              <option key={index} value={category.id}>
-                {category.name}
-              </option>
-            ))
-          : ''}
+        {productsAndCategories.categoriesList !== undefined &&
+          productsAndCategories.categoriesList.map((category, index) => (
+            <option key={index} value={category.id}>
+              {category.name}
+            </option>
+          ))}
       </select>
     </SelectCategoryStyle>
   );
@@ -48,4 +55,4 @@ const SelectCategoryStyle = styled.div`
     margin-top: 5px;
     border: none;
   }
-`;
+}`;

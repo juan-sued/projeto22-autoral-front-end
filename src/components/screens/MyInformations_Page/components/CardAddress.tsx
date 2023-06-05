@@ -9,8 +9,31 @@ import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
 import requestDeleteAddress from '../../../../util/requests/requestDelete';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
+interface CardAddressProps {
+  street: string;
+  number: string;
+  neighborhood: string;
+  state: string;
+  cep: string;
+  createdAt: string;
+  updatedAt: string;
+  idAddress: string;
+  requestKey: boolean;
+  setRequestKey: (value: boolean) => void;
+  city: string;
+}
+
+export interface UpdateDataAddress {
+  street: string;
+  neighborhood: string;
+  number: string;
+  state: string;
+  cep: string;
+  addressDetail: string;
+  city: string;
+}
+
 export default function CardAddress({
-  id,
   street,
   number,
   neighborhood,
@@ -22,42 +45,51 @@ export default function CardAddress({
   requestKey,
   setRequestKey,
   city
-}) {
-  const [stateButton, setStateButton] = useState(true);
-  const [editToggle, setEditToggle] = useState(false);
+}: CardAddressProps) {
+  const [stateButton, setStateButton] = useState<
+    '' | 'err' | 'loading' | 'success'
+  >('');
+  const [editToggle, setEditToggle] = useState<boolean>(false);
 
   const dayCreatedAt = returnDayFormated(createdAt);
   const dayUpdatedAt = returnDayFormated(updatedAt);
 
-  const [cardHeightToggle, setCardHeightToggle] = useState(true);
+  const [cardHeightToggle, setCardHeightToggle] = useState<boolean>(true);
 
-  const [updateDataAddress, setUpdateDataAddress] = useState({
-    street: '',
-    neighborhood: '',
-    number: '',
-    state: '',
-    cep: '',
-    addressDetail: ''
-  });
+  const [updateDataAddress, setUpdateDataAddress] = useState<UpdateDataAddress>(
+    {
+      street: '',
+      neighborhood: '',
+      number: '',
+      state: '',
+      cep: '',
+      addressDetail: '',
+      city: ''
+    }
+  );
 
-  const handleChangeText = e => {
-    setUpdateDataAddress({ ...updateDataAddress, [e.target.name]: e.target.value });
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdateDataAddress({
+      ...updateDataAddress,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const sucess = () => {
+  const success = () => {
     setRequestKey(!requestKey);
+    setStateButton('success');
   };
 
-  function updateAddress(event) {
+  function updateAddress(event: React.FormEvent) {
     event.preventDefault();
     setStateButton('loading');
-    requestUpdateAddress(
-      sucess,
+    requestUpdateAddress({
+      success,
       setStateButton,
       idAddress,
       updateDataAddress,
       setUpdateDataAddress
-    );
+    });
   }
 
   function deleteAddress() {
@@ -128,7 +160,7 @@ export default function CardAddress({
               placeholder={state}
               marginRight={'10px'}
               name={'state'}
-              value={`state`}
+              value={updateDataAddress.state}
               onChange={handleChangeText}
             />
             <InputInfoField
@@ -166,7 +198,7 @@ export default function CardAddress({
   );
 }
 
-const CardAddressStyle = styled.div`
+const CardAddressStyle = styled.div<{ cardHeightToggle: boolean }>`
   margin-top: 20px;
   background-color: white;
   width: 100%;

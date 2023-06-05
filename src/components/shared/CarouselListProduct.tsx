@@ -7,16 +7,12 @@ import iconFavorited from '../../assets/iconFavorited.svg';
 import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
 import Loading from '../shared/Loading';
+import { Product } from '../../hooks/useProducts';
 
 interface CarouselListProductProps {
   titleSession: string;
   margin_top: number;
-  objctResponseAPI: {
-    image: string;
-    description: string;
-    price: number;
-    favorited?: boolean;
-  }[];
+  objctResponseAPI: Product[] | null | undefined;
 }
 
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
@@ -28,7 +24,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
     <CarouselListContainer margin_top={margin_top}>
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
 
-      {objctResponseAPI.length === 0 ? (
+      {objctResponseAPI === null || objctResponseAPI === undefined ? (
         <Loading />
       ) : (
         <div className="rowOfCardsContainer">
@@ -39,7 +35,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                 image={order.image}
                 description={order.description}
                 price={order.price}
-                icon={order.favorited ? iconFavorited : addFavorites}
+                icon={order.isFavorited ? iconFavorited : addFavorites}
               />
             ) : titleSession === 'Meus favoritos' ? (
               <CardCarouselOrdersAndProducts

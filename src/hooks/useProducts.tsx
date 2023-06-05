@@ -5,9 +5,12 @@ import { axiosI } from '../services/axios';
 export interface Product {
   id: number;
   name: string;
-  price: string;
+  price: number;
   image: string;
   categoryId: number;
+  isFavorited: boolean;
+  description: string;
+  amount: number;
 }
 
 interface Category {
@@ -55,44 +58,62 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 1,
               name: 'e',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 1
+              categoryId: 1,
+              isFavorited: false,
+              description: '1 Litro',
+              amount: 12
             },
             {
               id: 2,
               name: 'banana',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 2
+              categoryId: 2,
+              isFavorited: false,
+              description: '1 Litro',
+              amount: 12
             },
             {
               id: 3,
               name: 'morango',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 3
+              categoryId: 3,
+              isFavorited: true,
+              description: '1 Litro',
+              amount: 12
             },
             {
               id: 4,
               name: 'chocolate',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 4
+              categoryId: 4,
+              isFavorited: true,
+              description: '1 Litro',
+              amount: 12
             },
             {
               id: 5,
               name: 'morango',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 4
+              categoryId: 5,
+              isFavorited: true,
+              description: '1 Litro',
+              amount: 12
             },
             {
               id: 6,
               name: 'menta',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 4
+              categoryId: 7,
+              isFavorited: true,
+              description: '1 Litro',
+              amount: 12
             }
           ]
         };

@@ -6,13 +6,22 @@ import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
 import requestAddAddress from '../../../../util/requests/requestAddAddress';
 import requestCep from '../../../../util/requests/requestCep';
 
+interface CardAddAddressProps {
+  requestKey: boolean;
+  setRequestKey: (value: boolean) => void;
+  editToggleCard: boolean;
+  setEditToggleCard: (value: boolean) => void;
+}
+
 export default function CardAddAddress({
   requestKey,
   setRequestKey,
   editToggleCard,
   setEditToggleCard
-}) {
-  const [stateButton, setStateButton] = useState(true);
+}: CardAddAddressProps) {
+  const [stateButton, setStateButton] = useState<
+    '' | 'err' | 'loading' | 'success'
+  >('');
   const [editToggle, setEditToggle] = useState(true);
 
   const [createDataAddress, setCreateDataAddress] = useState({
@@ -30,20 +39,28 @@ export default function CardAddAddress({
       requestCep(createDataAddress, setCreateDataAddress, setStateButton);
   }
 
-  const handleChangeText = e => {
-    setCreateDataAddress({ ...createDataAddress, [e.target.name]: e.target.value });
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateDataAddress({
+      ...createDataAddress,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const sucess = () => {
+  const success = () => {
     setEditToggleCard(!editToggleCard);
     setRequestKey(!requestKey);
   };
 
-  function updateAddress(event) {
+  function updateAddress(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStateButton('loading');
 
-    requestAddAddress(sucess, setStateButton, createDataAddress, setCreateDataAddress);
+    requestAddAddress(
+      success,
+      setStateButton,
+      createDataAddress,
+      setCreateDataAddress
+    );
   }
 
   return (
@@ -59,7 +76,7 @@ export default function CardAddAddress({
               value={createDataAddress.cep}
               onChange={handleChangeText}
               marginRight={'10px'}
-              maxWidht={'180px'}
+              maxWidth={'180px'}
             />
             <div className="containerIcon" onClick={searchCep}>
               <img src={iconsearch} alt="" />
@@ -75,7 +92,7 @@ export default function CardAddAddress({
               value={createDataAddress.street}
               onChange={handleChangeText}
               marginRight={'10px'}
-              maxWidht={'350px'}
+              maxWidth={'350px'}
             />
             <InputInfoField
               nameInput={'Número: '}
@@ -84,7 +101,7 @@ export default function CardAddAddress({
               name={'number'}
               value={createDataAddress.number}
               onChange={handleChangeText}
-              maxWidht={'90px'}
+              maxWidth={'90px'}
               type={'number'}
             />
           </section>
@@ -128,7 +145,7 @@ export default function CardAddAddress({
   );
 }
 
-const CardAddressStyle = styled.div`
+const CardAddressStyle = styled.div<{ displayToggle: boolean }>`
   margin-top: 20px;
   background-color: white;
   width: 100%;
@@ -178,7 +195,7 @@ const CardAddressStyle = styled.div`
   }
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ displayToggle: boolean }>`
   margin-top: 10px;
   display: ${props => (props.displayToggle ? 'block' : 'none')};
 `;

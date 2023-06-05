@@ -1,12 +1,12 @@
 import { axiosI } from '../../../../services/axios';
 
-const requestOrder = async (orderData, signOut, sucess) => {
+const requestOrder = async (orderData: any, signOut: any, success: any) => {
   try {
     const resp = await axiosI.post('/orders', orderData);
     if (resp.status === 201) {
-      sucess();
+      success();
     }
-  } catch (err) {
+  } catch (err: any) {
     if (err.response.status === 401) {
       signOut();
     }

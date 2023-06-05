@@ -34,7 +34,7 @@ export default function CardIdentify({
   setRequestKey
 }: CardIdentifyProps) {
   const [stateButton, setStateButton] = useState<
-    '' | 'err' | 'loading' | 'sucess'
+    '' | 'err' | 'loading' | 'success'
   >('');
   const [editToggle, setEditToggle] = useState(false);
 
@@ -53,7 +53,7 @@ export default function CardIdentify({
   };
 
   const success = () => {
-    setStateButton('sucess');
+    setStateButton('success');
     setTimeout(() => {
       setStateButton('');
     }, 3000);

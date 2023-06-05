@@ -1,6 +1,21 @@
 import { axiosBasic } from '../../services/axios';
 import { formatCEP } from '@brazilian-utils/brazilian-utils';
-async function requestCep(createDataAddress, setCreateDataAddress, setStateButton) {
+
+interface CreateDataAddress {
+  street: string;
+  neighborhood: string;
+  number: string;
+  state: string;
+  city: string;
+  cep: string;
+  addressDetail: string;
+}
+
+function requestCep(
+  createDataAddress: CreateDataAddress,
+  setCreateDataAddress: (value: CreateDataAddress) => void,
+  setStateButton: (value: '' | 'err' | 'loading' | 'success') => void
+): void {
   axiosBasic
     .get(`viacep.com.br/ws/${createDataAddress.cep}/json/`)
     .then(({ data }) => {

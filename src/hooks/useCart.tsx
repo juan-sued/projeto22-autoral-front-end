@@ -1,13 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { axiosI } from '../services/axios';
-
-interface Product {
-  id: number;
-  name: string;
-  amount: number;
-  price: number;
-  categoryId: number;
-}
+import { Product } from './useProducts';
 
 interface CartContextType {
   cart: Product[];

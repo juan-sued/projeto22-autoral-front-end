@@ -22,27 +22,30 @@ interface Address {
   id: string;
 }
 
-interface UserAndAddressesInfo {
+export interface UserAndAddressesInfo {
   user: UserDetails;
   addresses?: Address[];
 }
+const exemple = {
+  user: {
+    id: 0,
+    isAdministrator: true,
+    name: '',
+    email: '',
+    cpf: '',
+    phone: '',
+    createdAt: '',
+    updatedAt: ''
+  },
+
+  addresses: []
+};
 
 export default function MyInformationPage() {
   const { userInfo } = useAuth();
 
   const [userAndAddressesInfo, setUserAndAddressesInfo] =
-    useState<UserAndAddressesInfo>({
-      user: {
-        name: '',
-        email: '',
-        cpf: '',
-        phone: '',
-        createdAt: '',
-        updatedAt: ''
-      },
-
-      addresses: []
-    });
+    useState<UserAndAddressesInfo>(exemple);
 
   const [requestKey, setRequestKey] = useState(false);
   const [editToggleCard, setEditToggleCard] = useState(false);
@@ -54,7 +57,7 @@ export default function MyInformationPage() {
       userInfo
     );
     return () => {
-      setUserAndAddressesInfo({});
+      setUserAndAddressesInfo(exemple);
     };
   }, [requestKey]);
 

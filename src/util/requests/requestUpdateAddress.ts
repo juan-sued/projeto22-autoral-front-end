@@ -1,16 +1,9 @@
+import { UpdateDataAddress } from '../../components/screens/MyInformations_Page/components/CardAddress';
 import { axiosI } from '../../services/axios';
-
-interface UpdateDataAddress {
-  street: string;
-  neighborhood: string;
-  number: string;
-  state: string;
-  cep: string;
-}
 
 interface RequestUpdateAddressProps {
   success: () => void;
-  setStateButton: (value: boolean | 'err') => void;
+  setStateButton: (value: '' | 'err' | 'loading') => void;
   idAddress: string;
   updateDataAddress: UpdateDataAddress;
   setUpdateDataAddress: (value: UpdateDataAddress) => void;
@@ -27,18 +20,18 @@ async function requestUpdateAddress({
     await axiosI.patch(`/users/addresses/${idAddress}`, updateDataAddress);
     success();
   } catch (err) {
-    console.error(err);
     setStateButton('err');
     setUpdateDataAddress({
       street: '',
       neighborhood: '',
       number: '',
       state: '',
-      cep: ''
+      cep: '',
+      addressDetail: '',
+      city: ''
     });
     setTimeout(() => {
-      console.log('aqui');
-      setStateButton(true);
+      setStateButton('');
     }, 3000);
   }
 }

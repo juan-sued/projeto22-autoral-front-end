@@ -13,10 +13,16 @@ import { useAuth } from '../../../../hooks/useAuth';
 
 import TitlePage from '../../../shared/TitlePage';
 
-export default function Cart({ to, message, isSigned = false }) {
+interface CartProps {
+  to: string;
+  message?: string;
+  isSigned?: boolean;
+}
+
+const Cart: React.FC<CartProps> = ({ to, message, isSigned = false }) => {
   const { userInfo, signOut } = useAuth();
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { cart, setCart } = useCart();
 
@@ -34,7 +40,7 @@ export default function Cart({ to, message, isSigned = false }) {
   function handleCreateOrder() {
     const order = cart.map(products => {
       return {
-        id: products._id,
+        id: products.id,
         name: products.name,
         price: products.price,
         image: products.image,
@@ -43,16 +49,16 @@ export default function Cart({ to, message, isSigned = false }) {
     });
 
     const orderData = {
-      user: userInfo.idUser,
+      user: userInfo?.id,
       order
     };
 
-    const sucess = () => {
+    const success = () => {
       setCart([]);
       localStorage.removeItem('gellatoCart');
     };
 
-    requestOrder(orderData, signOut, sucess);
+    requestOrder(orderData, signOut, success);
   }
 
   return (
@@ -65,9 +71,9 @@ export default function Cart({ to, message, isSigned = false }) {
             <ItemProductTable
               key={product.id}
               image={product.image}
-              price={product.priceFormatted}
-              subTotal={product.subTotal}
-              description={product.title}
+              price={Number(product.priceFormatted)}
+              subTotal={Number(product.subTotal)}
+              description={product.name}
               amount={product.amount}
               id={product.id}
             />
@@ -92,7 +98,7 @@ export default function Cart({ to, message, isSigned = false }) {
       </Container>
     </>
   );
-}
+};
 
 const Back = styled.div`
   background-color: '#EEEDF4';
@@ -108,3 +114,5 @@ const Back = styled.div`
 const ProductTable = styled.div`
   width: 100%;
 `;
+
+export default Cart;

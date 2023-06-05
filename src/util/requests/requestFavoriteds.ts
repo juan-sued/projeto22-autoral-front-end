@@ -1,6 +1,11 @@
+import { Product } from '../../hooks/useProducts';
 import { axiosI } from '../../services/axios';
 
-async function requestFavoriteds(favoritedsList, setFavoritedsList, signOut) {
+function requestFavoriteds(
+  favoritedsList: Product[],
+  setFavoritedsList: (value: Product[]) => void,
+  signOut: () => void
+): void {
   axiosI
     .get(`/favoriteds`)
     .then(({ data }) => {

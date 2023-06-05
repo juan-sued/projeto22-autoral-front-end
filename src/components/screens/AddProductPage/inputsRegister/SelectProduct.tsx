@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
+interface SelectProductProps {
+  setSelectedProduct: (value: string) => void;
+  selectedProduct: string;
+  productsForCategories: { name: string }[];
+}
+
 export default function SelectProduct({
   setSelectedProduct,
   selectedProduct,
   productsForCategories
-}) {
+}: SelectProductProps) {
   console.log(selectedProduct);
   return (
     <SelectProductStyle>
@@ -14,16 +20,20 @@ export default function SelectProduct({
         onChange={e => setSelectedProduct(e.target.value)}
         name="products"
       >
-        <option value="" defaultValue={''} disabled>
+        <option value="" disabled>
           Escolha um produto
         </option>
-        {productsForCategories.length > 0
-          ? productsForCategories.map((product, index) => (
-              <option key={index} value={product.name}>
-                {product.name}
-              </option>
-            ))
-          : ''}
+        {productsForCategories.length > 0 ? (
+          productsForCategories.map((product, index) => (
+            <option key={index} value={product.name}>
+              {product.name}
+            </option>
+          ))
+        ) : (
+          <option value="" disabled>
+            Nenhum produto disponível
+          </option>
+        )}
       </select>
     </SelectProductStyle>
   );
@@ -47,4 +57,4 @@ const SelectProductStyle = styled.div`
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
     margin-top: 5px;
   }
-`;
+}`;

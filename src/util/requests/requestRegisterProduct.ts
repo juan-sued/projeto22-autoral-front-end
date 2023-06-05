@@ -14,7 +14,7 @@ async function requestRegisterProduct(
 ) {
   try {
     await axiosI.post(`/products`);
-    navigate('/sucess-register');
+    navigate('/success-register');
   } catch (err) {
     console.error(err);
     setObjNewProduct({ ...objNewProduct, price: '' });

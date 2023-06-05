@@ -10,7 +10,7 @@ interface UpdateDataUser {
 interface RequestUpdateUserProps {
   updateDataUser: UpdateDataUser;
   success: () => void;
-  setStateButton: (value: '' | 'err' | 'loading' | 'sucess') => void;
+  setStateButton: (value: '' | 'err' | 'loading' | 'success') => void;
   id: number;
   setUpdateDataUser: (value: UpdateDataUser) => void;
 }
@@ -36,7 +36,7 @@ async function requestUpdateUser({
     setStateButton('err');
     setTimeout(() => {
       console.log('aqui');
-      setStateButton('sucess');
+      setStateButton('success');
     }, 3000);
   }
 }
