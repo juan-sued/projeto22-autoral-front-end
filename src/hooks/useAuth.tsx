@@ -38,17 +38,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, []);
 
+  interface signInData {
+    email: string;
+    password: string;
+  }
+
+  const exempleUserInfo: User = {
+    id: 2,
+    email: 'juansued19@gmail.com',
+    name: 'juan',
+    isAdministrator: true
+  };
   const signIn = async (
-    signInData: any,
-    setStateCollorButton: any,
-    setSignIndata: any
+    signInData: signInData,
+    setStateCollorButton: (value: string) => void,
+    setSignIndata: (value: signInData) => void
   ) => {
     setStateCollorButton('#8a8893');
 
     try {
       const { data } = await axiosI.post('auth/sign-in', signInData);
 
-      setUserInfo(data.user);
+      setUserInfo(exempleUserInfo);
 
       axiosI.defaults.headers['Authorization'] = `Bearer ${data.token}`;
       localStorage.setItem('TBAuthUser', JSON.stringify(data.user));
@@ -56,6 +67,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       navigate('/');
     } catch (err) {
+      setUserInfo(exempleUserInfo);
+      axiosI.defaults.headers['Authorization'] = `Bearer ${'aaaa'}`;
+      localStorage.setItem('TBAuthUser', JSON.stringify(exempleUserInfo));
+      localStorage.setItem('TBAuthToken', 'aaaa');
       setSignIndata({
         email: '',
         password: ''

@@ -8,6 +8,7 @@ import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
 import Loading from '../shared/Loading';
 import { Product } from '../../hooks/useProducts';
+import PopsicleLoading from './Loaders/PopsicleLoading';
 
 interface CarouselListProductProps {
   titleSession: string;
@@ -25,7 +26,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
 
       {objctResponseAPI === null || objctResponseAPI === undefined ? (
-        <Loading />
+        <PopsicleLoading />
       ) : (
         <div className="rowOfCardsContainer">
           {objctResponseAPI.map((order, index) =>

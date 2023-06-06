@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { axiosI } from '../../services/axios';
-import { ObjNewProduct } from '../../components/screens/Stock_Page/inputsRegister/InputsRegisterProduct';
+import { ObjNewProduct } from '../../components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -8,13 +8,12 @@ interface SetObjNewProduct {
 
 async function requestRegisterProduct(
   objNewProduct: ObjNewProduct,
-  setObjNewProduct: SetObjNewProduct
+  setObjNewProduct: SetObjNewProduct,
+  success: () => void
 ) {
-  const navigate = useNavigate();
-
   try {
     await axiosI.post(`/products`);
-    navigate('/success-register');
+    success();
   } catch (err) {
     console.error(err);
     setObjNewProduct({ ...objNewProduct, price: '' });

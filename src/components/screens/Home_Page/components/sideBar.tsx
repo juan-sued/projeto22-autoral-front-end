@@ -56,8 +56,6 @@ export default function SideBar() {
       navigate('/cart');
     } else if (text.nameIcon === 'logout') {
       signOut();
-    } else if (text.nameIcon === 'add_box') {
-      navigate('/insert-product');
     } else if (text.nameIcon === 'group_add') {
       navigate('/');
     } else if (text.nameIcon === 'fingerprint') {
@@ -79,8 +77,7 @@ export default function SideBar() {
   ];
 
   // adiciona buttons de administrador
-  console.log(userInfo);
-  if (userInfo && userInfo.isAdministrator === true) {
+  if (userInfo?.isAdministrator === true) {
     listButtonsSideBar.splice(
       1,
       0,
@@ -88,10 +85,7 @@ export default function SideBar() {
         nameIcon: 'inventory_2',
         nameText: 'Estoque'
       },
-      {
-        nameIcon: 'add_box',
-        nameText: 'Adicionar produto'
-      },
+
       {
         nameIcon: 'group_add',
         nameText: 'Add. Administrador'

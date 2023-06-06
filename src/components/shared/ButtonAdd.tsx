@@ -2,19 +2,30 @@ import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 
 interface ButtonAddProps {
-  functionToggle: () => void;
+  toggleModal: boolean;
+  setToggleModal: (value: boolean) => void;
 }
 
-const ButtonAdd: React.FC<ButtonAddProps> = ({ functionToggle }) => {
+const ButtonAdd: React.FC<ButtonAddProps> = ({
+  toggleModal,
+  setToggleModal
+}) => {
   return (
-    <ButtonAddInStyle onClick={functionToggle}>
+    <ButtonAddInStyle
+      functionToggle={toggleModal}
+      onClick={() => setToggleModal(!toggleModal)}
+    >
       <MdAdd color="white" size="35px" />
     </ButtonAddInStyle>
   );
 };
 
-const ButtonAddInStyle = styled.button`
+interface ButtonAddInStyleProps {
+  functionToggle: boolean;
+}
+const ButtonAddInStyle = styled.button<ButtonAddInStyleProps>`
   position: fixed;
+  z-index: 1000;
   height: 80px;
   width: 80px;
   right: 20px;
@@ -27,10 +38,13 @@ const ButtonAddInStyle = styled.button`
 
   background-color: purple;
   border: none;
+
+  transform: rotate(${props => (props.functionToggle ? '45' : '0')}deg);
   :hover {
     cursor: pointer;
-
-    background-color: #934c93;
+    transition: all 300ms ease;
+    transform: scale(1.1)
+      rotate(${props => (props.functionToggle ? '45' : '0')}deg);
   }
 `;
 

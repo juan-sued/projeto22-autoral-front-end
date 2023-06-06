@@ -69,6 +69,9 @@ scrollbar-width: none;
 overflow-x: hidden;
 overflow-y: hidden;
 
+
+ 
+
   
 `;
 

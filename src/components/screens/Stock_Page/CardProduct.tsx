@@ -40,6 +40,7 @@ const CardProductStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px;
     img {
       width: fit-content;
       height: 100%;

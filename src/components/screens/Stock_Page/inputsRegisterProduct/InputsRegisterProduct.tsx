@@ -4,52 +4,39 @@ import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../shared/ButtonSubmit';
 import Loading from '../../../shared/Loading';
 import SelectCategory from './SelectCategory';
-import SelectProduct from './SelectProduct';
 import { Product, useProduct } from '../../../../hooks/useProducts';
 import requestRegisterProduct from '../../../../util/requests/requestRegisterProduct';
+import CheckboxLiquid from '../../../shared/CheckboxLiquid';
 
 export interface ObjNewProduct {
   category: string | number;
   name: string;
   amount: string;
-  notes: string;
+  description: string;
   price: string;
   image: string;
+  unitOfMeasure: string;
 }
 
 export default function InputsRegisterProduct() {
   const navigate = useNavigate();
   const { productsAndCategories } = useProduct();
-
-  const [selectedProduct, setSelectedProduct] = useState('');
-
+  const success = () => {
+    navigate('/success-register');
+  };
   const [selectedCategory, setSelectedCategory] = useState(0);
 
   const [objNewProduct, setObjNewProduct] = useState<ObjNewProduct>({
     category: '',
     name: '',
     amount: '',
-    notes: '',
+    description: '',
     price: '',
-    image: ''
+    image: '',
+    unitOfMeasure: ''
   });
 
-  const [productsForCategories, setProductsForCategories] = useState<Product[]>(
-    []
-  );
-
-  useEffect(() => {
-    if (selectedCategory > 1) {
-      const productsByCategoryId: Product[] =
-        productsAndCategories.productsList.filter(
-          product => product.categoryId === selectedCategory
-        );
-
-      setProductsForCategories(productsByCategoryId);
-    } else {
-      setProductsForCategories([]);
-    }
-  }, [selectedCategory]);
+  const [selectedCheckbox, setSelectedCheckbox] = useState<string | null>(null);
 
   const handleChangeText = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,22 +51,6 @@ export default function InputsRegisterProduct() {
 
     setStateButton('loading');
 
-    //================ Validação de novo produto =================>
-
-    const productsList = productsAndCategories.productsList;
-
-    if (objNewProduct.name) {
-      const isProductRegistered = productsList.some(
-        product => product.name === objNewProduct.name
-      );
-
-      if (isProductRegistered) {
-        setObjNewProduct({ ...objNewProduct, name: '' });
-        setStateButton('isProductRegistered');
-      }
-    } else {
-      setObjNewProduct({ ...objNewProduct, name: selectedProduct });
-    }
     //================ Validação de nova categoria =================>
 
     const categories = productsAndCategories.categoriesList;
@@ -100,7 +71,15 @@ export default function InputsRegisterProduct() {
     if (objNewProduct.category === '') {
       setObjNewProduct({ ...objNewProduct, category: selectedCategory });
     }
-    requestRegisterProduct(objNewProduct, setObjNewProduct);
+
+    if (selectedCheckbox) {
+      setObjNewProduct({ ...objNewProduct, unitOfMeasure: selectedCheckbox });
+    } else {
+      setStateButton('err');
+      return alert('Deve selecionar uma unidade de medida');
+    }
+
+    requestRegisterProduct(objNewProduct, setObjNewProduct, success);
   }
 
   if (stateButton === 'err' && objNewProduct.price.length > 0) {
@@ -144,9 +123,7 @@ export default function InputsRegisterProduct() {
         </div>
 
         <section className="sectionDescriptionProduct">
-          <ContainerAddName
-            heightToggle={productsForCategories.length > 0 ? '0%' : '100%'}
-          >
+          <ContainerAddName>
             <div className="containerAddProductName">
               <InputClass
                 placeholder="Produto"
@@ -155,11 +132,7 @@ export default function InputsRegisterProduct() {
                 type="text"
                 value={objNewProduct.name}
                 onChange={handleChangeText}
-                disabled={
-                  stateButton === 'loading' || productsForCategories.length > 0
-                    ? true
-                    : false
-                }
+                disabled={stateButton === 'loading' ? true : false}
               />
             </div>
           </ContainerAddName>
@@ -167,12 +140,11 @@ export default function InputsRegisterProduct() {
             cols={30}
             rows={30}
             wrap="hard"
-            heightToggle={productsForCategories.length > 0 ? '200px' : '50px'}
-            placeholder="Notas"
-            name="notes"
-            id="inputProductNotes"
-            className="inputProductNotes"
-            value={objNewProduct.notes}
+            placeholder="Descrição"
+            name="description"
+            id="inputProductDescription"
+            className="inputProductDescription"
+            value={objNewProduct.description}
             onChange={handleChangeText}
             disabled={stateButton === 'loading' ? true : false}
           />
@@ -180,7 +152,7 @@ export default function InputsRegisterProduct() {
 
         <section className="sectionPrice">
           <InputClass
-            placeholder="Quantidade em ml ou g"
+            placeholder="Quantidade"
             className="qtd"
             name="amount"
             type="number"
@@ -204,7 +176,10 @@ export default function InputsRegisterProduct() {
             required
           />
         </section>
-
+        <CheckboxLiquid
+          selectedCheckbox={selectedCheckbox}
+          setSelectedCheckbox={setSelectedCheckbox}
+        />
         <ButtonSubmit
           backgroundcolor={
             stateButton === 'err'
@@ -240,6 +215,7 @@ const ContainerFormStyle = styled.div`
   border-radius: 10px;
   width: 95%;
   box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.25);
+  height: 100%;
 
   form {
     display: flex;
@@ -293,7 +269,7 @@ const ContainerFormStyle = styled.div`
     width: 100%;
     height: 100%;
 
-    .inputProductNotes {
+    .inputProductDescription {
       min-height: 120px;
       max-height: 120px;
       min-width: 100%;
@@ -329,10 +305,9 @@ const ContainerFormStyle = styled.div`
     hei input:last-child {
       max-width: 140px;
     }
-
     .qtd {
       margin-right: 10px;
-      min-width: 228px;
+      max-width: 50%;
     }
   }
 
@@ -343,16 +318,13 @@ const ContainerFormStyle = styled.div`
   }
 `;
 
-interface ContainerAddNameProps {
-  heightToggle: string;
-}
-
-const ContainerAddName = styled.div<ContainerAddNameProps>`
+const ContainerAddName = styled.div`
   margin-top: 13px;
-  height: ${props => props.heightToggle};
+  height: 100%;
   transition: all 0.5s ease-out;
   max-height: 65px;
   margin-bottom: 10px;
+  overflow: hidden;
 `;
 
 const InputClass = styled.input`

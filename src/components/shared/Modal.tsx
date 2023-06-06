@@ -3,15 +3,23 @@ import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 
 interface ModalProps {
-  functionToggle: () => void;
   children: ReactNode;
+  toggleModal: boolean;
+  setToggleModal: (value: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, functionToggle }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  toggleModal,
+  setToggleModal
+}) => {
   return (
     <ModalStyle>
       <div className="cardModal">
-        <button className="closeCard" onClick={functionToggle}>
+        <button
+          className="closeCard"
+          onClick={() => setToggleModal(!toggleModal)}
+        >
           <MdClose color="#686868" size="35px" />
         </button>
         <h1 className="titleModal">Adicionar produto ao estoque</h1>
@@ -42,6 +50,7 @@ const ModalStyle = styled.div`
     justify-content: start;
     align-items: center;
     flex-direction: column;
+    overflow: scroll;
 
     .titleModal {
       position: relative;

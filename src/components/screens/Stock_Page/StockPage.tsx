@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import Main from '../../shared/Main';
 import TitlePage from '../../shared/TitlePage';
 
@@ -8,8 +7,14 @@ import ListCard from './ListCard';
 import requestGetProducts from '../../../util/requests/requestGetProducts';
 import ButtonAdd from '../../shared/ButtonAdd';
 import Modal from '../../shared/Modal';
-import InputsRegisterProduct from './inputsRegister/InputsRegisterProduct';
+import InputsRegisterProduct from './inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '../../../hooks/useProducts';
+import acaibanana from '../../../assets/acaibanana.png';
+import acaifruta2 from '../../../assets/acaifruta2.png';
+import copoHome from '../../../assets/copoHome.jpg';
+import copoHome2 from '../../../assets/copoHome2.jpg';
+import copoHome3 from '../../../assets/copoHome3.jpg';
+import copoacai from '../../../assets/copoacai.svg';
 
 interface SearchProduct {
   searchBar: string;
@@ -17,6 +22,7 @@ interface SearchProduct {
 
 export default function StockPage() {
   const [responseProducts, setResponseProducts] = useState<Product[]>([]);
+
   const [searchProduct, setSearchProduct] = useState<SearchProduct>({
     searchBar: ''
   });
@@ -26,7 +32,69 @@ export default function StockPage() {
   };
 
   useEffect(() => {
-    requestGetProducts(searchProduct, setResponseProducts);
+    setResponseProducts([
+      {
+        id: 1,
+        name: 'Açaí com banana',
+        price: 2.5,
+        image: acaibanana,
+        categoryId: 1,
+        isFavorited: false,
+        description: '1 Litro',
+        amount: 2
+      },
+      {
+        id: 2,
+        name: 'banana',
+        price: 2.5,
+        image: acaifruta2,
+        categoryId: 2,
+        isFavorited: false,
+        description: '1 Litro',
+        amount: 2
+      },
+      {
+        id: 3,
+        name: 'morango',
+        price: 2.5,
+        image: copoHome,
+        categoryId: 3,
+        isFavorited: true,
+        description: '1 Litro',
+        amount: 2
+      },
+      {
+        id: 4,
+        name: 'chocolate',
+        price: 2.5,
+        image: copoHome2,
+        categoryId: 4,
+        isFavorited: true,
+        description: '1 Litro',
+        amount: 2
+      },
+      {
+        id: 5,
+        name: 'morango',
+        price: 2.5,
+        image: copoHome3,
+        categoryId: 5,
+        isFavorited: true,
+        description: '1 Litro',
+        amount: 2
+      },
+      {
+        id: 6,
+        name: 'menta',
+        price: 2.5,
+        image: copoacai,
+        categoryId: 7,
+        isFavorited: true,
+        description: '1 Litro',
+        amount: 2
+      }
+    ]);
+    //requestGetProducts(searchProduct, setResponseProducts);
 
     return () => {
       // cleanup
@@ -34,13 +102,11 @@ export default function StockPage() {
   }, [searchProduct.searchBar]);
 
   const [toggleModal, setToggleModal] = useState(false);
-  function closeModal() {
-    setToggleModal(!toggleModal);
-  }
+
   return (
     <>
       {toggleModal ? (
-        <Modal functionToggle={closeModal}>
+        <Modal toggleModal={toggleModal} setToggleModal={setToggleModal}>
           <InputsRegisterProduct />
         </Modal>
       ) : (
@@ -61,7 +127,7 @@ export default function StockPage() {
         <ListCard responseProducts={responseProducts} />
       </Main>
 
-      <ButtonAdd functionToggle={closeModal} />
+      <ButtonAdd toggleModal={toggleModal} setToggleModal={setToggleModal} />
     </>
   );
 }

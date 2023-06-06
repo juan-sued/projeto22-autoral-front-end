@@ -11,6 +11,7 @@ const Main: React.FC<MainProps> = ({ children, margin_top }) => {
 };
 
 const MainStyle = styled.main<{ margin_top: string }>`
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
