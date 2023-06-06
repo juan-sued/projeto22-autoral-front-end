@@ -13,9 +13,9 @@ const PopsicleLoadingStyle = styled.div`
   width: 100%;
   display: grid;
   place-items: center;
-  animation: spin 10s reverse infinite;
+  animation: spin 7s reverse infinite;
   .loader {
-    transform: scale(0.8) rotate(320deg);
+    transform: scale(0.4) rotate(320deg);
     height: 150px;
     width: 100px;
     border-radius: 55px 55px 10px 10px;
@@ -24,12 +24,12 @@ const PopsicleLoadingStyle = styled.div`
     background-image: linear-gradient(
       0deg,
       #800080 25%,
-      #a000a0 25%,
+      #800080 25%,
       #a000a0 25%,
       #a000a0 50%,
       #800080 50%,
       #800080 50%,
-      #993399 75%,
+      #800080 75%,
       #900090 75%
     );
     background-position: 0px 0px;
@@ -75,14 +75,14 @@ const PopsicleLoadingStyle = styled.div`
     100% {
       transform: rotate(300deg);
     }
-    50% {
+    40% {
       transform: rotate(-60deg);
     }
     25% {
       transform: rotate(60deg);
     }
     15% {
-      transform: rotate(0deg);
+      transform: rotate(-2deg);
     }
     0% {
       transform: rotate(300deg);
