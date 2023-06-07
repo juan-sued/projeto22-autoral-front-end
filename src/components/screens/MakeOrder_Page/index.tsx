@@ -7,10 +7,16 @@ import { useEffect, useState } from 'react';
 import CarouselListProduct from '../../shared/CarouselListProduct';
 import { Product } from '../../../hooks/useProducts';
 import cupBig from '../../../assets/copoacai.svg';
+import TitleSectionLeft from '../../shared/titleSectionLeft';
+import TitleSectionRight from '../../shared/TitleSectionRight';
 
 interface CartProps {
   message?: string;
   isSigned?: boolean;
+}
+
+export interface responseProducts extends Omit<Product, 'categoryId'> {
+  category: string;
 }
 //topping === cobertura
 interface objNewOrderParams {
@@ -53,13 +59,13 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
     // requestMakeOrderPage(); -- pega as infos da página
   }, []);
 
-  const example: Product[] = [
+  const example: responseProducts[] = [
     {
       id: 0,
       name: 'chocolate',
       price: '27,00',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -71,7 +77,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       name: 'chocolate',
       price: '27,00',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -83,7 +89,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       name: 'chocolate',
       price: '19,00',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -95,7 +101,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       name: 'chocolate',
       price: '15,00',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -107,7 +113,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       name: 'chocolate',
       price: '10,50',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -119,7 +125,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       name: 'chocolate',
       price: '10,50',
       image: cupBig,
-      categoryId: 4,
+      category: 'tamanho',
       isFavorited: true,
       description: 'Banana',
       amount: 12,
@@ -130,31 +136,36 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
 
   return (
     <>
-      <Back />
       <TitlePage title={'Escolher pedido'} />
+      <TitleSectionLeft titleSession={'Primeiro um tamanho'} />
+      <TitleSectionRight titleSession={'Quanto maior, melhor'} />
       <CarouselListProduct
-        titleSession={'Primeiro um tamanho'}
-        margin_top={50}
+        margin_top={0}
         objctResponseAPI={example}
         setProductIds={setCupSizeId}
         productIds={cupSizeId}
-        uniqueSelection={true}
+        amountSelection={1}
       />
+      <TitleSectionLeft titleSession={'Agora os sabores'} />
+
+      <TitleSectionRight titleSession={'Quantos quiser'} />
+
       <CarouselListProduct
-        titleSession={'Escolha 1 sabor'}
         margin_top={50}
         objctResponseAPI={example}
         setProductIds={setFlavoursIds}
         productIds={flavoursIds}
-        uniqueSelection={false}
+        amountSelection={2}
       />
+      <TitleSectionLeft titleSession={'Agora os complementos'} />
+
+      <TitleSectionRight titleSession={'Até 5 (cinco)'} />
       <CarouselListProduct
-        titleSession={'Escolha 1 sabor'}
         margin_top={50}
         objctResponseAPI={example}
         setProductIds={setComplementsIds}
         productIds={complementsIds}
-        uniqueSelection={false}
+        amountSelection={4}
       />
       <Container>
         <footer>

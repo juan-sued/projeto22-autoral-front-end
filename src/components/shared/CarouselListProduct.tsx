@@ -8,14 +8,15 @@ import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
 import { Product } from '../../hooks/useProducts';
 import PopsicleLoading from './Loaders/PopsicleLoading';
-
+import { useState } from 'react';
+import { responseProducts } from '../screens/MakeOrder_Page';
 interface CarouselListProductProps {
-  titleSession: string;
+  titleSession?: string;
   margin_top: number;
-  objctResponseAPI: Product[] | null | undefined;
+  objctResponseAPI: responseProducts[] | null | undefined;
   setProductIds: (value: number[]) => void;
   productIds: number[];
-  uniqueSelection: boolean;
+  amountSelection: number;
 }
 
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
@@ -24,22 +25,21 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   objctResponseAPI,
   setProductIds,
   productIds,
-  uniqueSelection
+  amountSelection
 }) => {
   function incrementProduct(idSelected: number) {
     const newArr = [...productIds];
 
-    const isSelectedCard = newArr.some(productId => productId === idSelected);
+    const isSelectedCard = newArr.includes(idSelected);
 
     if (isSelectedCard) {
       const index = newArr.findIndex(productId => productId === idSelected);
       newArr.splice(index, 1);
-    } else if (!uniqueSelection) {
+    } else if (amountSelection > productIds.length || productIds.length === 0) {
       newArr.push(idSelected);
     }
 
     setProductIds(newArr);
-
     return newArr;
   }
 
@@ -72,13 +72,8 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
               <CardCarouselProduct
                 key={index}
                 image={order.image}
-                description={order.description}
                 price={order.price}
                 quantityForUnity={order.quantityForUnity}
-                categoryId={order.categoryId}
-                amount={order.amount}
-                isFavorited={order.isFavorited}
-                name={order.name}
                 id={order.id}
                 unitOfMeasure={order.unitOfMeasure}
                 incrementProduct={incrementProduct}
@@ -92,7 +87,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
 };
 
 const CarouselListContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 0px;
   width: 100%;
   min-width: 100%;
   height: 100%;

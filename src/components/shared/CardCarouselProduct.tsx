@@ -1,27 +1,24 @@
 import styled from 'styled-components';
-import { Product } from '../../hooks/useProducts';
 import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
+import { Product } from '../../hooks/useProducts';
 
-interface CardCarouselProductProps extends Product {
+interface CardCarouselProductProps
+  extends Omit<
+    Product,
+    'categoryId' | 'description' | 'amount' | 'isFavorited' | 'name'
+  > {
   incrementProduct: (value: number) => number[];
 }
 
 export default function CardCarouselProduct({
   image,
-  description,
   price,
-  amount,
-  categoryId,
-  isFavorited,
-  name,
   quantityForUnity,
   unitOfMeasure,
   id,
   incrementProduct
 }: CardCarouselProductProps) {
-  const [isSelected, setIsSelected] = useState(false);
-
   let scaleImage = 1;
 
   switch (quantityForUnity) {
@@ -47,18 +44,19 @@ export default function CardCarouselProduct({
       scaleImage = 1;
       break;
   }
+  const [isSelected, setIsSelected] = useState(false);
 
-  function clickedCard(id: number) {
-    const arr = incrementProduct(id);
+  function productClick(productClickedId: number) {
+    const arr = incrementProduct(productClickedId);
+    const selected = arr.includes(productClickedId);
+    setIsSelected(selected);
     console.log(arr);
   }
-
   return (
     <CardOfProduct
       scaleImage={scaleImage}
       isSelected={isSelected}
-      onClick={() => clickedCard(id)}
-      onClickCapture={() => setIsSelected(!isSelected)}
+      onClick={() => productClick(id)}
     >
       <div className="halfCircle">
         <img src={image} alt="" />
@@ -98,7 +96,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   padding: 0 19px 19px 19px;
   color: white;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
-  border: 3px solid ${props => (props.isSelected ? ' green' : 'transparent')};
+  border: 3px solid ${props => (props.isSelected ? '#00A711' : 'transparent')};
 
   .title {
     font-size: 40px;
