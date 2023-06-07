@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../shared/ButtonSubmit';
 import Loading from '../../../shared/Loading';
 import SelectCategory from './SelectCategory';
-import { Product, useProduct } from '../../../../hooks/useProducts';
-import requestRegisterProduct from '../../../../util/requests/requestRegisterProduct';
+import { useProduct } from '../../../../hooks/useProducts';
+
 import CheckboxLiquid from '../../../shared/CheckboxLiquid';
+import productRequests from '../../../../util/requests/products/productsRequests';
 
 export interface ObjNewProduct {
   category: string | number;
@@ -78,8 +79,11 @@ export default function InputsRegisterProduct() {
       setStateButton('err');
       return alert('Deve selecionar uma unidade de medida');
     }
-
-    requestRegisterProduct(objNewProduct, setObjNewProduct, success);
+    productRequests.postRegisterProduct(
+      objNewProduct,
+      setObjNewProduct,
+      success
+    );
   }
 
   if (stateButton === 'err' && objNewProduct.price.length > 0) {

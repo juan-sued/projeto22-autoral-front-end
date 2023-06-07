@@ -13,10 +13,10 @@ import SocialsButtons from '../../shared/SocialsButtons/SocialsButtons';
 import OurHistory from '../../shared/OurHistory/OurHistory';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import requestHomeContent from '../../../util/requests/requestHomeContent';
 import { axiosI } from '../../../services/axios';
-import requestFavoriteds from '../../../util/requests/requestFavoriteds';
 import { Product } from '../../../hooks/useProducts';
+import productRequests from '../../../util/requests/products/productsRequests';
+import pagesRequests from '../../../util/requests/pages/pagesRequests';
 
 export interface HomeResponseAPI {
   listMyFavoriteds: Product[];
@@ -32,9 +32,13 @@ export default function HomePage() {
 
   useEffect(() => {
     if (signed && axiosI.defaults.headers['Authorization'] !== undefined)
-      requestFavoriteds(favoritedsList, setFavoritedsList, signOut);
+      productRequests.getFavoriteds(favoritedsList, setFavoritedsList, signOut);
 
-    requestHomeContent(objHomeResponseAPI, setObjHomeResponseAPI, signOut);
+    pagesRequests.homeContent(
+      objHomeResponseAPI,
+      setObjHomeResponseAPI,
+      signOut
+    );
 
     return () => {
       setFavoritedsList([]);

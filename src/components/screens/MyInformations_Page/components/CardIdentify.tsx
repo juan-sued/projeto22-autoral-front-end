@@ -1,10 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import { returnDayFormated } from '../../../../util/format';
-import requestUpdateUser from '../../../../util/requests/requestUpdateUser';
 import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
 import InputInfoField from '../../../shared/InputInfoField';
 import { User } from '../../../../hooks/useAuth';
+import userRequests from '../../../../util/requests/users/userRequests';
 
 export interface UserDetails extends User {
   cpf: string;
@@ -66,7 +66,7 @@ export default function CardIdentify({
   function updateUser(event: FormEvent) {
     event.preventDefault();
     setStateButton('loading');
-    requestUpdateUser({
+    userRequests.requestUpdateUser({
       updateDataUser,
       setUpdateDataUser,
       success,

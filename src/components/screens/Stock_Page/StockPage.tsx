@@ -4,7 +4,7 @@ import TitlePage from '../../shared/TitlePage';
 import { useState, useEffect } from 'react';
 import SearchBar from '../../shared/SearchBar';
 import ListCard from './ListCard';
-import requestGetProducts from '../../../util/requests/requestGetProducts';
+
 import ButtonAdd from '../../shared/ButtonAdd';
 import Modal from '../../shared/Modal';
 import InputsRegisterProduct from './inputsRegisterProduct/InputsRegisterProduct';
@@ -15,6 +15,7 @@ import copoHome from '../../../assets/copoHome.jpg';
 import copoHome2 from '../../../assets/copoHome2.jpg';
 import copoHome3 from '../../../assets/copoHome3.jpg';
 import copoacai from '../../../assets/copoacai.svg';
+import productRequests from '../../../util/requests/products/productsRequests';
 
 interface SearchProduct {
   searchBar: string;
@@ -94,7 +95,7 @@ export default function StockPage() {
         amount: 2
       }
     ]);
-    //requestGetProducts(searchProduct, setResponseProducts);
+    //requestGetProductsByCharacter(searchProduct, setResponseProducts);
 
     return () => {
       // cleanup
@@ -119,7 +120,10 @@ export default function StockPage() {
         searchBar={searchProduct.searchBar}
         onChange={handleChangeText}
         sendSearch={() =>
-          requestGetProducts(searchProduct, setResponseProducts)
+          productRequests.getProductsByCharacter(
+            searchProduct,
+            setResponseProducts
+          )
         }
       />
 

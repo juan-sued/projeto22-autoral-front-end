@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import InputInfoField from '../../../shared/InputInfoField';
 import iconsearch from '../../../../assets/iconsearch.svg';
 import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
-import requestAddAddress from '../../../../util/requests/requestAddAddress';
-import requestCep from '../../../../util/requests/requestCep';
+import addressesRequests from '../../../../util/requests/users/addresses/addressesRequests';
 
 interface CardAddAddressProps {
   requestKey: boolean;
@@ -36,7 +35,11 @@ export default function CardAddAddress({
 
   function searchCep() {
     if (createDataAddress.cep.length === 8)
-      requestCep(createDataAddress, setCreateDataAddress, setStateButton);
+      addressesRequests.getCep(
+        createDataAddress,
+        setCreateDataAddress,
+        setStateButton
+      );
   }
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +58,7 @@ export default function CardAddAddress({
     event.preventDefault();
     setStateButton('loading');
 
-    requestAddAddress(
+    addressesRequests.postAddresses(
       success,
       setStateButton,
       createDataAddress,

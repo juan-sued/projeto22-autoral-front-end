@@ -1,30 +1,90 @@
 import styled from 'styled-components';
+import { Product } from '../../hooks/useProducts';
+import { useState } from 'react';
+import { BsCheckCircleFill } from 'react-icons/bs';
 
-interface CardCarouselProductProps {
-  image: string;
-  description: string;
-  price: number;
+interface CardCarouselProductProps extends Product {
+  incrementProduct: (value: number) => number[];
 }
 
 export default function CardCarouselProduct({
   image,
   description,
-  price
+  price,
+  amount,
+  categoryId,
+  isFavorited,
+  name,
+  quantityForUnity,
+  unitOfMeasure,
+  id,
+  incrementProduct
 }: CardCarouselProductProps) {
+  const [isSelected, setIsSelected] = useState(false);
+
+  let scaleImage = 1;
+
+  switch (quantityForUnity) {
+    case 1:
+      scaleImage = 1;
+      break;
+    case 1000:
+      scaleImage = 1;
+      break;
+    case 700:
+      scaleImage = 0.9;
+      break;
+    case 500:
+      scaleImage = 0.8;
+      break;
+    case 400:
+      scaleImage = 0.7;
+      break;
+    case 300:
+      scaleImage = 0.6;
+      break;
+    default:
+      scaleImage = 1;
+      break;
+  }
+
+  function clickedCard(id: number) {
+    const arr = incrementProduct(id);
+    console.log(arr);
+  }
+
   return (
-    <CardOfProduct>
+    <CardOfProduct
+      scaleImage={scaleImage}
+      isSelected={isSelected}
+      onClick={() => clickedCard(id)}
+      onClickCapture={() => setIsSelected(!isSelected)}
+    >
       <div className="halfCircle">
         <img src={image} alt="" />
       </div>
-      <h1 className="title">{description}</h1>
+      <h1 className="title">
+        {quantityForUnity}
+        {unitOfMeasure}
+      </h1>
       <div className="priceProductContainer">
         <p className="priceProduct">R$ {price}</p>
+        <BsCheckCircleFill
+          size={16}
+          className="iconCheck"
+          color={isSelected ? 'green' : 'transparent'}
+        />
       </div>
     </CardOfProduct>
   );
 }
 
-const CardOfProduct = styled.div`
+interface CardOfProductProps {
+  scaleImage: number;
+  isSelected: boolean;
+}
+
+const CardOfProduct = styled.div<CardOfProductProps>`
   height: 250px;
   width: 175px;
   min-width: 175px;
@@ -38,6 +98,7 @@ const CardOfProduct = styled.div`
   padding: 0 19px 19px 19px;
   color: white;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
+  border: 3px solid ${props => (props.isSelected ? ' green' : 'transparent')};
 
   .title {
     font-size: 40px;
@@ -48,11 +109,16 @@ const CardOfProduct = styled.div`
   .priceProductContainer {
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
+
     p {
       font-size: 20px;
       font-weight: 600;
+    }
+    .iconCheck {
+      position: relative;
+      left: 12px;
     }
   }
 
@@ -70,6 +136,7 @@ const CardOfProduct = styled.div`
     padding-bottom: 55px;
     img {
       width: 167px;
+      transform: scale(${props => props.scaleImage});
     }
   }
 `;

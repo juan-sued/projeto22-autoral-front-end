@@ -6,6 +6,7 @@ import LoginPage from '../components/screens/Login_Page/Login_Page';
 import MyInformationPage from '../components/screens/MyInformations_Page/MyInformation';
 import RegisterPage from '../components/screens/Register_Page/RegisterPage';
 import React from 'react';
+import MakeOrderPage from '../components/screens/MakeOrder_Page';
 
 const PublicRoutes: React.FC = () => (
   <Routes>
@@ -14,6 +15,7 @@ const PublicRoutes: React.FC = () => (
     <Route path="/sign-up" element={<RegisterPage />} />
     <Route path="/cart" element={<Cart />} />
     <Route path="/my-informations-page" element={<MyInformationPage />} />
+    <Route path="/make-order" element={<MakeOrderPage />} />
   </Routes>
 );
 

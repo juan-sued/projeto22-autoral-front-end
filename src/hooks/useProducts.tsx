@@ -5,12 +5,14 @@ import { axiosI } from '../services/axios';
 export interface Product {
   id: number;
   name: string;
-  price: number;
+  price: string;
   image: string;
   categoryId: number;
   isFavorited: boolean;
   description: string;
   amount: number;
+  unitOfMeasure: string;
+  quantityForUnity: number;
 }
 
 interface Category {
@@ -58,62 +60,74 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 1,
               name: 'e',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 1,
               isFavorited: false,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             },
             {
               id: 2,
               name: 'banana',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 2,
               isFavorited: false,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             },
             {
               id: 3,
               name: 'morango',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 3,
               isFavorited: true,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             },
             {
               id: 4,
               name: 'chocolate',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 4,
               isFavorited: true,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             },
             {
               id: 5,
               name: 'morango',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 5,
               isFavorited: true,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             },
             {
               id: 6,
               name: 'menta',
-              price: 2.5,
+              price: '2,50',
               image: 'https://asdasdasdasdasd',
               categoryId: 7,
               isFavorited: true,
               description: '1 Litro',
-              amount: 12
+              amount: 12,
+              unitOfMeasure: 'ml',
+              quantityForUnity: 700
             }
           ]
         };
