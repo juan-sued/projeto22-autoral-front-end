@@ -62,17 +62,20 @@ export default function CardCarouselProduct({
       <div className="halfCircle">
         <img src={image} alt="" />
       </div>
-      <h1 className="title">
-        {unitOfMeasure === 'unity'
-          ? name
-          : quantityForUnity + '' + unitOfMeasure.toString()}
-      </h1>
+      <div className="containerTitle">
+        <h1 className="title">
+          {unitOfMeasure === 'unity'
+            ? name
+            : quantityForUnity + unitOfMeasure.toString()}
+        </h1>
+      </div>
+
       <div className="priceProductContainer">
         <p className="priceProduct">R$ {price}</p>
         <BsCheckCircleFill
           size={16}
           className="iconCheck"
-          color={isSelected ? 'green' : 'transparent'}
+          color={isSelected ? '#7fff7f' : 'transparent'}
         />
       </div>
     </CardOfProduct>
@@ -96,14 +99,20 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   justify-content: space-between;
   align-items: center;
   padding: 0 19px 19px 19px;
-  color: white;
+  color: ${props => (props.isSelected ? '#7fff7f' : 'white')};
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
-  border: 3px solid ${props => (props.isSelected ? '#00A711' : 'transparent')};
+  border: 3px solid ${props => (props.isSelected ? '#7fff7f' : 'transparent')};
 
-  .title {
-    font-size: 40px;
-    margin-bottom: 48px;
-    font-weight: 700;
+  .containerTitle {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    .title {
+      font-size: 25px;
+      font-weight: 700;
+      text-align: center;
+    }
   }
 
   .priceProductContainer {
@@ -111,6 +120,8 @@ const CardOfProduct = styled.div<CardOfProductProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    bottom: 0px;
 
     p {
       font-size: 20px;
@@ -119,13 +130,14 @@ const CardOfProduct = styled.div<CardOfProductProps>`
     .iconCheck {
       position: relative;
       left: 12px;
+      top: 13px;
     }
   }
 
   .halfCircle {
     position: relative;
-    bottom: 60px;
-    min-height: 130px;
+    margin-top: -60px;
+    max-height: 130px;
     width: 130px;
     background-color: #eeedf4;
     border-radius: 100px;

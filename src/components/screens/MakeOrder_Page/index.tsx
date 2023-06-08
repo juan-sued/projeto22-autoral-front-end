@@ -71,7 +71,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         price: '27,00',
         image: cupBig,
         isFavorited: true,
-        description: 'Banana',
+        description: '',
         amount: 12,
         unitOfMeasure: ' Litro',
         quantityForUnity: 1
@@ -201,74 +201,129 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
     complements: [
       {
         id: 0,
-        name: 'chocolate',
+        name: 'Aveia',
         price: '27,00',
         image: cupBig,
 
         isFavorited: true,
         description: 'Banana',
         amount: 12,
-        unitOfMeasure: ' Litro',
+        unitOfMeasure: 'unity',
         quantityForUnity: 1
       },
       {
         id: 1,
-        name: 'chocolate',
+        name: 'Amendoim',
         price: '27,00',
         image: cupBig,
-
         isFavorited: true,
         description: 'Banana',
         amount: 12,
-        unitOfMeasure: 'ml',
+        unitOfMeasure: 'unity',
         quantityForUnity: 1000
       },
       {
         id: 2,
-        name: 'chocolate',
+        name: 'Biscoito',
         price: '19,00',
         image: cupBig,
-
         isFavorited: true,
-        description: 'Banana',
+        description: '',
         amount: 12,
-        unitOfMeasure: 'ml',
+        unitOfMeasure: 'unity',
         quantityForUnity: 700
       },
       {
         id: 3,
-        name: 'chocolate',
+        name: 'Confete',
         price: '15,00',
         image: cupBig,
 
         isFavorited: true,
-        description: 'Banana',
+        description: '',
         amount: 12,
-        unitOfMeasure: 'ml',
+        unitOfMeasure: 'unity',
         quantityForUnity: 500
       },
       {
         id: 4,
-        name: 'chocolate',
+        name: 'Flocos de Arroz',
         price: '10,50',
         image: cupBig,
 
         isFavorited: true,
-        description: 'Banana',
+        description: 'Granola',
         amount: 12,
-        unitOfMeasure: 'ml',
+        unitOfMeasure: 'unity',
         quantityForUnity: 400
       },
       {
         id: 5,
-        name: 'chocolate',
+        name: 'Granulado de chocolate',
         price: '10,50',
         image: cupBig,
 
         isFavorited: true,
-        description: 'Banana',
+        description: '',
         amount: 12,
-        unitOfMeasure: 'ml',
+        unitOfMeasure: 'unity',
+        quantityForUnity: 300
+      },
+      {
+        id: 6,
+        name: 'Granola',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 300
+      },
+      {
+        id: 7,
+        name: 'Jujuba',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 300
+      },
+      {
+        id: 8,
+        name: 'Leite em pó',
+        price: '10,50',
+        image: cupBig,
+        isFavorited: true,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 300
+      },
+      {
+        id: 9,
+        name: 'Paçoca',
+        price: '10,50',
+        image: cupBig,
+        isFavorited: true,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 300
+      },
+      {
+        id: 10,
+        name: 'Sucrilhos',
+        price: '10,50',
+        image: cupBig,
+        isFavorited: true,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
         quantityForUnity: 300
       }
     ]
@@ -295,7 +350,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         objctResponseAPI={example.flavours}
         setProductIds={setFlavoursIds}
         productIds={flavoursIds}
-        amountSelection={2}
+        amountSelection={example.flavours.length}
       />
       <TitleSectionLeft titleSession={'Agora os complementos'} />
 
@@ -305,7 +360,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         objctResponseAPI={example.complements}
         setProductIds={setComplementsIds}
         productIds={complementsIds}
-        amountSelection={4}
+        amountSelection={5}
       />
       <Container>
         <footer>
