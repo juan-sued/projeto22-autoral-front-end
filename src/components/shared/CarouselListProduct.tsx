@@ -6,17 +6,15 @@ import iconExitFavorites from '../../assets/iconExitFavorites.svg';
 import iconFavorited from '../../assets/iconFavorited.svg';
 import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
-import { Product } from '../../hooks/useProducts';
 import PopsicleLoading from './Loaders/PopsicleLoading';
-import { useState } from 'react';
 import { responseProductsWithoutCategories } from '../screens/MakeOrder_Page';
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
   objctResponseAPI: responseProductsWithoutCategories[] | null | undefined;
-  setProductIds: (value: number[]) => void;
-  productIds: number[];
-  amountSelection: number;
+  setProductIds?: (value: number[]) => void;
+  productIds?: number[];
+  amountSelection?: number;
 }
 
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
@@ -24,8 +22,8 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   margin_top,
   objctResponseAPI,
   setProductIds,
-  productIds,
-  amountSelection
+  productIds = [],
+  amountSelection = 0
 }) => {
   function incrementProduct(idSelected: number) {
     const newArr = [...productIds];
@@ -39,7 +37,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
       newArr.push(idSelected);
     }
 
-    setProductIds(newArr);
+    setProductIds?.(newArr);
     return newArr;
   }
 

@@ -4,10 +4,7 @@ import { BsCheckCircleFill } from 'react-icons/bs';
 import { Product } from '../../hooks/useProducts';
 
 interface CardCarouselProductProps
-  extends Omit<
-    Product,
-    'categoryId' | 'description' | 'amount' | 'isFavorited'
-  > {
+  extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
   incrementProduct: (value: number) => number[];
 }
 

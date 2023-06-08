@@ -72,8 +72,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 0,
         name: 'chocolate',
-        price: '27,00',
+        price: 27.0,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: true,
         description: '',
         amount: 12,
@@ -83,9 +84,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 1,
         name: 'chocolate',
-        price: '27,00',
+        price: 27.0,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
@@ -95,9 +96,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 2,
         name: 'chocolate',
-        price: '19,00',
+        price: 19.0,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
@@ -107,9 +108,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 3,
         name: 'chocolate',
-        price: '15,00',
+        price: 15.0,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
@@ -119,9 +120,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 4,
         name: 'chocolate',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
@@ -131,9 +132,9 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 5,
         name: 'chocolate',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
@@ -145,59 +146,64 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 0,
         name: 'Banana',
-        price: '27,00',
+        price: 27.0,
         image: bolaacaibanana,
         isFavorited: false,
         description: 'Natural',
         amount: 12,
         unitOfMeasure: 'unity',
+        category: 'categoria x',
         quantityForUnity: 1
       },
       {
         id: 1,
         name: 'Natural',
-        price: '27,00',
+        price: 27.0,
         image: bolaacainatural,
         isFavorited: false,
         description: 'Natural',
         amount: 12,
         unitOfMeasure: 'unity',
+        category: 'categoria x',
         quantityForUnity: 1
       },
       {
         id: 2,
         name: 'Morango',
-        price: '19,00',
+        price: 19.0,
         image: bolaacaimorango,
 
         isFavorited: true,
         description: 'Banana',
         amount: 12,
         unitOfMeasure: 'unity',
+        category: 'categoria x',
         quantityForUnity: 1
       },
       {
         id: 3,
         name: 'Guaraná',
-        price: '15,00',
+        price: 15.0,
         image: bolaacaiguarana,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 4,
         name: 'Hortelã',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: true,
         description: 'Banana',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       }
     ],
@@ -205,123 +211,144 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       {
         id: 0,
         name: 'Aveia',
-        price: '27,00',
+        price: 27.0,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: 'Granola boa',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 1,
         name: 'Amendoim',
-        price: '27,00',
+        price: 27.0,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: 'Banana',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 11
       },
       {
         id: 2,
         name: 'Biscoito',
-        price: '19,00',
+        price: 19.0,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 3,
         name: 'Confete',
-        price: '15,00',
+        price: 15.0,
         image: cupBig,
-
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 4,
         name: 'Flocos de Arroz',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: 'Granola',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 5,
         name: 'Granulado de chocolate',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 6,
         name: 'Granola',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 7,
         name: 'Jujuba',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 8,
         name: 'Leite em pó',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 9,
         name: 'Paçoca',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: true,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       },
       {
         id: 10,
         name: 'Sucrilhos',
-        price: '10,50',
+        price: 10.5,
         image: cupBig,
+        category: 'categoria x',
         isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
+
         quantityForUnity: 1
       }
     ]

@@ -5,9 +5,9 @@ import { axiosI } from '../services/axios';
 export interface Product {
   id: number;
   name: string;
-  price: string;
+  price: number;
   image: string;
-  categoryId: number;
+  category: string;
   isFavorited: boolean;
   description: string;
   amount: number;
@@ -60,9 +60,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 1,
               name: 'e',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 1,
+              category: 'produto x',
               isFavorited: false,
               description: '1 Litro',
               amount: 12,
@@ -72,9 +72,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 2,
               name: 'banana',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 2,
+              category: 'produto y',
               isFavorited: false,
               description: '1 Litro',
               amount: 12,
@@ -84,9 +84,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 3,
               name: 'morango',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 3,
+              category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
               amount: 12,
@@ -96,9 +96,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 4,
               name: 'chocolate',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 4,
+              category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
               amount: 12,
@@ -108,9 +108,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 5,
               name: 'morango',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 5,
+              category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
               amount: 12,
@@ -120,9 +120,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             {
               id: 6,
               name: 'menta',
-              price: '2,50',
+              price: 2.5,
               image: 'https://asdasdasdasdasd',
-              categoryId: 7,
+              category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
               amount: 12,

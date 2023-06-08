@@ -38,60 +38,72 @@ async function getProductsByCharacter(
         name: 'e',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 1,
+        category: 'produto x',
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 2,
         name: 'banana',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 2,
+        category: 'produto y',
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 3,
         name: 'morango',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 3,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 4,
         name: 'chocolate',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 4,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 5,
         name: 'morango',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 5,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 6,
         name: 'menta',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
-        categoryId: 7,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       }
     ]);
   }
