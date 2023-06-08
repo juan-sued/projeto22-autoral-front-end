@@ -20,29 +20,26 @@ export default function CardCarouselProduct({
   incrementProduct,
   name
 }: CardCarouselProductProps) {
-  let scaleImage = 1;
+  let scaleImage = 0.5;
 
   switch (quantityForUnity) {
-    case 1:
-      scaleImage = 1;
-      break;
     case 1000:
-      scaleImage = 1;
-      break;
-    case 700:
-      scaleImage = 0.9;
-      break;
-    case 500:
-      scaleImage = 0.8;
-      break;
-    case 400:
       scaleImage = 0.7;
       break;
-    case 300:
+    case 700:
       scaleImage = 0.6;
       break;
+    case 500:
+      scaleImage = 0.5;
+      break;
+    case 400:
+      scaleImage = 0.4;
+      break;
+    case 300:
+      scaleImage = 0.38;
+      break;
     default:
-      scaleImage = 1;
+      scaleImage = 0.7;
       break;
   }
   const [isSelected, setIsSelected] = useState(false);
@@ -71,7 +68,9 @@ export default function CardCarouselProduct({
       </div>
 
       <div className="priceProductContainer">
-        <p className="priceProduct">R$ {price}</p>
+        <p className="priceProduct">
+          {unitOfMeasure === 'unity' ? '' : 'R$ ' + price}
+        </p>
         <BsCheckCircleFill
           size={16}
           className="iconCheck"
@@ -98,7 +97,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0 19px 19px 19px;
+  padding: 0 19px 15px 19px;
   color: ${props => (props.isSelected ? '#7fff7f' : 'white')};
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   border: 3px solid ${props => (props.isSelected ? '#7fff7f' : 'transparent')};
@@ -130,7 +129,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
     .iconCheck {
       position: relative;
       left: 12px;
-      top: 13px;
+      top: 9px;
     }
   }
 
@@ -144,8 +143,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 12px;
-    padding-bottom: 55px;
+
     img {
       width: 167px;
       transform: scale(${props => props.scaleImage});

@@ -9,6 +9,10 @@ import { Product } from '../../../hooks/useProducts';
 import cupBig from '../../../assets/copoacai.svg';
 import TitleSectionRight from '../../shared/TitleSectionRight';
 import TitleSectionLeft from '../../shared/TitleSectionLeft';
+import bolaacaibanana from '../../../assets/bolaacaibanana.png';
+import bolaacainatural from '../../../assets/bolaacainatural.png';
+import bolaacaiguarana from '../../../assets/bolaacaiguarana.png';
+import bolaacaimorango from '../../../assets/bolaacaimorango.png';
 
 interface CartProps {
   message?: string;
@@ -142,8 +146,8 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 0,
         name: 'Banana',
         price: '27,00',
-        image: cupBig,
-        isFavorited: true,
+        image: bolaacaibanana,
+        isFavorited: false,
         description: 'Natural',
         amount: 12,
         unitOfMeasure: 'unity',
@@ -153,9 +157,8 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 1,
         name: 'Natural',
         price: '27,00',
-        image: cupBig,
-
-        isFavorited: true,
+        image: bolaacainatural,
+        isFavorited: false,
         description: 'Natural',
         amount: 12,
         unitOfMeasure: 'unity',
@@ -165,7 +168,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 2,
         name: 'Morango',
         price: '19,00',
-        image: cupBig,
+        image: bolaacaimorango,
 
         isFavorited: true,
         description: 'Banana',
@@ -177,7 +180,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 3,
         name: 'Guaraná',
         price: '15,00',
-        image: cupBig,
+        image: bolaacaiguarana,
 
         isFavorited: true,
         description: 'Banana',
@@ -204,9 +207,8 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         name: 'Aveia',
         price: '27,00',
         image: cupBig,
-
-        isFavorited: true,
-        description: 'Banana',
+        isFavorited: false,
+        description: 'Granola boa',
         amount: 12,
         unitOfMeasure: 'unity',
         quantityForUnity: 1
@@ -216,22 +218,22 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         name: 'Amendoim',
         price: '27,00',
         image: cupBig,
-        isFavorited: true,
+        isFavorited: false,
         description: 'Banana',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 1000
+        quantityForUnity: 11
       },
       {
         id: 2,
         name: 'Biscoito',
         price: '19,00',
         image: cupBig,
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 700
+        quantityForUnity: 1
       },
       {
         id: 3,
@@ -239,70 +241,66 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         price: '15,00',
         image: cupBig,
 
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 500
+        quantityForUnity: 1
       },
       {
         id: 4,
         name: 'Flocos de Arroz',
         price: '10,50',
         image: cupBig,
-
-        isFavorited: true,
+        isFavorited: false,
         description: 'Granola',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 400
+        quantityForUnity: 1
       },
       {
         id: 5,
         name: 'Granulado de chocolate',
         price: '10,50',
         image: cupBig,
-
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       },
       {
         id: 6,
         name: 'Granola',
         price: '10,50',
         image: cupBig,
-
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       },
       {
         id: 7,
         name: 'Jujuba',
         price: '10,50',
         image: cupBig,
-
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       },
       {
         id: 8,
         name: 'Leite em pó',
         price: '10,50',
         image: cupBig,
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       },
       {
         id: 9,
@@ -313,18 +311,18 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       },
       {
         id: 10,
         name: 'Sucrilhos',
         price: '10,50',
         image: cupBig,
-        isFavorited: true,
+        isFavorited: false,
         description: '',
         amount: 12,
         unitOfMeasure: 'unity',
-        quantityForUnity: 300
+        quantityForUnity: 1
       }
     ]
   };

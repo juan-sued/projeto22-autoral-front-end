@@ -9,7 +9,7 @@ import ButtonAdd from '../../shared/ButtonAdd';
 import Modal from '../../shared/Modal';
 import InputsRegisterProduct from './inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '../../../hooks/useProducts';
-import acaibanana from '../../../assets/acaibanana.png';
+import acaibanana from '../../../assets/bolaacaibanana.png';
 import acaifruta2 from '../../../assets/acaifruta2.png';
 import copoHome from '../../../assets/copoHome.jpg';
 import copoHome2 from '../../../assets/copoHome2.jpg';
@@ -37,62 +37,74 @@ export default function StockPage() {
       {
         id: 1,
         name: 'Açaí com banana',
-        price: 2.5,
+        price: '2,5',
         image: acaibanana,
         categoryId: 1,
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 2,
         name: 'banana',
-        price: 2.5,
+        price: '2,5',
         image: acaifruta2,
         categoryId: 2,
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 3,
         name: 'morango',
-        price: 2.5,
+        price: '2,5',
         image: copoHome,
         categoryId: 3,
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 4,
         name: 'chocolate',
-        price: 2.5,
+        price: '2,5',
         image: copoHome2,
         categoryId: 4,
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 5,
         name: 'morango',
-        price: 2.5,
+        price: '2,5',
         image: copoHome3,
         categoryId: 5,
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 6,
         name: 'menta',
-        price: 2.5,
+        price: '2,5',
         image: copoacai,
         categoryId: 7,
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       }
     ]);
     //requestGetProductsByCharacter(searchProduct, setResponseProducts);
