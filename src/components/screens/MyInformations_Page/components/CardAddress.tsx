@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import InputInfoField from '../../../shared/InputInfoField';
 import iconremoveblack from '../../../../assets/iconremoveblack.svg';
 
-import requestUpdateAddress from '../../../../util/requests/requestUpdateAddress';
 import { returnDayFormated } from '../../../../util/format';
 import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
-import requestDeleteAddress from '../../../../util/requests/requestDelete';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
+import addressesRequests from '../../../../util/requests/users/addresses/addressesRequests';
 
 interface CardAddressProps {
   street: string;
@@ -83,7 +82,7 @@ export default function CardAddress({
   function updateAddress(event: React.FormEvent) {
     event.preventDefault();
     setStateButton('loading');
-    requestUpdateAddress({
+    addressesRequests.updateAddress({
       success,
       setStateButton,
       idAddress,
@@ -94,9 +93,8 @@ export default function CardAddress({
 
   function deleteAddress() {
     const URL = `/users/addresses/${idAddress}`;
-    requestDeleteAddress(URL, requestKey, setRequestKey);
+    addressesRequests.deleteAddress(URL, requestKey, setRequestKey);
   }
-  console.log(updateDataAddress);
   return (
     <Container>
       <CardAddressStyle cardHeightToggle={cardHeightToggle}>

@@ -4,17 +4,18 @@ import TitlePage from '../../shared/TitlePage';
 import { useState, useEffect } from 'react';
 import SearchBar from '../../shared/SearchBar';
 import ListCard from './ListCard';
-import requestGetProducts from '../../../util/requests/requestGetProducts';
+
 import ButtonAdd from '../../shared/ButtonAdd';
 import Modal from '../../shared/Modal';
 import InputsRegisterProduct from './inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '../../../hooks/useProducts';
-import acaibanana from '../../../assets/acaibanana.png';
+import acaibanana from '../../../assets/bolaacaibanana.png';
 import acaifruta2 from '../../../assets/acaifruta2.png';
 import copoHome from '../../../assets/copoHome.jpg';
 import copoHome2 from '../../../assets/copoHome2.jpg';
 import copoHome3 from '../../../assets/copoHome3.jpg';
 import copoacai from '../../../assets/copoacai.svg';
+import productRequests from '../../../util/requests/products/productsRequests';
 
 interface SearchProduct {
   searchBar: string;
@@ -38,63 +39,75 @@ export default function StockPage() {
         name: 'Açaí com banana',
         price: 2.5,
         image: acaibanana,
-        categoryId: 1,
+        category: 'produto x',
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 2,
         name: 'banana',
         price: 2.5,
         image: acaifruta2,
-        categoryId: 2,
+        category: 'produto y',
         isFavorited: false,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 3,
         name: 'morango',
         price: 2.5,
         image: copoHome,
-        categoryId: 3,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 4,
         name: 'chocolate',
         price: 2.5,
         image: copoHome2,
-        categoryId: 4,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 5,
         name: 'morango',
         price: 2.5,
         image: copoHome3,
-        categoryId: 5,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       },
       {
         id: 6,
         name: 'menta',
         price: 2.5,
         image: copoacai,
-        categoryId: 7,
+        category: 'produto z',
         isFavorited: true,
         description: '1 Litro',
-        amount: 2
+        amount: 2,
+        unitOfMeasure: 'unit',
+        quantityForUnity: 1
       }
     ]);
-    //requestGetProducts(searchProduct, setResponseProducts);
+    //requestGetProductsByCharacter(searchProduct, setResponseProducts);
 
     return () => {
       // cleanup
@@ -119,7 +132,10 @@ export default function StockPage() {
         searchBar={searchProduct.searchBar}
         onChange={handleChangeText}
         sendSearch={() =>
-          requestGetProducts(searchProduct, setResponseProducts)
+          productRequests.getProductsByCharacter(
+            searchProduct,
+            setResponseProducts
+          )
         }
       />
 

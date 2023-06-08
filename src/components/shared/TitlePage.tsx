@@ -11,7 +11,7 @@ export default function TitlePage({ to = '/', title }: TitlePageProps) {
   const navigate = useNavigate();
 
   return (
-    <>
+    <TitlePageStyle>
       <Container>
         <BackPage>
           <button onClick={() => navigate(to)}>
@@ -22,10 +22,13 @@ export default function TitlePage({ to = '/', title }: TitlePageProps) {
       </Container>
 
       <TitleContainer>{title}</TitleContainer>
-    </>
+    </TitlePageStyle>
   );
 }
 
+const TitlePageStyle = styled.div`
+  margin-bottom: 0px;
+`;
 const Container = styled.div`
   width: 100%;
   padding: 20px 20px 0 20px;

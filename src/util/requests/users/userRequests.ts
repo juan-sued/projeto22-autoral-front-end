@@ -1,4 +1,4 @@
-import { axiosI } from '../../services/axios';
+import { axiosI } from '../../../services/axios';
 
 interface UpdateDataUser {
   name: string;
@@ -41,4 +41,8 @@ async function requestUpdateUser({
   }
 }
 
-export default requestUpdateUser;
+const userRequests = {
+  requestUpdateUser
+};
+
+export default userRequests;

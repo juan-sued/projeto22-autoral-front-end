@@ -29,8 +29,8 @@ export default function SideBar() {
 
   const cartFormatted = cart.map(product => ({
     ...product,
-    priceFormatted: formatPrice(product.price),
-    subTotal: formatPrice(product.price * product.amount)
+    priceFormatted: formatPrice(Number(product.price)),
+    subTotal: formatPrice(Number(product.price) * Number(product.amount))
   }));
 
   const [state, setState] = React.useState({
@@ -61,7 +61,7 @@ export default function SideBar() {
     } else if (text.nameIcon === 'fingerprint') {
       navigate('/my-informations-page');
     } else if (text.nameIcon === 'inventory_2') {
-      navigate('/stock-page');
+      navigate('stock');
     } else {
       console.log('não carrinho');
     }

@@ -13,10 +13,10 @@ import SocialsButtons from '../../shared/SocialsButtons/SocialsButtons';
 import OurHistory from '../../shared/OurHistory/OurHistory';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
-import requestHomeContent from '../../../util/requests/requestHomeContent';
 import { axiosI } from '../../../services/axios';
-import requestFavoriteds from '../../../util/requests/requestFavoriteds';
 import { Product } from '../../../hooks/useProducts';
+import productRequests from '../../../util/requests/products/productsRequests';
+import pagesRequests from '../../../util/requests/pages/pagesRequests';
 
 export interface HomeResponseAPI {
   listMyFavoriteds: Product[];
@@ -32,9 +32,13 @@ export default function HomePage() {
 
   useEffect(() => {
     if (signed && axiosI.defaults.headers['Authorization'] !== undefined)
-      requestFavoriteds(favoritedsList, setFavoritedsList, signOut);
+      productRequests.getFavoriteds(favoritedsList, setFavoritedsList, signOut);
 
-    requestHomeContent(objHomeResponseAPI, setObjHomeResponseAPI, signOut);
+    pagesRequests.homeContent(
+      objHomeResponseAPI,
+      setObjHomeResponseAPI,
+      signOut
+    );
 
     return () => {
       setFavoritedsList([]);
@@ -45,126 +49,272 @@ export default function HomePage() {
   const objctResponseAPITest: HomeResponseAPI = {
     listMyFavoriteds: [
       {
-        id: 1,
-        name: 'e',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 1,
+        id: 0,
+        name: 'Aveia',
+        price: 27.0,
+        image: 'cupBig',
         isFavorited: false,
-        description: '1 Litro',
-        amount: 10
+        description: 'Granola boa',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 1,
+        name: 'Amendoim',
+        price: 27.0,
+        image: 'cupBig',
+        isFavorited: false,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 11,
+        category: 'categoria x'
       },
       {
         id: 2,
-        name: 'banana',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 2,
+        name: 'Biscoito',
+        price: 19.0,
+        image: 'cupBig',
         isFavorited: false,
-        description: '1 Litro',
-        amount: 10
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 3,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 3,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Confete',
+        price: 15.0,
+        image: 'cupBig',
+
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 4,
-        name: 'chocolate',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 4,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Flocos de Arroz',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: 'Granola',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 5,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 5,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Granulado de chocolate',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 6,
-        name: 'menta',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 7,
+        name: 'Granola',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 7,
+        name: 'Jujuba',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 8,
+        name: 'Leite em pó',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 9,
+        name: 'Paçoca',
+        price: 10.5,
+        image: 'cupBig',
         isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 10,
+        name: 'Sucrilhos',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       }
     ],
     listMoreOrders: [
       {
-        id: 1,
-        name: 'e',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 1,
+        id: 0,
+        name: 'Aveia',
+        price: 27.0,
+        image: 'cupBig',
         isFavorited: false,
-        description: '1 Litro',
-        amount: 10
+        description: 'Granola boa',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 1,
+        name: 'Amendoim',
+        price: 27.0,
+        image: 'cupBig',
+        isFavorited: false,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 11,
+        category: 'categoria x'
       },
       {
         id: 2,
-        name: 'banana',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 2,
+        name: 'Biscoito',
+        price: 19.0,
+        image: 'cupBig',
         isFavorited: false,
-        description: '1 Litro',
-        amount: 10
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 3,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 3,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Confete',
+        price: 15.0,
+        image: 'cupBig',
+
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 4,
-        name: 'chocolate',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 4,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Flocos de Arroz',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: 'Granola',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 5,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 5,
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        name: 'Granulado de chocolate',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       },
       {
         id: 6,
-        name: 'menta',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        categoryId: 7,
+        name: 'Granola',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 7,
+        name: 'Jujuba',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 8,
+        name: 'Leite em pó',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 9,
+        name: 'Paçoca',
+        price: 10.5,
+        image: 'cupBig',
         isFavorited: true,
-        description: '1 Litro',
-        amount: 10
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
+      },
+      {
+        id: 10,
+        name: 'Sucrilhos',
+        price: 10.5,
+        image: 'cupBig',
+        isFavorited: false,
+        description: '',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1,
+        category: 'categoria x'
       }
     ]
   };

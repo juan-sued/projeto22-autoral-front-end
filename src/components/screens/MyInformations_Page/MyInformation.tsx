@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { User, useAuth } from '../../../hooks/useAuth';
-import requestMyInformations from '../../../util/requests/requestMyInformations';
 import Loading from '../../shared/Loading';
 import Main from '../../shared/Main';
 import TitlePage from '../../shared/TitlePage';
@@ -9,6 +8,8 @@ import CardAddress from './components/CardAddress';
 import CardIdentify, { UserDetails } from './components/CardIdentify';
 import CardAddAddress from './components/CardAddAddress';
 import { MdAdd } from 'react-icons/md';
+import pagesRequests from '../../../util/requests/pages/pagesRequests';
+import productRequests from '../../../util/requests/products/productsRequests';
 
 interface Address {
   street: string;
@@ -51,7 +52,7 @@ export default function MyInformationPage() {
   const [editToggleCard, setEditToggleCard] = useState(false);
 
   useEffect(() => {
-    requestMyInformations(
+    pagesRequests.getMyInformationsPage(
       userAndAddressesInfo,
       setUserAndAddressesInfo,
       userInfo

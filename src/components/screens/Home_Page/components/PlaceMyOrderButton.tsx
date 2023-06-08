@@ -2,11 +2,16 @@ import styled from 'styled-components';
 import placeorder from '../../../../assets/placeorder.gif';
 
 import clickhere from '../../../../assets/click.gif';
+import { useNavigate } from 'react-router-dom';
 
 export default function PlaceMyOrderButton() {
+  const navigate = useNavigate();
   return (
     <PlaceMyOrderContainer>
-      <button className="placeMyOrderButton">
+      <button
+        className="placeMyOrderButton"
+        onClick={() => navigate('/make-order')}
+      >
         <div className="degrade">
           <p>Fazer meu pedido</p>
           <img src={clickhere} alt="" />
