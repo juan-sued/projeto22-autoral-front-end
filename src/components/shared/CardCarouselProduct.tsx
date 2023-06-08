@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Product } from '../../hooks/useProducts';
+import { formatPrice } from '../../util/format';
 
 interface CardCarouselProductProps
   extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
@@ -39,6 +40,8 @@ export default function CardCarouselProduct({
       scaleImage = 0.7;
       break;
   }
+  const priceFormatted = formatPrice(price);
+
   const [isSelected, setIsSelected] = useState(false);
 
   function productClick(productClickedId: number) {
@@ -66,7 +69,7 @@ export default function CardCarouselProduct({
 
       <div className="priceProductContainer">
         <p className="priceProduct">
-          {unitOfMeasure === 'unity' ? '' : 'R$ ' + price}
+          {unitOfMeasure === 'unity' ? '' : priceFormatted}
         </p>
         <BsCheckCircleFill
           size={16}
@@ -133,6 +136,8 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   .halfCircle {
     position: relative;
     margin-top: -60px;
+    min-height: 130px;
+
     max-height: 130px;
     width: 130px;
     background-color: #eeedf4;
@@ -143,7 +148,9 @@ const CardOfProduct = styled.div<CardOfProductProps>`
 
     img {
       width: 167px;
-      transform: scale(${props => props.scaleImage});
+      transform: scale(${props => (props.isSelected ? '1' : props.scaleImage)})
+        translateY(${props => (props.isSelected ? '-50px' : '0')});
+      transition: transform 0.2s ease-in-out;
     }
   }
 `;

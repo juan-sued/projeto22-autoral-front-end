@@ -13,6 +13,14 @@ import bolaacaibanana from '../../../assets/bolaacaibanana.png';
 import bolaacainatural from '../../../assets/bolaacainatural.png';
 import bolaacaiguarana from '../../../assets/bolaacaiguarana.png';
 import bolaacaimorango from '../../../assets/bolaacaimorango.png';
+import complementpacoca from '../../../assets/complementpacoca.png';
+import complementjujuba from '../../../assets/complementjujuba.png';
+import componentaveia from '../../../assets/componentaveia.png';
+import complementAmendoim from '../../../assets/complement-amendoim.png';
+import complementBiscoitosCanudos from '../../../assets/complement-biscoitos-canudos.png';
+import complementConfete from '../../../assets/complement-confete-chocolate.png';
+import complementFlocoArroz from '../../../assets/complement-floco-de-arroz.png';
+import complementGranulado from '../../../assets/complement-granulado.png';
 
 interface CartProps {
   message?: string;
@@ -212,7 +220,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 0,
         name: 'Aveia',
         price: 27.0,
-        image: cupBig,
+        image: componentaveia,
         category: 'categoria x',
         isFavorited: false,
         description: 'Granola boa',
@@ -225,7 +233,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 1,
         name: 'Amendoim',
         price: 27.0,
-        image: cupBig,
+        image: complementAmendoim,
         category: 'categoria x',
         isFavorited: false,
         description: 'Banana',
@@ -238,7 +246,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 2,
         name: 'Biscoito',
         price: 19.0,
-        image: cupBig,
+        image: complementBiscoitosCanudos,
         category: 'categoria x',
         isFavorited: false,
         description: '',
@@ -251,7 +259,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 3,
         name: 'Confete',
         price: 15.0,
-        image: cupBig,
+        image: complementConfete,
         category: 'categoria x',
         isFavorited: false,
         description: '',
@@ -264,7 +272,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 4,
         name: 'Flocos de Arroz',
         price: 10.5,
-        image: cupBig,
+        image: complementFlocoArroz,
         category: 'categoria x',
         isFavorited: false,
         description: 'Granola',
@@ -277,7 +285,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 5,
         name: 'Granulado de chocolate',
         price: 10.5,
-        image: cupBig,
+        image: complementGranulado,
         category: 'categoria x',
         isFavorited: false,
         description: '',
@@ -303,7 +311,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 7,
         name: 'Jujuba',
         price: 10.5,
-        image: cupBig,
+        image: complementjujuba,
         category: 'categoria x',
         isFavorited: false,
         description: '',
@@ -329,7 +337,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         id: 9,
         name: 'Paçoca',
         price: 10.5,
-        image: cupBig,
+        image: complementpacoca,
         category: 'categoria x',
         isFavorited: true,
         description: '',
