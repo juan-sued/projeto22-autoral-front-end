@@ -7,16 +7,20 @@ import { useEffect, useState } from 'react';
 import CarouselListProduct from '../../shared/CarouselListProduct';
 import { Product } from '../../../hooks/useProducts';
 import cupBig from '../../../assets/copoacai.svg';
-import TitleSectionLeft from '../../shared/titleSectionLeft';
 import TitleSectionRight from '../../shared/TitleSectionRight';
+import TitleSectionLeft from '../../shared/TitleSectionLeft';
 
 interface CartProps {
   message?: string;
   isSigned?: boolean;
 }
+export interface responseProductsWithoutCategories
+  extends Omit<Product, 'categoryId'> {}
 
-export interface responseProducts extends Omit<Product, 'categoryId'> {
-  category: string;
+export interface responseProducts {
+  sizes: responseProductsWithoutCategories[];
+  flavours: responseProductsWithoutCategories[];
+  complements: responseProductsWithoutCategories[];
 }
 //topping === cobertura
 interface objNewOrderParams {
@@ -59,80 +63,216 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
     // requestMakeOrderPage(); -- pega as infos da página
   }, []);
 
-  const example: responseProducts[] = [
-    {
-      id: 0,
-      name: 'chocolate',
-      price: '27,00',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: ' Litro',
-      quantityForUnity: 1
-    },
-    {
-      id: 1,
-      name: 'chocolate',
-      price: '27,00',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: 'ml',
-      quantityForUnity: 1000
-    },
-    {
-      id: 2,
-      name: 'chocolate',
-      price: '19,00',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: 'ml',
-      quantityForUnity: 700
-    },
-    {
-      id: 3,
-      name: 'chocolate',
-      price: '15,00',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: 'ml',
-      quantityForUnity: 500
-    },
-    {
-      id: 4,
-      name: 'chocolate',
-      price: '10,50',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: 'ml',
-      quantityForUnity: 400
-    },
-    {
-      id: 5,
-      name: 'chocolate',
-      price: '10,50',
-      image: cupBig,
-      category: 'tamanho',
-      isFavorited: true,
-      description: 'Banana',
-      amount: 12,
-      unitOfMeasure: 'ml',
-      quantityForUnity: 300
-    }
-  ];
+  const example: responseProducts = {
+    sizes: [
+      {
+        id: 0,
+        name: 'chocolate',
+        price: '27,00',
+        image: cupBig,
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: ' Litro',
+        quantityForUnity: 1
+      },
+      {
+        id: 1,
+        name: 'chocolate',
+        price: '27,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 1000
+      },
+      {
+        id: 2,
+        name: 'chocolate',
+        price: '19,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 700
+      },
+      {
+        id: 3,
+        name: 'chocolate',
+        price: '15,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 500
+      },
+      {
+        id: 4,
+        name: 'chocolate',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 400
+      },
+      {
+        id: 5,
+        name: 'chocolate',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 300
+      }
+    ],
+    flavours: [
+      {
+        id: 0,
+        name: 'Banana',
+        price: '27,00',
+        image: cupBig,
+        isFavorited: true,
+        description: 'Natural',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1
+      },
+      {
+        id: 1,
+        name: 'Natural',
+        price: '27,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Natural',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1
+      },
+      {
+        id: 2,
+        name: 'Morango',
+        price: '19,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1
+      },
+      {
+        id: 3,
+        name: 'Guaraná',
+        price: '15,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1
+      },
+      {
+        id: 4,
+        name: 'Hortelã',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'unity',
+        quantityForUnity: 1
+      }
+    ],
+    complements: [
+      {
+        id: 0,
+        name: 'chocolate',
+        price: '27,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: ' Litro',
+        quantityForUnity: 1
+      },
+      {
+        id: 1,
+        name: 'chocolate',
+        price: '27,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 1000
+      },
+      {
+        id: 2,
+        name: 'chocolate',
+        price: '19,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 700
+      },
+      {
+        id: 3,
+        name: 'chocolate',
+        price: '15,00',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 500
+      },
+      {
+        id: 4,
+        name: 'chocolate',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 400
+      },
+      {
+        id: 5,
+        name: 'chocolate',
+        price: '10,50',
+        image: cupBig,
+
+        isFavorited: true,
+        description: 'Banana',
+        amount: 12,
+        unitOfMeasure: 'ml',
+        quantityForUnity: 300
+      }
+    ]
+  };
 
   return (
     <>
@@ -141,7 +281,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       <TitleSectionRight titleSession={'Quanto maior, melhor'} />
       <CarouselListProduct
         margin_top={0}
-        objctResponseAPI={example}
+        objctResponseAPI={example.sizes}
         setProductIds={setCupSizeId}
         productIds={cupSizeId}
         amountSelection={1}
@@ -152,7 +292,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
 
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example}
+        objctResponseAPI={example.flavours}
         setProductIds={setFlavoursIds}
         productIds={flavoursIds}
         amountSelection={2}
@@ -162,7 +302,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       <TitleSectionRight titleSession={'Até 5 (cinco)'} />
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example}
+        objctResponseAPI={example.complements}
         setProductIds={setComplementsIds}
         productIds={complementsIds}
         amountSelection={4}

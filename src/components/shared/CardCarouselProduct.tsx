@@ -6,7 +6,7 @@ import { Product } from '../../hooks/useProducts';
 interface CardCarouselProductProps
   extends Omit<
     Product,
-    'categoryId' | 'description' | 'amount' | 'isFavorited' | 'name'
+    'categoryId' | 'description' | 'amount' | 'isFavorited'
   > {
   incrementProduct: (value: number) => number[];
 }
@@ -17,7 +17,8 @@ export default function CardCarouselProduct({
   quantityForUnity,
   unitOfMeasure,
   id,
-  incrementProduct
+  incrementProduct,
+  name
 }: CardCarouselProductProps) {
   let scaleImage = 1;
 
@@ -62,8 +63,9 @@ export default function CardCarouselProduct({
         <img src={image} alt="" />
       </div>
       <h1 className="title">
-        {quantityForUnity}
-        {unitOfMeasure}
+        {unitOfMeasure === 'unity'
+          ? name
+          : quantityForUnity + '' + unitOfMeasure.toString()}
       </h1>
       <div className="priceProductContainer">
         <p className="priceProduct">R$ {price}</p>

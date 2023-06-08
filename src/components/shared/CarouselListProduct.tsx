@@ -9,11 +9,11 @@ import TitleAndArrow from './TitleAndArrow';
 import { Product } from '../../hooks/useProducts';
 import PopsicleLoading from './Loaders/PopsicleLoading';
 import { useState } from 'react';
-import { responseProducts } from '../screens/MakeOrder_Page';
+import { responseProductsWithoutCategories } from '../screens/MakeOrder_Page';
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
-  objctResponseAPI: responseProducts[] | null | undefined;
+  objctResponseAPI: responseProductsWithoutCategories[] | null | undefined;
   setProductIds: (value: number[]) => void;
   productIds: number[];
   amountSelection: number;
@@ -77,6 +77,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                 id={order.id}
                 unitOfMeasure={order.unitOfMeasure}
                 incrementProduct={incrementProduct}
+                name={order.name}
               />
             )
           )}
