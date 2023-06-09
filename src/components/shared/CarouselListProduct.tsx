@@ -15,6 +15,7 @@ interface CarouselListProductProps {
   setProductIds?: (value: number[]) => void;
   productIds?: number[];
   amountSelection?: number;
+  showPrice?: boolean;
 }
 
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
@@ -23,7 +24,8 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   objctResponseAPI,
   setProductIds,
   productIds = [],
-  amountSelection = 0
+  amountSelection = 0,
+  showPrice = false
 }) => {
   function incrementProduct(idSelected: number) {
     const newArr = [...productIds];
@@ -76,6 +78,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                 unitOfMeasure={order.unitOfMeasure}
                 incrementProduct={incrementProduct}
                 name={order.name}
+                showPrice={showPrice}
               />
             )
           )}
