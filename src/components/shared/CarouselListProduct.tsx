@@ -8,10 +8,11 @@ import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
 import PopsicleLoading from './Loaders/PopsicleLoading';
 import { responseProductsWithoutCategories } from '../screens/MakeOrder_Page';
+import { useState, useEffect } from 'react';
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
-  objctResponseAPI: responseProductsWithoutCategories[] | null | undefined;
+  objctResponseAPI: responseProductsWithoutCategories[];
   setProductIds?: (value: number[]) => void;
   productIds?: number[];
   amountSelection?: number;
@@ -21,32 +22,42 @@ interface CarouselListProductProps {
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   titleSession,
   margin_top,
-  objctResponseAPI,
+  objctResponseAPI = [],
   setProductIds,
   productIds = [],
   amountSelection = 0,
   showPrice = false
 }) => {
-  function incrementProduct(idSelected: number) {
-    const newArr = [...productIds];
+  const [productsSelecteds, setProductsSelecteds] = useState<string[]>([]);
 
-    const isSelectedCard = newArr.includes(idSelected);
+  useEffect(() => {
+    const filteredObject: string[] = objctResponseAPI
+      .filter(productObj => productIds.includes(productObj.id))
+      .map(productObj => productObj.name);
+
+    setProductsSelecteds([...filteredObject]);
+  }, [productIds]);
+
+  function incrementProduct(idSelected: number) {
+    const idsArr = [...productIds];
+
+    const isSelectedCard = idsArr.includes(idSelected);
 
     if (isSelectedCard) {
-      const index = newArr.findIndex(productId => productId === idSelected);
-      newArr.splice(index, 1);
+      const index = idsArr.findIndex(productId => productId === idSelected);
+      idsArr.splice(index, 1);
     } else if (amountSelection > productIds.length || productIds.length === 0) {
-      newArr.push(idSelected);
+      idsArr.push(idSelected);
     }
 
-    setProductIds?.(newArr);
-    return newArr;
+    setProductIds?.(idsArr);
+    return idsArr;
   }
 
   return (
     <CarouselListContainer margin_top={margin_top}>
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
-
+      <div className="listProductsAdd">{productsSelecteds}</div>
       {objctResponseAPI === null || objctResponseAPI === undefined ? (
         <PopsicleLoading />
       ) : (
