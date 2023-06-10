@@ -6,21 +6,11 @@ import { Container, Total } from '../Cart_Page/components/styles';
 import { useEffect, useState } from 'react';
 import CarouselListProduct from '../../shared/CarouselListProduct';
 import { Product } from '../../../hooks/useProducts';
-import cupBig from '../../../assets/copoacai.svg';
+
 import TitleSectionRight from '../../shared/TitleSectionRight';
 import TitleSectionLeft from '../../shared/TitleSectionLeft';
-import bolaacaibanana from '../../../assets/bolaacaibanana.png';
-import bolaacainatural from '../../../assets/bolaacainatural.png';
-import bolaacaiguarana from '../../../assets/bolaacaiguarana.png';
-import bolaacaimorango from '../../../assets/bolaacaimorango.png';
-import complementpacoca from '../../../assets/complementpacoca.png';
-import complementjujuba from '../../../assets/complementjujuba.png';
-import componentaveia from '../../../assets/componentaveia.png';
-import complementAmendoim from '../../../assets/complement-amendoim.png';
-import complementBiscoitosCanudos from '../../../assets/complement-biscoitos-canudos.png';
-import complementConfete from '../../../assets/complement-confete-chocolate.png';
-import complementFlocoArroz from '../../../assets/complement-floco-de-arroz.png';
-import complementGranulado from '../../../assets/complement-granulado.png';
+
+import { example } from './mock';
 
 interface CartProps {
   message?: string;
@@ -33,6 +23,9 @@ export interface responseProducts {
   sizes: responseProductsWithoutCategories[];
   flavours: responseProductsWithoutCategories[];
   complements: responseProductsWithoutCategories[];
+  toppings: responseProductsWithoutCategories[];
+  fruits: responseProductsWithoutCategories[];
+  plus: responseProductsWithoutCategories[];
 }
 //topping === cobertura
 interface objNewOrderParams {
@@ -75,292 +68,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
     // requestMakeOrderPage(); -- pega as infos da página
   }, []);
 
-  const example: responseProducts = {
-    sizes: [
-      {
-        id: 0,
-        name: 'chocolate',
-        price: 27.0,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: '',
-        amount: 12,
-        unitOfMeasure: ' Litro',
-        quantityForUnity: 1
-      },
-      {
-        id: 1,
-        name: 'chocolate',
-        price: 27.0,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'ml',
-        quantityForUnity: 1000
-      },
-      {
-        id: 2,
-        name: 'chocolate',
-        price: 19.0,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'ml',
-        quantityForUnity: 700
-      },
-      {
-        id: 3,
-        name: 'chocolate',
-        price: 15.0,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'ml',
-        quantityForUnity: 500
-      },
-      {
-        id: 4,
-        name: 'chocolate',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'ml',
-        quantityForUnity: 400
-      },
-      {
-        id: 5,
-        name: 'chocolate',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'ml',
-        quantityForUnity: 300
-      }
-    ],
-    flavours: [
-      {
-        id: 0,
-        name: 'Banana',
-        price: 27.0,
-        image: bolaacaibanana,
-        isFavorited: false,
-        description: 'Natural',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        category: 'categoria x',
-        quantityForUnity: 1
-      },
-      {
-        id: 1,
-        name: 'Natural',
-        price: 27.0,
-        image: bolaacainatural,
-        isFavorited: false,
-        description: 'Natural',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        category: 'categoria x',
-        quantityForUnity: 1
-      },
-      {
-        id: 2,
-        name: 'Morango',
-        price: 19.0,
-        image: bolaacaimorango,
-
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        category: 'categoria x',
-        quantityForUnity: 1
-      },
-      {
-        id: 3,
-        name: 'Guaraná',
-        price: 15.0,
-        image: bolaacaiguarana,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 4,
-        name: 'Hortelã',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: true,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      }
-    ],
-    complements: [
-      {
-        id: 0,
-        name: 'Aveia',
-        price: 27.0,
-        image: componentaveia,
-        category: 'categoria x',
-        isFavorited: false,
-        description: 'Granola boa',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 1,
-        name: 'Amendoim',
-        price: 27.0,
-        image: complementAmendoim,
-        category: 'categoria x',
-        isFavorited: false,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 11
-      },
-      {
-        id: 2,
-        name: 'Biscoito',
-        price: 19.0,
-        image: complementBiscoitosCanudos,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 3,
-        name: 'Confete',
-        price: 15.0,
-        image: complementConfete,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 4,
-        name: 'Flocos de Arroz',
-        price: 10.5,
-        image: complementFlocoArroz,
-        category: 'categoria x',
-        isFavorited: false,
-        description: 'Granola',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 5,
-        name: 'Granulado de chocolate',
-        price: 10.5,
-        image: complementGranulado,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 6,
-        name: 'Granola',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 7,
-        name: 'Jujuba',
-        price: 10.5,
-        image: complementjujuba,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 8,
-        name: 'Leite em pó',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 9,
-        name: 'Paçoca',
-        price: 10.5,
-        image: complementpacoca,
-        category: 'categoria x',
-        isFavorited: true,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      },
-      {
-        id: 10,
-        name: 'Sucrilhos',
-        price: 10.5,
-        image: cupBig,
-        category: 'categoria x',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-
-        quantityForUnity: 1
-      }
-    ]
-  };
+  //arr.toString().replace(/,/g, ', '); const arr = [batata,feijao,tomate] => 'batata, feijao, tomate'
 
   return (
     <>
@@ -373,6 +81,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         setProductIds={setCupSizeId}
         productIds={cupSizeId}
         amountSelection={1}
+        showPrice={true}
       />
       <TitleSectionLeft titleSession={'Agora os sabores'} />
 
@@ -386,7 +95,6 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         amountSelection={example.flavours.length}
       />
       <TitleSectionLeft titleSession={'Agora os complementos'} />
-
       <TitleSectionRight titleSession={'Até 5 (cinco)'} />
       <CarouselListProduct
         margin_top={50}
@@ -394,6 +102,34 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         setProductIds={setComplementsIds}
         productIds={complementsIds}
         amountSelection={5}
+      />
+      <TitleSectionLeft titleSession={'Cobertura'} />
+      <TitleSectionRight titleSession={'Quantas quiser'} />
+      <CarouselListProduct
+        margin_top={50}
+        objctResponseAPI={example.toppings}
+        setProductIds={setToppingsIds}
+        productIds={toppingsIds}
+        amountSelection={example.toppings.length}
+      />
+      <TitleSectionLeft titleSession={'Agora uma fruta'} />
+      <TitleSectionRight titleSession={'Porque a gente é saudável'} />
+      <CarouselListProduct
+        margin_top={50}
+        objctResponseAPI={example.fruits}
+        setProductIds={setFruitId}
+        productIds={fruitId}
+        amountSelection={1}
+      />
+      <TitleSectionLeft titleSession={'Adicionais'} />
+      <TitleSectionRight titleSession={'A cereja do bolo'} />
+      <CarouselListProduct
+        margin_top={50}
+        objctResponseAPI={example.plus}
+        setProductIds={setPlusIds}
+        productIds={plusIds}
+        amountSelection={example.plus.length}
+        showPrice={true}
       />
       <Container>
         <footer>

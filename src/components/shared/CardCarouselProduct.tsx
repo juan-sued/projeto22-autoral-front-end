@@ -7,6 +7,7 @@ import { formatPrice } from '../../util/format';
 interface CardCarouselProductProps
   extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
   incrementProduct: (value: number) => number[];
+  showPrice: boolean;
 }
 
 export default function CardCarouselProduct({
@@ -16,7 +17,8 @@ export default function CardCarouselProduct({
   unitOfMeasure,
   id,
   incrementProduct,
-  name
+  name,
+  showPrice
 }: CardCarouselProductProps) {
   let scaleImage = 0.5;
 
@@ -48,7 +50,6 @@ export default function CardCarouselProduct({
     const arr = incrementProduct(productClickedId);
     const selected = arr.includes(productClickedId);
     setIsSelected(selected);
-    console.log(arr);
   }
   return (
     <CardOfProduct
@@ -68,9 +69,7 @@ export default function CardCarouselProduct({
       </div>
 
       <div className="priceProductContainer">
-        <p className="priceProduct">
-          {unitOfMeasure === 'unity' ? '' : priceFormatted}
-        </p>
+        <p className="priceProduct">{showPrice ? priceFormatted : ''}</p>
         <BsCheckCircleFill
           size={16}
           className="iconCheck"
@@ -151,6 +150,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
       transform: scale(${props => (props.isSelected ? '1' : props.scaleImage)})
         translateY(${props => (props.isSelected ? '-50px' : '0')});
       transition: transform 0.2s ease-in-out;
+      border-radius: 100px;
     }
   }
 `;
