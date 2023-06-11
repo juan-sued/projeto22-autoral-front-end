@@ -16,16 +16,14 @@ interface CartProps {
   message?: string;
   isSigned?: boolean;
 }
-export interface responseProductsWithoutCategories
-  extends Omit<Product, 'categoryId'> {}
 
 export interface responseProducts {
-  sizes: responseProductsWithoutCategories[];
-  flavours: responseProductsWithoutCategories[];
-  complements: responseProductsWithoutCategories[];
-  toppings: responseProductsWithoutCategories[];
-  fruits: responseProductsWithoutCategories[];
-  plus: responseProductsWithoutCategories[];
+  sizes: Product[];
+  flavours: Product[];
+  complements: Product[];
+  toppings: Product[];
+  fruits: Product[];
+  plus: Product[];
 }
 //topping === cobertura
 interface objNewOrderParams {

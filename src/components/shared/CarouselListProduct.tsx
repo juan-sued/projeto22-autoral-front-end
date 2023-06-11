@@ -7,12 +7,12 @@ import iconFavorited from '../../assets/iconFavorited.svg';
 import addFavorites from '../../assets/addFavorites.svg';
 import TitleAndArrow from './TitleAndArrow';
 import PopsicleLoading from './Loaders/PopsicleLoading';
-import { responseProductsWithoutCategories } from '../screens/MakeOrder_Page';
 import { useState, useEffect } from 'react';
+import { Product } from '../../hooks/useProducts';
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
-  objctResponseAPI: responseProductsWithoutCategories[];
+  objctResponseAPI: Product[] | undefined;
   setProductIds?: (value: number[]) => void;
   productIds?: number[];
   amountSelection?: number;
