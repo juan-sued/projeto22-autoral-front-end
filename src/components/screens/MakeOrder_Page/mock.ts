@@ -38,20 +38,8 @@ import { responseProducts } from '.';
 export const example: responseProducts = {
   sizes: [
     {
-      id: 0,
-      name: 'chocolate',
-      price: 27.0,
-      image: cupBig,
-      category: 'categoria x',
-      isFavorited: true,
-      description: '',
-      amount: 12,
-      unitOfMeasure: ' Litro',
-      quantityForUnity: 1
-    },
-    {
       id: 1,
-      name: 'chocolate',
+      name: 'Tamanho 1000ml',
       price: 27.0,
       image: cupBig,
       category: 'categoria x',
@@ -63,7 +51,7 @@ export const example: responseProducts = {
     },
     {
       id: 2,
-      name: 'chocolate',
+      name: 'Tamanho 700ml',
       price: 19.0,
       image: cupBig,
       category: 'categoria x',
@@ -75,7 +63,7 @@ export const example: responseProducts = {
     },
     {
       id: 3,
-      name: 'chocolate',
+      name: 'Tamanho 500ml',
       price: 15.0,
       image: cupBig,
       category: 'categoria x',
@@ -87,7 +75,7 @@ export const example: responseProducts = {
     },
     {
       id: 4,
-      name: 'chocolate',
+      name: 'Tamanho 400ml',
       price: 10.5,
       image: cupBig,
       category: 'categoria x',
@@ -99,7 +87,7 @@ export const example: responseProducts = {
     },
     {
       id: 5,
-      name: 'chocolate',
+      name: 'Tamanho 300ml',
       price: 10.5,
       image: cupBig,
       category: 'categoria x',
@@ -323,7 +311,7 @@ export const example: responseProducts = {
   toppings: [
     {
       id: 0,
-      name: 'Chocolate',
+      name: 'Tamanho 1000ml',
       price: 27.0,
       image: toppingChocolate,
       category: 'categoria x',
