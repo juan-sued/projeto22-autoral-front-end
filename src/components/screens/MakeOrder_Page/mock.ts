@@ -40,7 +40,7 @@ export const example: responseProducts = {
     {
       id: 1,
       name: 'Tamanho 1000ml',
-      price: 27.0,
+      price: 27,
       image: cupBig,
       category: 'categoria x',
       isFavorited: true,
@@ -52,7 +52,7 @@ export const example: responseProducts = {
     {
       id: 2,
       name: 'Tamanho 700ml',
-      price: 19.0,
+      price: 19,
       image: cupBig,
       category: 'categoria x',
       isFavorited: true,
@@ -76,7 +76,7 @@ export const example: responseProducts = {
     {
       id: 4,
       name: 'Tamanho 400ml',
-      price: 10.5,
+      price: 13.0,
       image: cupBig,
       category: 'categoria x',
       isFavorited: true,
@@ -102,7 +102,7 @@ export const example: responseProducts = {
     {
       id: 0,
       name: 'Banana',
-      price: 27.0,
+      price: 0,
       image: bolaacaibanana,
       isFavorited: false,
       description: 'Natural',
@@ -114,7 +114,7 @@ export const example: responseProducts = {
     {
       id: 1,
       name: 'Natural',
-      price: 27.0,
+      price: 0,
       image: bolaacainatural,
       isFavorited: false,
       description: 'Natural',
@@ -126,7 +126,7 @@ export const example: responseProducts = {
     {
       id: 2,
       name: 'Morango',
-      price: 19.0,
+      price: 0,
       image: bolaacaimorango,
 
       isFavorited: true,
@@ -139,7 +139,7 @@ export const example: responseProducts = {
     {
       id: 3,
       name: 'Guaraná',
-      price: 15.0,
+      price: 0,
       image: bolaacaiguarana,
       category: 'categoria x',
       isFavorited: true,
@@ -152,7 +152,7 @@ export const example: responseProducts = {
     {
       id: 4,
       name: 'Hortelã',
-      price: 10.5,
+      price: 0,
       image: bolcaacaihortela,
       category: 'categoria x',
       isFavorited: true,
@@ -167,7 +167,7 @@ export const example: responseProducts = {
     {
       id: 0,
       name: 'Aveia',
-      price: 27.0,
+      price: 0,
       image: componentaveia,
       category: 'categoria x',
       isFavorited: false,
@@ -180,7 +180,7 @@ export const example: responseProducts = {
     {
       id: 1,
       name: 'Amendoim',
-      price: 27.0,
+      price: 0,
       image: complementAmendoim,
       category: 'categoria x',
       isFavorited: false,
@@ -188,12 +188,12 @@ export const example: responseProducts = {
       amount: 12,
       unitOfMeasure: 'unity',
 
-      quantityForUnity: 11
+      quantityForUnity: 1
     },
     {
       id: 2,
       name: 'Biscoito',
-      price: 19.0,
+      price: 0,
       image: complementBiscoitosCanudos,
       category: 'categoria x',
       isFavorited: false,
@@ -206,7 +206,7 @@ export const example: responseProducts = {
     {
       id: 3,
       name: 'Confete',
-      price: 15.0,
+      price: 0,
       image: complementConfete,
       category: 'categoria x',
       isFavorited: false,
@@ -219,7 +219,7 @@ export const example: responseProducts = {
     {
       id: 4,
       name: 'Flocos de Arroz',
-      price: 10.5,
+      price: 0,
       image: complementFlocoArroz,
       category: 'categoria x',
       isFavorited: false,
@@ -232,7 +232,7 @@ export const example: responseProducts = {
     {
       id: 5,
       name: 'Granulado de chocolate',
-      price: 10.5,
+      price: 0,
       image: complementGranulado,
       category: 'categoria x',
       isFavorited: false,
@@ -245,7 +245,7 @@ export const example: responseProducts = {
     {
       id: 6,
       name: 'Granola',
-      price: 10.5,
+      price: 0,
       image: complementGranola,
       category: 'categoria x',
       isFavorited: false,
@@ -258,7 +258,7 @@ export const example: responseProducts = {
     {
       id: 7,
       name: 'Jujuba',
-      price: 10.5,
+      price: 0,
       image: complementjujuba,
       category: 'categoria x',
       isFavorited: false,
@@ -271,7 +271,7 @@ export const example: responseProducts = {
     {
       id: 8,
       name: 'Leite em pó',
-      price: 10.5,
+      price: 0,
       image: complementLeiteEmPo,
       category: 'categoria x',
       isFavorited: false,
@@ -284,7 +284,7 @@ export const example: responseProducts = {
     {
       id: 9,
       name: 'Paçoca',
-      price: 10.5,
+      price: 0,
       image: complementpacoca,
       category: 'categoria x',
       isFavorited: true,
@@ -297,7 +297,7 @@ export const example: responseProducts = {
     {
       id: 10,
       name: 'Sucrilhos',
-      price: 10.5,
+      price: 0,
       image: complementSucrilhos,
       category: 'categoria x',
       isFavorited: false,
@@ -311,8 +311,8 @@ export const example: responseProducts = {
   toppings: [
     {
       id: 0,
-      name: 'Tamanho 1000ml',
-      price: 27.0,
+      name: 'Chocolate',
+      price: 0,
       image: toppingChocolate,
       category: 'categoria x',
       isFavorited: false,
@@ -325,7 +325,7 @@ export const example: responseProducts = {
     {
       id: 1,
       name: 'Menta',
-      price: 27.0,
+      price: 0,
       image: toppingMenta,
       category: 'categoria x',
       isFavorited: false,
@@ -333,12 +333,12 @@ export const example: responseProducts = {
       amount: 12,
       unitOfMeasure: 'unity',
 
-      quantityForUnity: 11
+      quantityForUnity: 1
     },
     {
       id: 2,
       name: 'Cholate Suíço',
-      price: 19.0,
+      price: 0,
       image: toppingChocolateSuico,
       category: 'categoria x',
       isFavorited: false,
@@ -351,7 +351,7 @@ export const example: responseProducts = {
     {
       id: 3,
       name: 'Morango',
-      price: 15.0,
+      price: 0,
       image: toppingMorango,
       category: 'categoria x',
       isFavorited: false,
@@ -364,7 +364,7 @@ export const example: responseProducts = {
     {
       id: 4,
       name: 'Leite condensado',
-      price: 10.5,
+      price: 0,
       image: toppingLeiteCondensado,
       category: 'categoria x',
       isFavorited: false,
@@ -377,7 +377,7 @@ export const example: responseProducts = {
     {
       id: 5,
       name: 'Doce de leite',
-      price: 10.5,
+      price: 0,
       image: toppingDoceDeLeite,
       category: 'categoria x',
       isFavorited: false,
@@ -390,7 +390,7 @@ export const example: responseProducts = {
     {
       id: 6,
       name: 'Tutti Frutti',
-      price: 10.5,
+      price: 0,
       image: toppingTuttiFrutti,
       category: 'categoria x',
       isFavorited: false,
@@ -403,7 +403,7 @@ export const example: responseProducts = {
     {
       id: 7,
       name: 'Frutas vermelhas',
-      price: 10.5,
+      price: 0,
       image: toppingFrutasVermelhas,
       category: 'categoria x',
       isFavorited: false,
@@ -417,7 +417,7 @@ export const example: responseProducts = {
     {
       id: 0,
       name: 'Morango',
-      price: 27.0,
+      price: 0,
       image: toppingMorango,
       category: 'categoria x',
       isFavorited: false,
@@ -430,7 +430,7 @@ export const example: responseProducts = {
     {
       id: 1,
       name: 'Banana',
-      price: 27.0,
+      price: 0,
       image: fruitBanana,
       category: 'categoria x',
       isFavorited: false,
@@ -438,7 +438,7 @@ export const example: responseProducts = {
       amount: 12,
       unitOfMeasure: 'unity',
 
-      quantityForUnity: 11
+      quantityForUnity: 1
     }
   ],
   plus: [

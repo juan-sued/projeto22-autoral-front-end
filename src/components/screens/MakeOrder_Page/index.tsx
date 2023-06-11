@@ -11,6 +11,7 @@ import TitleSectionRight from '../../shared/TitleSectionRight';
 import TitleSectionLeft from '../../shared/TitleSectionLeft';
 
 import { example } from './mock';
+import { formatPrice } from '../../../util/format';
 
 interface CartProps {
   message?: string;
@@ -54,20 +55,48 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
   const [fruitId, setFruitId] = useState<number[]>([]);
   const [plusIds, setPlusIds] = useState<number[]>([]);
 
+  const [totalPrice, setTotalPrice] = useState<string>('');
+
+  useEffect(() => {
+    // Exemplo de uso:
+    const totalPriceCupSize = calculateTotalPrice(cupSizeId, example.sizes);
+    const totalPriceFlavours = calculateTotalPrice(
+      flavoursIds,
+      example.flavours
+    );
+    const totalPriceComplements = calculateTotalPrice(
+      complementsIds,
+      example.complements
+    );
+    const totalPriceToppings = calculateTotalPrice(
+      toppingsIds,
+      example.toppings
+    );
+    const totalPriceFruit = calculateTotalPrice(fruitId, example.fruits);
+    const totalPricePlus = calculateTotalPrice(plusIds, example.plus);
+
+    const total =
+      totalPriceCupSize +
+      totalPriceFlavours +
+      totalPriceComplements +
+      totalPriceToppings +
+      totalPriceFruit +
+      totalPricePlus;
+
+    setTotalPrice(formatPrice(total));
+  }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
+
   const [responseProducts, setResponseProducts] = useState([]);
 
-  // console.log('cupSizeId:', cupSizeId);
-  // console.log('flavoursIds:', flavoursIds);
-  // console.log('complementsIds:', complementsIds);
-  // console.log('toppingsIds:', toppingsIds);
-  // console.log('fruitId:', fruitId);
-  // console.log('plusIds:', plusIds);
-  useEffect(() => {
-    // requestMakeOrderPage(); -- pega as infos da página
-  }, []);
-
-  //arr.toString().replace(/,/g, ', '); const arr = [batata,feijao,tomate] => 'batata, feijao, tomate'
-
+  function calculateTotalPrice(ids: number[], products: Product[]): number {
+    return ids
+      .filter(productId => products.some(product => product.id === productId))
+      .map(
+        productId =>
+          products.find(product => product.id === productId)?.price || 0
+      )
+      .reduce((accumulator, price) => accumulator + price, 0);
+  }
   return (
     <>
       <TitlePage title={'Escolher pedido'} />
@@ -101,7 +130,7 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         productIds={complementsIds}
         amountSelection={5}
       />
-      <TitleSectionLeft titleSession={'Cobertura'} />
+      <TitleSectionLeft titleSession={'Caldas'} />
       <TitleSectionRight titleSession={'Quantas quiser'} />
       <CarouselListProduct
         margin_top={50}
@@ -131,16 +160,10 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
       />
       <Container>
         <footer>
-          {isSigned ? (
-            <button type="button">Finalizar Compra</button>
-          ) : (
-            <button type="button" onClick={() => navigate('/')}>
-              Fazer login
-            </button>
-          )}
+          <button type="button">Adicionar ao carrinho</button>
           <Total>
             <span>TOTAL</span>
-            <strong>R$ {'2,50'}</strong>
+            <strong>{totalPrice}</strong>
           </Total>
         </footer>
       </Container>

@@ -59,7 +59,9 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
       <div className="listProductsAdd">
         {productsSelecteds.length > 0
-          ? 'Você escolheu: ' + productsSelecteds.toString().replace(/,/g, ', ')
+          ? 'Você escolheu: ' +
+            productsSelecteds.join(', ').replace(/,([^,]*)$/, ' e$1') +
+            '.'
           : ''}
       </div>
       {objctResponseAPI === null || objctResponseAPI === undefined ? (
@@ -109,10 +111,12 @@ const CarouselListContainer = styled.div`
   min-width: 100%;
   height: 100%;
   margin-right: 0;
+
 .listProductsAdd{
   padding-left: 10px;
-  min-height: 16px;
+  height: 16px;
   margin-bottom: 20px;
+
 }
   .rowOfCardsContainer {
     margin-top: ${(props: { margin_top: number }) => props.margin_top}px;
