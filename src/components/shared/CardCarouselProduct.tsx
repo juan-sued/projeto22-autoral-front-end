@@ -42,6 +42,11 @@ export default function CardCarouselProduct({
       scaleImage = 0.7;
       break;
   }
+
+  const textShowUnity = '( ' + quantityForUnity + ' Un)';
+
+  const showUnity =
+    quantityForUnity > 1 && quantityForUnity < 300 ? textShowUnity : '';
   const priceFormatted = formatPrice(price);
 
   const [isSelected, setIsSelected] = useState(false);
@@ -66,6 +71,7 @@ export default function CardCarouselProduct({
             ? name
             : quantityForUnity + unitOfMeasure.toString()}
         </h1>
+        <p className="description">{showUnity}</p>
       </div>
 
       <div className="priceProductContainer">
@@ -104,12 +110,15 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   .containerTitle {
     width: 100%;
     height: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     .title {
       font-size: 25px;
       font-weight: 700;
       text-align: center;
+      margin-bottom: 10px;
     }
   }
 
