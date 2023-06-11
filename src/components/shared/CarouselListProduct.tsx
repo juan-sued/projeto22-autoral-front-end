@@ -57,7 +57,11 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   return (
     <CarouselListContainer margin_top={margin_top}>
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
-      <div className="listProductsAdd">{productsSelecteds}</div>
+      <div className="listProductsAdd">
+        {productsSelecteds.length > 0
+          ? 'Você escolheu: ' + productsSelecteds.toString().replace(/,/g, ', ')
+          : ''}
+      </div>
       {objctResponseAPI === null || objctResponseAPI === undefined ? (
         <PopsicleLoading />
       ) : (
@@ -105,7 +109,11 @@ const CarouselListContainer = styled.div`
   min-width: 100%;
   height: 100%;
   margin-right: 0;
-
+.listProductsAdd{
+  padding-left: 10px;
+  min-height: 16px;
+  margin-bottom: 20px;
+}
   .rowOfCardsContainer {
     margin-top: ${(props: { margin_top: number }) => props.margin_top}px;
     width: 100%;
