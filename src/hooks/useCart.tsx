@@ -1,10 +1,19 @@
 import { createContext, useContext, useState } from 'react';
 import { axiosI } from '../services/axios';
 import { Product } from './useProducts';
+import productRequests from '../util/requests/products/productsRequests';
+import { objNewOrderParams } from '../components/screens/MakeOrder_Page';
+import {
+  CheckAllProductsAvailability,
+  checkAllProductsAvailability
+} from '../util/utilsFunctions';
 
 interface CartContextType {
   cart: Product[];
   addProduct: (productId: number) => Promise<void>;
+  addProductOrder: (
+    objectNewOrder: objNewOrderParams
+  ) => Promise<CheckAllProductsAvailability>;
   updateProductAmount: ({
     productId,
     amount
@@ -31,31 +40,47 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     return [];
   });
 
+  async function addProductOrder(objectNewOrder: objNewOrderParams) {
+    try {
+      const result = await checkAllProductsAvailability(objectNewOrder);
+      if (result) {
+        return result;
+      } else {
+        throw new Error('Failed to check product availability.'); // Lança um erro caso o resultado seja undefined
+      }
+    } catch (error) {
+      console.log('error', error);
+      return { availables: [], unavailables: [] }; // Valor padrão a ser retornado em caso de erro
+    }
+  }
+
   async function addProduct(productId: number) {
     try {
       const cartUpdated = [...cart];
-
+      //verifica se ja tem o produto no carrinho
       const foundProductInCart = cartUpdated.find(
         product => product.id === productId
       );
-
       const stockProductAmount = await axiosI
         .get(`/products/${productId}`)
         .then(({ data }) => data.availables);
 
+      //pega a quantidade atual do produto no carrinho
       const currentAmountProduct = foundProductInCart
         ? foundProductInCart.amount
         : 0;
-      const amountProduct = currentAmountProduct + 1;
 
+      const amountProduct = currentAmountProduct + 1;
+      //se a quantidade do produto no escolhido for maior que stock ==> quantidade insuficiente
       if (amountProduct > stockProductAmount) {
-        console.log('Quantidade solicitada fora de estoque');
+        alert('Quantidade solicitada fora de estoque');
         return;
       }
-
+      //se ja tiver o produto no stock, ele pega a quantidade que ja tem + 1
       if (foundProductInCart) {
         foundProductInCart.amount++;
       } else {
+        //senão tiver, ele puxa os dados do produto com a quantidade 1
         const product = await axiosI
           .get(`/products/${productId}`)
           .then(({ data }) => data);
@@ -64,10 +89,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
           ...product,
           amount: 1
         };
-
+        //adiciona o produto novo no cart atualizado
         cartUpdated.push(newProduct);
       }
-
+      //atualiza o carrinho
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
@@ -134,7 +159,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, updateProductAmount, removeProduct, setCart }}
+      value={{
+        cart,
+        addProduct,
+        updateProductAmount,
+        removeProduct,
+        setCart,
+        addProductOrder
+      }}
     >
       {children}
     </CartContext.Provider>

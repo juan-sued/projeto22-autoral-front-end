@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TailSpin } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 
 interface LoadingProps {
   height?: string;
@@ -10,14 +10,18 @@ interface LoadingProps {
 }
 
 const Loading: React.FC<LoadingProps> = ({
-  height,
-  width,
-  marginLeft,
-  marginTop
+  height = '50%',
+  width = '50',
+  marginLeft = '0',
+  marginTop = '0'
 }) => {
   return (
     <ContainerLoading marginLeft={marginLeft} marginTop={marginTop}>
-      <TailSpin color="#892182" height={height} width={width} />
+      <ThreeDots
+        color="rgba(255, 255, 255, 0.5"
+        height={height}
+        width={width}
+      />
     </ContainerLoading>
   );
 };
@@ -31,7 +35,6 @@ const ContainerLoading = styled.div<{
   align-items: center;
   width: 100%;
   height: 100%;
-
   margin-left: ${props => props.marginLeft};
   margin-top: ${props => props.marginTop};
 `;

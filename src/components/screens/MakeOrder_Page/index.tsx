@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 import TitlePage from '../../shared/TitlePage';
-import { Container, Total } from '../Cart_Page/components/styles';
 import { useEffect, useState } from 'react';
 import CarouselListProduct from '../../shared/CarouselListProduct';
 import { Product } from '../../../hooks/useProducts';
@@ -12,12 +11,11 @@ import TitleSectionLeft from '../../shared/TitleSectionLeft';
 
 import { example } from './mock';
 import { formatPrice } from '../../../util/format';
-
-interface CartProps {
-  message?: string;
-  isSigned?: boolean;
-}
-
+import FooterWithPriceAndButton from '../../shared/Footers/FooterWithPriceAndButton';
+import { calculateTotalPrice } from '../../../util/utilsFunctions';
+import { useCart } from '../../../hooks/useCart';
+import Modal from '../../shared/Modal';
+import PopsicleLoading from '../../shared/Loaders/PopsicleLoading';
 export interface responseProducts {
   sizes: Product[];
   flavours: Product[];
@@ -27,7 +25,7 @@ export interface responseProducts {
   plus: Product[];
 }
 //topping === cobertura
-interface objNewOrderParams {
+export interface objNewOrderParams {
   cupSizeId: number;
   flavoursIds: number[];
   complementsIds: number[];
@@ -36,16 +34,16 @@ interface objNewOrderParams {
   plusIds: number[];
 }
 
-const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
+const MakeOrderPage: React.FC = () => {
   const navigate = useNavigate();
-  //request para pegar os produtos de MakeOrderPage
+  const [stateButton, setStateButton] = useState('');
   const [objNewOrder, setObjNewOrder] = useState<objNewOrderParams>({
-    cupSizeId: 1,
-    flavoursIds: [1, 2, 3],
-    complementsIds: [1, 2, 3],
-    toppingsIds: [1, 2, 3],
-    fruitId: 3,
-    plusIds: [1, 2, 3]
+    cupSizeId: 23,
+    flavoursIds: [124, 5, 3],
+    complementsIds: [85, 32, 90],
+    toppingsIds: [10, 23, 50],
+    fruitId: 92,
+    plusIds: [231, 111, 282]
   });
 
   const [cupSizeId, setCupSizeId] = useState<number[]>([]);
@@ -58,47 +56,40 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
   const [totalPrice, setTotalPrice] = useState<string>('');
 
   useEffect(() => {
-    // Exemplo de uso:
     const totalPriceCupSize = calculateTotalPrice(cupSizeId, example.sizes);
-    const totalPriceFlavours = calculateTotalPrice(
-      flavoursIds,
-      example.flavours
-    );
-    const totalPriceComplements = calculateTotalPrice(
-      complementsIds,
-      example.complements
-    );
-    const totalPriceToppings = calculateTotalPrice(
-      toppingsIds,
-      example.toppings
-    );
-    const totalPriceFruit = calculateTotalPrice(fruitId, example.fruits);
+
     const totalPricePlus = calculateTotalPrice(plusIds, example.plus);
 
-    const total =
-      totalPriceCupSize +
-      totalPriceFlavours +
-      totalPriceComplements +
-      totalPriceToppings +
-      totalPriceFruit +
-      totalPricePlus;
+    const total = totalPriceCupSize + totalPricePlus;
 
     setTotalPrice(formatPrice(total));
   }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
 
-  const [responseProducts, setResponseProducts] = useState([]);
+  const { addProductOrder } = useCart();
 
-  function calculateTotalPrice(ids: number[], products: Product[]): number {
-    return ids
-      .filter(productId => products.some(product => product.id === productId))
-      .map(
-        productId =>
-          products.find(product => product.id === productId)?.price || 0
-      )
-      .reduce((accumulator, price) => accumulator + price, 0);
+  async function handleCreateOrder() {
+    setStateButton('loading');
+    const result = await addProductOrder(objNewOrder);
+    if (!result) throw new Error('Deu ruim pegando products');
+
+    setStateButton('');
+    if (result.unavailables.length === 0) {
+      navigate('/cart');
+    } else {
+    }
+
+    console.log(result);
   }
+
   return (
-    <>
+    <MakeOrderPageStyle>
+      <ModalLoading stateButton={stateButton}>
+        <div className="containerModal">
+          <PopsicleLoading />
+          <div className="Message">Verificando produto no banco de dados</div>
+        </div>
+      </ModalLoading>
+
       <TitlePage title={'Escolher pedido'} />
       <TitleSectionLeft titleSession={'Primeiro um tamanho'} />
       <TitleSectionRight titleSession={'Quanto maior, melhor'} />
@@ -158,28 +149,41 @@ const MakeOrderPage: React.FC<CartProps> = ({ isSigned = false }) => {
         amountSelection={example.plus.length}
         showPrice={true}
       />
-      <Container>
-        <footer>
-          <button type="button">Adicionar ao carrinho</button>
-          <Total>
-            <span>TOTAL</span>
-            <strong>{totalPrice}</strong>
-          </Total>
-        </footer>
-      </Container>
-    </>
+
+      <FooterWithPriceAndButton
+        total={totalPrice}
+        handleCreateOrder={handleCreateOrder}
+        stateButton={stateButton}
+      />
+    </MakeOrderPageStyle>
   );
 };
 
-const Back = styled.div`
-  background-color: '#EEEDF4';
+export default MakeOrderPage;
+
+interface ModalLoading {
+  stateButton: string;
+}
+
+const ModalLoading = styled.div<ModalLoading>`
   position: fixed;
-  min-height: 100%;
-  min-width: 100%;
-  z-index: -1;
-  display: flex;
-  flex-direction: column;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: ${props => (props.stateButton === 'loading' ? 'flex' : 'none')};
   align-items: center;
+  justify-content: center;
+
+  .containerModal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+  }
 `;
 
-export default MakeOrderPage;
+const MakeOrderPageStyle = styled.div`
+  padding-bottom: 80px;
+`;

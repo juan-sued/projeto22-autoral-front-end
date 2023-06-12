@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../../../util/format';
 
-import { Container, Total } from './styles';
+import { Container } from './styles';
 import styled from 'styled-components';
 
 import requestOrder from './requestOrder';
@@ -12,6 +12,7 @@ import ItemProductTable from '../ItemProductTable';
 import { useAuth } from '../../../../hooks/useAuth';
 
 import TitlePage from '../../../shared/TitlePage';
+import FooterWithPriceAndButton from '../../../shared/Footers/FooterWithPriceAndButton';
 
 interface CartProps {
   message?: string;
@@ -30,6 +31,7 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     priceFormatted: formatPrice(product.price),
     subTotal: formatPrice(product.price * product.amount)
   }));
+
   const total = formatPrice(
     cart.reduce((sumTotal, product) => {
       return sumTotal + product.price * product.amount;
@@ -78,22 +80,12 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
             />
           ))}
         </ProductTable>
-
-        <footer>
-          {isSigned ? (
-            <button type="button" onClick={handleCreateOrder}>
-              Finalizar Compra
-            </button>
-          ) : (
-            <button type="button" onClick={() => navigate('/')}>
-              Fazer login
-            </button>
-          )}
-          <Total>
-            <span>TOTAL</span>
-            <strong>{total}</strong>
-          </Total>
-        </footer>
+        <FooterWithPriceAndButton
+          isCart={true}
+          isSigned={isSigned}
+          handleCreateOrder={handleCreateOrder}
+          total={total.toString()}
+        />
       </Container>
     </>
   );
