@@ -1,8 +1,7 @@
 import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
 import { ObjNewProduct } from '@/components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '@/hooks/useProducts';
-import { axiosHttpCats, axiosI } from '@/services/axios';
-import { getRandomHttpCatCode } from '@/utilsFunctions';
+import { axiosI } from '@/services/axios';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -115,8 +114,6 @@ async function getProductById(productId: string): Promise<Product> {
     const { data } = await axiosI.get(`/products/${productId}`);
     return data;
   } catch (err) {
-    console.log('bateu');
-
     return {
       id: 1,
       name: 'produto ' + Math.floor(Math.random() * 5),
