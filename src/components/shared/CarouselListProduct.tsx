@@ -9,6 +9,7 @@ import TitleAndArrow from './TitleAndArrow';
 import PopsicleLoading from './Loaders/PopsicleLoading';
 import { useState, useEffect } from 'react';
 import { Product } from '../../hooks/useProducts';
+import { formatListNames } from '../../util/utilsFunctions';
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
@@ -59,9 +60,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
       <div className="listProductsAdd">
         {productsSelecteds.length > 0
-          ? 'Você escolheu: ' +
-            productsSelecteds.join(', ').replace(/,([^,]*)$/, ' e$1') +
-            '.'
+          ? 'Você escolheu: ' + formatListNames(productsSelecteds)
           : ''}
       </div>
       {objctResponseAPI === null || objctResponseAPI === undefined ? (

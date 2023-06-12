@@ -35,7 +35,7 @@ async function getProductsByCharacter(
     setResponseProducts([
       {
         id: 1,
-        name: 'e',
+        name: 'produto 1',
         price: 2.5,
         image: 'https://asdasdasdasdasd',
         category: 'produto x',
@@ -116,7 +116,7 @@ async function getProductById(productId: string): Promise<Product> {
     console.log('bateu');
     return {
       id: 1,
-      name: 'e',
+      name: 'produto 1',
       price: 2.5,
       image: 'https://asdasdasdasdasd',
       category: 'produto x',

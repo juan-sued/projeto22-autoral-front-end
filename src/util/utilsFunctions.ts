@@ -38,6 +38,7 @@ function calculateTotalPrice(ids: number[], products: Product[]): number {
 
 interface ProductsAvailablesCheck {
   id: number;
+  name: string;
   quantity: number;
 }
 
@@ -59,12 +60,14 @@ async function checkAllProductsAvailability(
           const product = await productRequests.getProductById(productId);
           if (product.amount <= 0) {
             unavailabilityList.push({
-              id: productId,
+              id: product.id,
+              name: product.name,
               quantity: product.amount
             });
           } else {
             availabilityList.push({
-              id: productId,
+              id: product.id,
+              name: product.name,
               quantity: product.amount
             });
           }
@@ -74,11 +77,13 @@ async function checkAllProductsAvailability(
         if (product.amount <= 0) {
           unavailabilityList.push({
             id: product.id,
+            name: product.name,
             quantity: product.amount
           });
         } else {
           availabilityList.push({
             id: products[key],
+            name: product.name,
             quantity: product.amount
           });
         }
@@ -100,9 +105,15 @@ async function checkAllProductsAvailability(
   }
 }
 
+function formatListNames(arr: string[]): string {
+  const names = arr.join(', ').replace(/,([^,]*)$/, ' e$1') + '.';
+  return names;
+}
+
 export {
   incrementStarsFeedback,
   increaseCardSizeToggle,
   calculateTotalPrice,
-  checkAllProductsAvailability
+  checkAllProductsAvailability,
+  formatListNames
 };

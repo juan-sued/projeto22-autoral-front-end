@@ -12,7 +12,10 @@ import TitleSectionLeft from '../../shared/TitleSectionLeft';
 import { example } from './mock';
 import { formatPrice } from '../../../util/format';
 import FooterWithPriceAndButton from '../../shared/Footers/FooterWithPriceAndButton';
-import { calculateTotalPrice } from '../../../util/utilsFunctions';
+import {
+  calculateTotalPrice,
+  formatListNames
+} from '../../../util/utilsFunctions';
 import { useCart } from '../../../hooks/useCart';
 import Modal from '../../shared/Modal';
 import PopsicleLoading from '../../shared/Loaders/PopsicleLoading';
@@ -76,6 +79,8 @@ const MakeOrderPage: React.FC = () => {
     if (result.unavailables.length === 0) {
       navigate('/cart');
     } else {
+      const names = result.unavailables.map(product => product.name);
+      alert('Produtos em falta no estoque: ' + formatListNames(names));
     }
 
     console.log(result);
