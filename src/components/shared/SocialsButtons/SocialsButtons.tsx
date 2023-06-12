@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-import iconwhatsapp from '../../../assets/iconwhatsapp.svg';
-import iconinstagram from '../../../assets/iconinstagram.svg';
-import iconfacebook from '../../../assets/iconfacebook.svg';
-import icontwitter from '../../../assets/icontwitter.svg';
-import messagecomic from '../../../assets/messagecomic.svg';
-import background1 from '../../../assets/fundoredessociais4.jpg';
+import iconwhatsapp from '@/assets/iconwhatsapp.svg';
+import iconinstagram from '@/assets/iconinstagram.svg';
+import iconfacebook from '@/assets/iconfacebook.svg';
+import icontwitter from '@/assets/icontwitter.svg';
+import messagecomic from '@/assets/messagecomic.svg';
+import background1 from '@/assets/fundoredessociais4.jpg';
 
 import CardSocials from './CardSocials';
-import TitleAndArrow from '../TitleAndArrow';
+import TitleAndArrow from '../Titles/TitleAndArrow';
 
 interface SocialButton {
   icon: string;

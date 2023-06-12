@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import Loading from '../../shared/Loading';
-import ButtonSubmit from '../../shared/ButtonSubmit';
-import { useAuth } from '../../../hooks/useAuth';
+import Loading from '@/components/shared/Loaders/Loading';
+import { useAuth } from '@/hooks/useAuth';
 import { ContainerFormClass, InputClass } from './styles';
+import ButtonSubmit from '@/components/shared/Buttons/ButtonSubmit';
 
 interface SignInFormProps {
   // adicione as props necessárias aqui, se houver

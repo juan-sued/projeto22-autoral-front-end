@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TitleAndArrow from '../TitleAndArrow';
+import TitleAndArrow from '../Titles/TitleAndArrow';
 
 interface OurHistoryProps {
   titleSession: string;

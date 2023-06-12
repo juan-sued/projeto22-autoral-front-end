@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { Product } from '../../hooks/useProducts';
-import { formatPrice } from '../../util/format';
+import { Product } from '@/hooks/useProducts';
+import { formatPrice } from '@/util/format';
 
 interface CardCarouselProductProps
   extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
   incrementProduct: (value: number) => number[];
   showPrice: boolean;
+  isSelected: boolean;
 }
 
 export default function CardCarouselProduct({
@@ -18,7 +19,8 @@ export default function CardCarouselProduct({
   id,
   incrementProduct,
   name,
-  showPrice
+  showPrice,
+  isSelected = false
 }: CardCarouselProductProps) {
   let scaleImage = 0.5;
 
@@ -49,18 +51,11 @@ export default function CardCarouselProduct({
     quantityForUnity > 1 && quantityForUnity < 300 ? textShowUnity : '';
   const priceFormatted = formatPrice(price);
 
-  const [isSelected, setIsSelected] = useState(false);
-
-  function productClick(productClickedId: number) {
-    const arr = incrementProduct(productClickedId);
-    const selected = arr.includes(productClickedId);
-    setIsSelected(selected);
-  }
   return (
     <CardOfProduct
       scaleImage={scaleImage}
       isSelected={isSelected}
-      onClick={() => productClick(id)}
+      onClick={() => incrementProduct(id)}
     >
       <div className="halfCircle">
         <img src={image} alt="" />

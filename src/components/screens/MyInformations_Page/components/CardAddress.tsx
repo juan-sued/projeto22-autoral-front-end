@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputInfoField from '../../../shared/InputInfoField';
-import iconremoveblack from '../../../../assets/iconremoveblack.svg';
+import iconremoveblack from '@/assets/iconremoveblack.svg';
 
-import { returnDayFormated } from '../../../../util/format';
-import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
+import { returnDayFormated } from '@/util/format';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
-import addressesRequests from '../../../../util/requests/users/addresses/addressesRequests';
+import addressesRequests from '@/util/requests/users/addresses/addressesRequests';
+import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
+import InputInfoField from '@/components/shared/Inputs/InputInfoField';
 
 interface CardAddressProps {
   street: string;

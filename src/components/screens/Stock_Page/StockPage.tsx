@@ -1,21 +1,20 @@
-import Main from '../../shared/Main';
-import TitlePage from '../../shared/TitlePage';
-
 import { useState, useEffect } from 'react';
-import SearchBar from '../../shared/SearchBar';
 import ListCard from './ListCard';
 
-import ButtonAdd from '../../shared/ButtonAdd';
-import Modal from '../../shared/Modal';
 import InputsRegisterProduct from './inputsRegisterProduct/InputsRegisterProduct';
-import { Product } from '../../../hooks/useProducts';
-import acaibanana from '../../../assets/bolaacaibanana.png';
-import acaifruta2 from '../../../assets/acaifruta2.png';
-import copoHome from '../../../assets/copoHome.jpg';
-import copoHome2 from '../../../assets/copoHome2.jpg';
-import copoHome3 from '../../../assets/copoHome3.jpg';
-import copoacai from '../../../assets/copoacai.svg';
-import productRequests from '../../../util/requests/products/productsRequests';
+import { Product } from '@/hooks/useProducts';
+import acaibanana from '@/assets/bolaacaibanana.png';
+import acaifruta2 from '@/assets/acaifruta2.png';
+import copoHome from '@/assets/copoHome.jpg';
+import copoHome2 from '@/assets/copoHome2.jpg';
+import copoHome3 from '@/assets/copoHome3.jpg';
+import copoacai from '@/assets/copoacai.svg';
+import productRequests from '@/util/requests/products/productsRequests';
+import ButtonAdd from '@/components/shared/Buttons/ButtonAdd';
+import Main from '@/components/shared/Main';
+import SearchBar from '@/components/shared/SearchBars/SearchBar';
+import TitlePage from '@/components/shared/Titles/TitlePage';
+import Modal from '@/components/shared/Modals/Modal';
 
 interface SearchProduct {
   searchBar: string;

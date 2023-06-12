@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { CSSProperties } from 'styled-components';
-import arrowright from '../../assets/arrowright.svg';
-import arrowrigthwhite from '../../assets/arrowrigthwhite.svg';
+import arrowright from '@/assets/arrowright.svg';
+import arrowrigthwhite from '@/assets/arrowrigthwhite.svg';
 
 interface TitleAndArrowProps {
   titleSession: string;

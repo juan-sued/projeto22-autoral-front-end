@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import divider from '../../assets/divider.svg';
+import divider from '@/assets/divider.svg';
 
 const Divider: React.FC = () => {
   return (

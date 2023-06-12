@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { axiosI } from '../../../services/axios';
+import { axiosI } from '@/services/axios';
 import { SignUpData } from './InputsRegister';
 
 interface SignUpRequestProps {

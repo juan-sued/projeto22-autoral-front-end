@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Image_Acai_Fruta from '../../../../assets/acaifruta2.png';
-import Loading from '../../../shared/Loading';
+import Image_Acai_Fruta from '@/assets/acaifruta2.png';
+import Loading from '@/components/shared/Loaders/Loading';
 
 interface CardOfertProps {
   objHomeResponseAPI: {

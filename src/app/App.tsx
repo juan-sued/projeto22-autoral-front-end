@@ -1,11 +1,10 @@
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '../hooks/useAuth';
-import 'material-icons/iconfont/material-icons.css';
-import Routes from '../Routes';
-import GlobalStyles from '../styles/globalStyles/globalStyles';
-import { CartProvider } from '../hooks/useCart';
-import { ProductProvider } from '../hooks/useProducts';
-import React from 'react';
+
+import GlobalStyles from '@/styles/globalStyles/globalStyles';
+import { CartProvider } from '@/hooks/useCart';
+import { AuthProvider } from '@/hooks/useAuth';
+import { ProductProvider } from '@/hooks/useProducts';
+import Routes from '@/Routes';
 
 const App: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import { Product } from '../hooks/useProducts';
+import { Product } from '@/hooks/useProducts';
 import productRequests from './requests/products/productsRequests';
 
 const incrementStarsFeedback = (stars: string): string[] => {

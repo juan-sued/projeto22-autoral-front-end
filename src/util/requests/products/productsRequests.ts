@@ -1,8 +1,8 @@
-import { HomeResponseAPI } from '../../../components/screens/Home_Page/HomePage';
-import { ObjNewProduct } from '../../../components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
-import { Product } from '../../../hooks/useProducts';
-import { axiosHttpCats, axiosI } from '../../../services/axios';
-import { getRandomHttpCatCode } from '../../utilsFunctions';
+import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
+import { ObjNewProduct } from '@/components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
+import { Product } from '@/hooks/useProducts';
+import { axiosHttpCats, axiosI } from '@/services/axios';
+import { getRandomHttpCatCode } from '@/utilsFunctions';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -109,6 +109,7 @@ async function getProductsByCharacter(
     ]);
   }
 }
+
 async function getProductById(productId: string): Promise<Product> {
   try {
     const { data } = await axiosI.get(`/products/${productId}`);
@@ -116,14 +117,11 @@ async function getProductById(productId: string): Promise<Product> {
   } catch (err) {
     console.log('bateu');
 
-    const { data } = await axiosHttpCats.get(`/${getRandomHttpCatCode()}`);
-    console.log(data);
-
     return {
       id: 1,
       name: 'produto ' + Math.floor(Math.random() * 5),
       price: 2.5,
-      image: data ? data : '',
+      image: 'https://asdasdas',
       category: 'produto x',
       isFavorited: false,
       description: '1 Litro',

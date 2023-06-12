@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import * as utils from '../../../util/utilsFunctions';
+import * as utils from '@/util/utilsFunctions';
 
 interface CardSocialsProps {
   icon: string;

@@ -1,18 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { formatPrice } from '../../../../util/format';
+import { formatPrice } from '@/util/format';
 
 import { Container } from './styles';
 import styled from 'styled-components';
 
 import requestOrder from './requestOrder';
 
-import { useCart } from '../../../../hooks/useCart';
+import { useCart } from '@/hooks/useCart';
 
+import { useAuth } from '@/hooks/useAuth';
+import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
+import TitlePage from '@/components/shared/Titles/TitlePage';
 import ItemProductTable from '../ItemProductTable';
-import { useAuth } from '../../../../hooks/useAuth';
-
-import TitlePage from '../../../shared/TitlePage';
-import FooterWithPriceAndButton from '../../../shared/Footers/FooterWithPriceAndButton';
 
 interface CartProps {
   message?: string;

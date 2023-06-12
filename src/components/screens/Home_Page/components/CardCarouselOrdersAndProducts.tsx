@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { formatPrice } from '../../../../util/format';
+import { formatPrice } from '@/util/format';
 
 interface CardCarouselOrdersAndProductsProps {
   image: string;
@@ -22,7 +22,7 @@ export default function CardCarouselOrdersAndProducts({
 
       <h1 className="title">{description}</h1>
       <div className="priceProductContainer">
-        <p className="priceProduct">priceFormatted</p>
+        <p className="priceProduct">{priceFormatted}</p>
         <img src={icon} alt="" />
       </div>
     </CardOfProduct>
