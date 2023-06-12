@@ -55,7 +55,6 @@ const MakeOrderPage: React.FC = () => {
   const [toppingsIds, setToppingsIds] = useState<number[]>([]);
   const [fruitId, setFruitId] = useState<number[]>([]);
   const [plusIds, setPlusIds] = useState<number[]>([]);
-
   const [totalPrice, setTotalPrice] = useState<string>('');
 
   useEffect(() => {
@@ -71,6 +70,14 @@ const MakeOrderPage: React.FC = () => {
   const { addProductOrder } = useCart();
 
   async function handleCreateOrder() {
+    setObjNewOrder({
+      cupSizeId: cupSizeId[0],
+      flavoursIds: flavoursIds,
+      complementsIds: complementsIds,
+      toppingsIds: toppingsIds,
+      fruitId: fruitId[0],
+      plusIds: plusIds
+    });
     setStateButton('loading');
     const result = await addProductOrder(objNewOrder);
     if (!result) throw new Error('Deu ruim pegando products');
@@ -91,7 +98,9 @@ const MakeOrderPage: React.FC = () => {
       <ModalLoading stateButton={stateButton}>
         <div className="containerModal">
           <PopsicleLoading />
-          <div className="Message">Verificando produto no banco de dados</div>
+          <div className="Message">
+            Verificando disponibilidades dos produtos
+          </div>
         </div>
       </ModalLoading>
 

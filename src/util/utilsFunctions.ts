@@ -110,10 +110,23 @@ function formatListNames(arr: string[]): string {
   return names;
 }
 
+function getRandomHttpCatCode(): number {
+  const httpCatCodes = [
+    100, 101, 102, 103, 200, 201, 202, 204, 206, 207, 300, 301, 302, 303, 304,
+    305, 307, 400, 401, 402, 403, 404, 405, 406, 408, 409, 410, 411, 413, 414,
+    415, 416, 417, 418, 421, 422, 423, 424, 425, 426, 428, 429, 431, 444, 450,
+    451, 499, 500, 501, 502, 503, 504, 506, 507, 508, 509, 510, 511
+  ];
+
+  const randomIndex = Math.floor(Math.random() * httpCatCodes.length);
+  return httpCatCodes[randomIndex];
+}
+
 export {
   incrementStarsFeedback,
   increaseCardSizeToggle,
   calculateTotalPrice,
   checkAllProductsAvailability,
-  formatListNames
+  formatListNames,
+  getRandomHttpCatCode
 };

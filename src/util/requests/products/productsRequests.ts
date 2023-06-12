@@ -1,7 +1,8 @@
 import { HomeResponseAPI } from '../../../components/screens/Home_Page/HomePage';
 import { ObjNewProduct } from '../../../components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '../../../hooks/useProducts';
-import { axiosI } from '../../../services/axios';
+import { axiosHttpCats, axiosI } from '../../../services/axios';
+import { getRandomHttpCatCode } from '../../utilsFunctions';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -114,11 +115,15 @@ async function getProductById(productId: string): Promise<Product> {
     return data;
   } catch (err) {
     console.log('bateu');
+
+    const { data } = await axiosHttpCats.get(`/${getRandomHttpCatCode()}`);
+    console.log(data);
+
     return {
       id: 1,
-      name: 'produto 1',
+      name: 'produto ' + Math.floor(Math.random() * 5),
       price: 2.5,
-      image: 'https://asdasdasdasdasd',
+      image: data ? data : '',
       category: 'produto x',
       isFavorited: false,
       description: '1 Litro',
