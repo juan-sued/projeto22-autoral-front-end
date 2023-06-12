@@ -8,7 +8,6 @@ import { ProductProvider } from '../hooks/useProducts';
 import React from 'react';
 
 const App: React.FC = () => {
-  console.log('entrou');
   return (
     <CartProvider>
       <GlobalStyles />

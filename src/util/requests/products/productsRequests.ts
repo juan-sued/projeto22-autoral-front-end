@@ -108,6 +108,26 @@ async function getProductsByCharacter(
     ]);
   }
 }
+async function getProductById(productId: string): Promise<Product> {
+  try {
+    const { data } = await axiosI.get(`/products/${productId}`);
+    return data;
+  } catch (err) {
+    console.log('bateu');
+    return {
+      id: 1,
+      name: 'e',
+      price: 2.5,
+      image: 'https://asdasdasdasdasd',
+      category: 'produto x',
+      isFavorited: false,
+      description: '1 Litro',
+      amount: Math.floor(Math.random() * 5),
+      unitOfMeasure: 'unit',
+      quantityForUnity: 1
+    };
+  }
+}
 
 interface ResponseAPI {}
 
@@ -169,7 +189,8 @@ const productRequests = {
   getProductsByCharacter,
   getOfertDay,
   getMoreOrders,
-  getFavoriteds
+  getFavoriteds,
+  getProductById
 };
 
 export default productRequests;
