@@ -12,7 +12,10 @@ import TitleSectionLeft from '../../shared/TitleSectionLeft';
 import { example } from './mock';
 import { formatPrice } from '../../../util/format';
 import FooterWithPriceAndButton from '../../shared/Footers/FooterWithPriceAndButton';
-import { calculateTotalPrice } from '../../../util/utilsFunctions';
+import {
+  calculateTotalPrice,
+  formatListNames
+} from '../../../util/utilsFunctions';
 import { useCart } from '../../../hooks/useCart';
 import Modal from '../../shared/Modal';
 import PopsicleLoading from '../../shared/Loaders/PopsicleLoading';
@@ -52,7 +55,6 @@ const MakeOrderPage: React.FC = () => {
   const [toppingsIds, setToppingsIds] = useState<number[]>([]);
   const [fruitId, setFruitId] = useState<number[]>([]);
   const [plusIds, setPlusIds] = useState<number[]>([]);
-
   const [totalPrice, setTotalPrice] = useState<string>('');
 
   useEffect(() => {
@@ -68,6 +70,14 @@ const MakeOrderPage: React.FC = () => {
   const { addProductOrder } = useCart();
 
   async function handleCreateOrder() {
+    setObjNewOrder({
+      cupSizeId: cupSizeId[0],
+      flavoursIds: flavoursIds,
+      complementsIds: complementsIds,
+      toppingsIds: toppingsIds,
+      fruitId: fruitId[0],
+      plusIds: plusIds
+    });
     setStateButton('loading');
     const result = await addProductOrder(objNewOrder);
     if (!result) throw new Error('Deu ruim pegando products');
@@ -76,6 +86,8 @@ const MakeOrderPage: React.FC = () => {
     if (result.unavailables.length === 0) {
       navigate('/cart');
     } else {
+      const names = result.unavailables.map(product => product.name);
+      alert('Produtos em falta no estoque: ' + formatListNames(names));
     }
 
     console.log(result);
@@ -86,7 +98,9 @@ const MakeOrderPage: React.FC = () => {
       <ModalLoading stateButton={stateButton}>
         <div className="containerModal">
           <PopsicleLoading />
-          <div className="Message">Verificando produto no banco de dados</div>
+          <div className="Message">
+            Verificando disponibilidades dos produtos
+          </div>
         </div>
       </ModalLoading>
 

@@ -95,7 +95,7 @@ const FooterWithPriceAndButtonStyle = styled.div`
       transition: background 0.2s;
       width: 155px;
       z-index: 3;
-      min-height: 60px;
+      min-height: 50px;
       display: grid;
       place-items: center;
 

@@ -5,7 +5,11 @@ const axiosI = axios.create({
 });
 
 const axiosBasic = axios.create({
-  baseURL: 'https:/'
+  baseURL: 'https://'
 });
 
-export { axiosI, axiosBasic };
+const axiosHttpCats = axios.create({
+  baseURL: 'https://http.cat/'
+});
+
+export { axiosI, axiosBasic, axiosHttpCats };
