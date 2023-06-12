@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import iconprofile from '../../../assets/iconprofile.svg';
-import iconstart from '../../../assets/iconstart.svg';
-import iconmiddlestart from '../../../assets/iconmiddlestart.svg';
-import iconnotpoint from '../../../assets/iconnotpoint.svg';
-import * as utils from '../../../util/utilsFunctions';
+import iconprofile from '@/assets/iconprofile.svg';
+import iconstart from '@/assets/iconstart.svg';
+import iconmiddlestart from '@/assets/iconmiddlestart.svg';
+import iconnotpoint from '@/assets/iconnotpoint.svg';
+import * as utils from '@/util/utilsFunctions';
 import { useState } from 'react';
 
 interface CardFeedbackProps {

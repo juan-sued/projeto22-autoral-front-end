@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import TitleAndArrow from '../TitleAndArrow';
-import { useState } from 'react';
 import CardFeedback from './CardFeedback';
+import TitleAndArrow from '../Titles/TitleAndArrow';
 
 interface Feedback {
   name: string;

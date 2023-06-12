@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import iconremove from '../../../assets/iconremove.svg';
+import iconremove from '@/assets/iconremove.svg';
 
-import InputNumber from '../../shared/InputNumber';
-import iconnegative from '../../../assets/iconnegative.svg';
-import iconpositive from '../../../assets/iconpositive.svg';
-import { useCart } from '../../../hooks/useCart';
+import iconnegative from '@/assets/iconnegative.svg';
+import iconpositive from '@/assets/iconpositive.svg';
+import { useCart } from '@/hooks/useCart';
+import InputNumber from '@/components/shared/Inputs/InputNumber';
 
 interface ItemProductTableProps {
   image: string;

@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from 'react';
-import { axiosI } from '../services/axios';
+import { axiosI } from '@/services/axios';
 import { Product } from './useProducts';
-import productRequests from '../util/requests/products/productsRequests';
-import { objNewOrderParams } from '../components/screens/MakeOrder_Page';
+import productRequests from '@/util/requests/products/productsRequests';
+import { objNewOrderParams } from '@/components/screens/MakeOrder_Page';
 import {
   CheckAllProductsAvailability,
   checkAllProductsAvailability
-} from '../util/utilsFunctions';
+} from '@/util/utilsFunctions';
 
 interface CartContextType {
   cart: Product[];

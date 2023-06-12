@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import Loading from '../../shared/Loading';
-import ButtonSubmit from '../../shared/ButtonSubmit';
+import Loading from '@/components/shared/Loaders/Loading';
 import { ContainerFormClass, InputClass } from './styles';
 import signUpRequest from './singUpRequest';
+import ButtonSubmit from '@/components/shared/Buttons/ButtonSubmit';
 
 export interface SignUpData {
   name: string;

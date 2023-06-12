@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputInfoField from '../../../shared/InputInfoField';
-import iconsearch from '../../../../assets/iconsearch.svg';
-import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
-import addressesRequests from '../../../../util/requests/users/addresses/addressesRequests';
+import iconsearch from '@/assets/iconsearch.svg';
+import addressesRequests from '@/util/requests/users/addresses/addressesRequests';
+import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
+import InputInfoField from '@/components/shared/Inputs/InputInfoField';
 
 interface CardAddAddressProps {
   requestKey: boolean;

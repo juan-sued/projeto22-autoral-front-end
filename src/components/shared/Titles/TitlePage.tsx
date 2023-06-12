@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import arrowright from '../../assets/arrowright.svg';
+import arrowright from '@/assets/arrowright.svg';
 
 interface TitlePageProps {
   to?: string;

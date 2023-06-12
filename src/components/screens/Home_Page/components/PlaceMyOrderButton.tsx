@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import placeorder from '../../../../assets/placeorder.gif';
+import placeorder from '@/assets/placeorder.gif';
 
-import clickhere from '../../../../assets/click.gif';
+import clickhere from '@/assets/click.gif';
 import { useNavigate } from 'react-router-dom';
 
 export default function PlaceMyOrderButton() {

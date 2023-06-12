@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useProduct } from '../../../../hooks/useProducts';
+import { useProduct } from '@/hooks/useProducts';
 
 interface SelectCategoryProps {
   setSelectedCategory: (value: number) => void;

@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
-import { returnDayFormated } from '../../../../util/format';
-import ButtonSubmitHover from '../../../shared/ButtonSubmitHover';
-import InputInfoField from '../../../shared/InputInfoField';
-import { User } from '../../../../hooks/useAuth';
-import userRequests from '../../../../util/requests/users/userRequests';
+import { returnDayFormated } from '@/util/format';
+
+import { User } from '@/hooks/useAuth';
+import userRequests from '@/util/requests/users/userRequests';
+import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
+import InputInfoField from '@/components/shared/Inputs/InputInfoField';
 
 export interface UserDetails extends User {
   cpf: string;

@@ -11,7 +11,6 @@ export default function SelectProduct({
   selectedProduct,
   productsForCategories
 }: SelectProductProps) {
-  console.log(selectedProduct);
   return (
     <SelectProductStyle>
       <label htmlFor="products">Nome do produto: </label>

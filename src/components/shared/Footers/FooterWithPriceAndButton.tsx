@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading';
+import Loading from '../Loaders/Loading';
 
 interface FooterWithPriceAndButtonProps {
   isCart?: boolean;
@@ -21,29 +20,31 @@ export default function FooterWithPriceAndButton({
   const navigate = useNavigate();
   if (isCart) {
     return (
-      <footer>
-        {isSigned ? (
-          <button
-            disabled={stateButton === 'loading' ? true : false}
-            type="button"
-            onClick={handleCreateOrder}
-          >
-            {stateButton === 'loading' ? <Loading /> : 'Finalizar Compra'}
-          </button>
-        ) : (
-          <button
-            disabled={stateButton === 'loading' ? true : false}
-            type="button"
-            onClick={() => navigate('/')}
-          >
-            {stateButton === 'loading' ? <Loading /> : 'Fazer login'}
-          </button>
-        )}
-        <Total>
-          <span>TOTAL</span>
-          <strong>{total}</strong>
-        </Total>
-      </footer>
+      <FooterWithPriceAndButtonStyle>
+        <footer>
+          {isSigned ? (
+            <button
+              disabled={stateButton === 'loading' ? true : false}
+              type="button"
+              onClick={handleCreateOrder}
+            >
+              {stateButton === 'loading' ? <Loading /> : 'Finalizar Compra'}
+            </button>
+          ) : (
+            <button
+              disabled={stateButton === 'loading' ? true : false}
+              type="button"
+              onClick={() => navigate('/sign-in')}
+            >
+              {stateButton === 'loading' ? <Loading /> : 'Fazer login'}
+            </button>
+          )}
+          <Total>
+            <span>TOTAL</span>
+            <strong>{total}</strong>
+          </Total>
+        </footer>
+      </FooterWithPriceAndButtonStyle>
     );
   } else {
     return (

@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Cart from '../components/screens/Cart_Page/components';
-import HomePage from '../components/screens/Home_Page/HomePage';
-import LoginPage from '../components/screens/Login_Page/Login_Page';
-import MyInformationPage from '../components/screens/MyInformations_Page/MyInformation';
-import RegisterPage from '../components/screens/Register_Page/RegisterPage';
-import MakeOrderPage from '../components/screens/MakeOrder_Page';
+import Cart from '@/components/screens/Cart_Page/components';
+import HomePage from '@/components/screens/Home_Page/HomePage';
+import LoginPage from '@/components/screens/Login_Page/Login_Page';
+import MyInformationPage from '@/components/screens/MyInformations_Page/MyInformation';
+import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
+import MakeOrderPage from '@/components/screens/MakeOrder_Page';
 
 const PrivateRoutes: React.FC = () => (
   <Routes>

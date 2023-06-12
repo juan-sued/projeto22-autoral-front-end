@@ -1,15 +1,15 @@
+import { useAuth } from '@/hooks/useAuth';
+import pagesRequests from '@/util/requests/pages/pagesRequests';
 import { useEffect, useState } from 'react';
+import { MdAdd } from 'react-icons/md';
 import styled from 'styled-components';
-import { User, useAuth } from '../../../hooks/useAuth';
-import Loading from '../../shared/Loading';
-import Main from '../../shared/Main';
-import TitlePage from '../../shared/TitlePage';
+
+import CardAddAddress from './components/CardAddAddress';
 import CardAddress from './components/CardAddress';
 import CardIdentify, { UserDetails } from './components/CardIdentify';
-import CardAddAddress from './components/CardAddAddress';
-import { MdAdd } from 'react-icons/md';
-import pagesRequests from '../../../util/requests/pages/pagesRequests';
-import productRequests from '../../../util/requests/products/productsRequests';
+import Loading from '@/components/shared/Loaders/Loading';
+import Main from '@/components/shared/Main';
+import TitlePage from '@/components/shared/Titles/TitlePage';
 
 interface Address {
   street: string;

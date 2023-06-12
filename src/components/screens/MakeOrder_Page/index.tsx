@@ -1,24 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
-import TitlePage from '../../shared/TitlePage';
 import { useEffect, useState } from 'react';
-import CarouselListProduct from '../../shared/CarouselListProduct';
-import { Product } from '../../../hooks/useProducts';
-
-import TitleSectionRight from '../../shared/TitleSectionRight';
-import TitleSectionLeft from '../../shared/TitleSectionLeft';
+import { Product } from '@/hooks/useProducts';
 
 import { example } from './mock';
-import { formatPrice } from '../../../util/format';
-import FooterWithPriceAndButton from '../../shared/Footers/FooterWithPriceAndButton';
-import {
-  calculateTotalPrice,
-  formatListNames
-} from '../../../util/utilsFunctions';
-import { useCart } from '../../../hooks/useCart';
-import Modal from '../../shared/Modal';
-import PopsicleLoading from '../../shared/Loaders/PopsicleLoading';
+import { formatPrice } from '@/util/format';
+import { calculateTotalPrice, formatListNames } from '@/util/utilsFunctions';
+import { useCart } from '@/hooks/useCart';
+import CarouselListProduct from '@/components/shared/Carousels/CarouselListProduct';
+import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
+import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
+import TitlePage from '@/components/shared/Titles/TitlePage';
+import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
+import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
 export interface responseProducts {
   sizes: Product[];
   flavours: Product[];
@@ -89,8 +84,6 @@ const MakeOrderPage: React.FC = () => {
       const names = result.unavailables.map(product => product.name);
       alert('Produtos em falta no estoque: ' + formatListNames(names));
     }
-
-    console.log(result);
   }
 
   return (

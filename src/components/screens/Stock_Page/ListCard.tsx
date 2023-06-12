@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import CardProduct from './CardProduct';
-import { Product } from '../../../hooks/useProducts';
+import { Product } from '@/hooks/useProducts';
 
 interface ListCardProps {
   responseProducts: Product[];

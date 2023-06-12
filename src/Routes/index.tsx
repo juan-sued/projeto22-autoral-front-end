@@ -1,4 +1,4 @@
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import AdministratorRoutes from './AdministratorRoutes';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';

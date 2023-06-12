@@ -10,9 +10,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../../../../hooks/useCart';
-import { formatPrice } from '../../../../util/format';
-import { useAuth } from '../../../../hooks/useAuth';
+import { useCart } from '@/hooks/useCart';
+import { formatPrice } from '@/util/format';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SideBar() {
   const navigate = useNavigate();

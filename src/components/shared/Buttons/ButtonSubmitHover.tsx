@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Loading from './Loading';
+import Loading from '../Loaders/Loading';
 
 interface ButtonSubmitHoverProps {
   stateButton: string;

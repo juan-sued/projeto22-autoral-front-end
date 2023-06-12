@@ -1,7 +1,7 @@
-import { HomeResponseAPI } from '../../../components/screens/Home_Page/HomePage';
-import { axiosI } from '../../../services/axios';
-import { UserAndAddressesInfo } from '../../../components/screens/MyInformations_Page/MyInformation';
-import { User } from '../../../hooks/useAuth';
+import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
+import { axiosI } from '@/services/axios';
+import { UserAndAddressesInfo } from '@/components/screens/MyInformations_Page/MyInformation';
+import { User } from '@/hooks/useAuth';
 
 function homeContent(
   objHomeResponseAPI: HomeResponseAPI | null,

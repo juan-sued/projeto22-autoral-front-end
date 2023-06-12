@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ButtonSubmit from '../../../shared/ButtonSubmit';
-import Loading from '../../../shared/Loading';
+import Loading from '@/components/shared/Loaders/Loading';
 import SelectCategory from './SelectCategory';
-import { useProduct } from '../../../../hooks/useProducts';
+import { useProduct } from '@/hooks/useProducts';
 
-import CheckboxLiquid from '../../../shared/CheckboxLiquid';
-import productRequests from '../../../../util/requests/products/productsRequests';
+import productRequests from '@/util/requests/products/productsRequests';
+import ButtonSubmit from '@/components/shared/Buttons/ButtonSubmit';
+import CheckboxLiquid from '@/components/shared/Checkboxs/CheckboxLiquid';
 
 export interface ObjNewProduct {
   category: string | number;
