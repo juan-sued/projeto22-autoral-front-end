@@ -90,7 +90,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                 {isMostOrdered || isFavorite ? (
                   <CardCarouselOrdersAndProducts
                     image={order.image}
-                    description={order.description}
+                    name={order.name}
                     price={Number(order.price)}
                     icon={icon}
                   />
@@ -117,7 +117,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
 };
 
 const CarouselListContainer = styled.div<{ margin_top: number }>`
-  margin-top: 0px;
+  margin-top: 50px;
   width: 100%;
   min-width: 100%;
   height: 100%;
@@ -140,6 +140,7 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
     padding-left: 13px;
     margin-right: 0px;
     padding-top: 100px;
+    padding-bottom: 20px;
   }
 `;
 

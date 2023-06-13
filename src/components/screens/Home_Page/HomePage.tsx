@@ -18,6 +18,7 @@ import { axiosI } from '@/services/axios';
 import pagesRequests from '@/util/requests/pages/pagesRequests';
 import productRequests from '@/util/requests/products/productsRequests';
 import { useEffect, useState } from 'react';
+import mocks from '../MakeOrder_Page/mock';
 
 export interface HomeResponseAPI {
   listMyFavoriteds: Product[];
@@ -43,301 +44,28 @@ export default function HomePage() {
     );
   }, [signed]);
 
-  const objctResponseAPITest: HomeResponseAPI = {
-    listMyFavoriteds: [
-      {
-        id: 0,
-        name: 'Aveia',
-        price: 27.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Granola boa',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 1,
-        name: 'Amendoim',
-        price: 27.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 11,
-        category: 'categoria x'
-      },
-      {
-        id: 2,
-        name: 'Biscoito',
-        price: 19.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 3,
-        name: 'Confete',
-        price: 15.0,
-        image: 'https://http.cat/status/102',
-
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 4,
-        name: 'Flocos de Arroz',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Granola',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 5,
-        name: 'Granulado de chocolate',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 6,
-        name: 'Granola',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 7,
-        name: 'Jujuba',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 8,
-        name: 'Leite em pó',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 9,
-        name: 'Paçoca',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: true,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 10,
-        name: 'Sucrilhos',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      }
-    ],
-    listMoreOrders: [
-      {
-        id: 0,
-        name: 'Aveia',
-        price: 27.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Granola boa',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 1,
-        name: 'Amendoim',
-        price: 27.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Banana',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 11,
-        category: 'categoria x'
-      },
-      {
-        id: 2,
-        name: 'Biscoito',
-        price: 19.0,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 3,
-        name: 'Confete',
-        price: 15.0,
-        image: 'https://http.cat/status/102',
-
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 4,
-        name: 'Flocos de Arroz',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: 'Granola',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 5,
-        name: 'Granulado de chocolate',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 6,
-        name: 'Granola',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 7,
-        name: 'Jujuba',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 8,
-        name: 'Leite em pó',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 9,
-        name: 'Paçoca',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: true,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      },
-      {
-        id: 10,
-        name: 'Sucrilhos',
-        price: 10.5,
-        image: 'https://http.cat/status/102',
-        isFavorited: false,
-        description: '',
-        amount: 12,
-        unitOfMeasure: 'unity',
-        quantityForUnity: 1,
-        category: 'categoria x'
-      }
-    ]
-  };
-
   return (
     <>
       <SideBar />
       <TitleStatus />
       <Main margin_top={'100'}>
         <WellcomeUser userInfo={userInfo} />
-        <CardOfert objHomeResponseAPI={objctResponseAPITest} />
+        <CardOfert objHomeResponseAPI={mocks.exampleHomeContent} />
         <Divider />
         <PlaceMyOrderButton />
         <Divider />
 
         <CarouselListProduct
-          objctResponseAPI={objctResponseAPITest?.listMoreOrders}
+          objctResponseAPI={mocks.exampleHomeContent.listMoreOrders}
           titleSession={'Mais pedidos'}
-          margin_top={50}
+          margin_top={-50}
         />
 
         {signed ? (
           <CarouselListProduct
-            objctResponseAPI={objctResponseAPITest?.listMyFavoriteds}
+            objctResponseAPI={mocks.exampleHomeContent.listMyFavoriteds}
             titleSession={'Meus favoritos'}
-            margin_top={50}
+            margin_top={-50}
           />
         ) : (
           ''

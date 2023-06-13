@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Product } from '@/hooks/useProducts';
 
-import { example } from './mock';
 import { formatPrice } from '@/util/format';
 import { calculateTotalPrice, formatListNames } from '@/util/utilsFunctions';
 import { useCart } from '@/hooks/useCart';
@@ -14,6 +13,7 @@ import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
 import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
+import mocks from './mock';
 export interface responseProducts {
   sizes: Product[];
   flavours: Product[];
@@ -53,9 +53,15 @@ const MakeOrderPage: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState<string>('');
 
   useEffect(() => {
-    const totalPriceCupSize = calculateTotalPrice(cupSizeId, example.sizes);
+    const totalPriceCupSize = calculateTotalPrice(
+      cupSizeId,
+      mocks.exampleProductsOrder.sizes
+    );
 
-    const totalPricePlus = calculateTotalPrice(plusIds, example.plus);
+    const totalPricePlus = calculateTotalPrice(
+      plusIds,
+      mocks.exampleProductsOrder.plus
+    );
 
     const total = totalPriceCupSize + totalPricePlus;
 
@@ -102,7 +108,7 @@ const MakeOrderPage: React.FC = () => {
       <TitleSectionRight titleSession={'Quanto maior, melhor'} />
       <CarouselListProduct
         margin_top={0}
-        objctResponseAPI={example.sizes}
+        objctResponseAPI={mocks.exampleProductsOrder.sizes}
         setProductIds={setCupSizeId}
         productIds={cupSizeId}
         amountSelection={1}
@@ -114,16 +120,16 @@ const MakeOrderPage: React.FC = () => {
 
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example.flavours}
+        objctResponseAPI={mocks.exampleProductsOrder.flavours}
         setProductIds={setFlavoursIds}
         productIds={flavoursIds}
-        amountSelection={example.flavours.length}
+        amountSelection={mocks.exampleProductsOrder.flavours.length}
       />
       <TitleSectionLeft titleSession={'Agora os complementos'} />
       <TitleSectionRight titleSession={'Até 5 (cinco)'} />
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example.complements}
+        objctResponseAPI={mocks.exampleProductsOrder.complements}
         setProductIds={setComplementsIds}
         productIds={complementsIds}
         amountSelection={5}
@@ -132,16 +138,16 @@ const MakeOrderPage: React.FC = () => {
       <TitleSectionRight titleSession={'Quantas quiser'} />
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example.toppings}
+        objctResponseAPI={mocks.exampleProductsOrder.toppings}
         setProductIds={setToppingsIds}
         productIds={toppingsIds}
-        amountSelection={example.toppings.length}
+        amountSelection={mocks.exampleProductsOrder.toppings.length}
       />
       <TitleSectionLeft titleSession={'Agora uma fruta'} />
       <TitleSectionRight titleSession={'Porque a gente é saudável'} />
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example.fruits}
+        objctResponseAPI={mocks.exampleProductsOrder.fruits}
         setProductIds={setFruitId}
         productIds={fruitId}
         amountSelection={1}
@@ -150,10 +156,10 @@ const MakeOrderPage: React.FC = () => {
       <TitleSectionRight titleSession={'A cereja do bolo'} />
       <CarouselListProduct
         margin_top={50}
-        objctResponseAPI={example.plus}
+        objctResponseAPI={mocks.exampleProductsOrder.plus}
         setProductIds={setPlusIds}
         productIds={plusIds}
-        amountSelection={example.plus.length}
+        amountSelection={mocks.exampleProductsOrder.plus.length}
         showPrice={true}
       />
 
