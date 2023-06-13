@@ -32,10 +32,12 @@ import plusCremeAvela from '@/assets/plus-creme-de-avela.png';
 import plusCremeNinho from '@/assets/plus-creme-ninho.png';
 import plusCremeMorango from '@/assets/plus-creme-morango.png';
 import plusCremePacoca from '@/assets/plus-creme-pacoca.png';
-
 import { responseProducts } from '.';
+import { HomeResponseAPI } from '../Home_Page/HomePage';
+import moreOrderImage from '@/assets/copoHome.jpg';
+import moreOrderImage2 from '@/assets/copoHome2.jpg';
 
-export const example: responseProducts = {
+export const exampleProductsOrder: responseProducts = {
   sizes: [
     {
       id: 1,
@@ -532,3 +534,249 @@ export const example: responseProducts = {
     }
   ]
 };
+
+export const exampleHomeContent: HomeResponseAPI = {
+  listMyFavoriteds: [
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 1,
+      name: 'Amendoim',
+      price: 0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Banana',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 2,
+      name: 'Biscoito',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 3,
+      name: 'Confete',
+      price: 0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 4,
+      name: 'Flocos de Arroz',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 5,
+      name: 'Granulado de chocolate',
+      price: 0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 6,
+      name: 'Granola',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 7,
+      name: 'Jujuba',
+      price: 0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 8,
+      name: 'Leite em pó',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 9,
+      name: 'Paçoca',
+      price: 0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: true,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 10,
+      name: 'Sucrilhos',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    }
+  ],
+
+  listMoreOrders: [
+    {
+      id: 0,
+      name: 'Bis',
+      price: 2.0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '34g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 1,
+      name: 'KitKat',
+      price: 2.0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '22,5g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+      quantityForUnity: 2
+    },
+    {
+      id: 2,
+      name: 'KitKat',
+      price: 4.0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '45g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+      quantityForUnity: 4
+    },
+    {
+      id: 3,
+      name: 'Creme de Avelã',
+      price: 3.0,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '40g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 4,
+      name: 'Creme de leite ninho',
+      price: 3.0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '40g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 5,
+      name: 'Creme de morango',
+      price: 3,
+      image: moreOrderImage2,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '40g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 6,
+      name: 'Creme de paçoca',
+      price: 3,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: '40g',
+      amount: 12,
+      unitOfMeasure: 'unity',
+      quantityForUnity: 1
+    }
+  ]
+};
+
+const mocks = {
+  exampleProductsOrder,
+  exampleHomeContent
+};
+
+export default mocks;
