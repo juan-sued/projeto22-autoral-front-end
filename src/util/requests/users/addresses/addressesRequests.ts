@@ -1,5 +1,5 @@
 import { UpdateDataAddress } from '@/components/screens/MyInformations_Page/components/CardAddress';
-import { axiosI } from '@/services/axios';
+import { axiosI } from '@/Routes/services/axios';
 
 interface CreateDataAddress {
   street: string;
@@ -39,7 +39,7 @@ function postAddresses(
     });
 }
 
-import { axiosBasic } from '@/services/axios';
+import { axiosBasic } from '@/Routes/services/axios';
 import { formatCEP } from '@brazilian-utils/brazilian-utils';
 
 function getCep(

@@ -9,7 +9,6 @@ interface ItemProductTableProps {
   image: string;
   name: string;
   price: string;
-  subTotal: string;
   description: string;
   amount: number;
   id: number;
@@ -18,7 +17,7 @@ interface ItemProductTableProps {
 function ItemProductTable({
   image,
   price,
-  subTotal,
+
   description,
   name,
   amount,
@@ -64,16 +63,16 @@ function ItemProductTable({
           <div className="subContainerCount">
             <button
               className="iconButton"
-              onClick={() => handleRemoveProduct(id)}
+              onClick={() => handleProductDecrement({ id, amount })}
             >
-              <MdRemove size={20} className="iconButton" />
+              <MdRemove size={10} className="iconButton" />
             </button>
             <p className="countProduct">{amount}</p>
             <button
               className="iconButton"
               onClick={() => handleProductIncrement({ id, amount })}
             >
-              <MdAdd className="iconButton" size={20} />
+              <MdAdd className="iconButton" size={10} />
             </button>
           </div>
         </div>
@@ -86,13 +85,13 @@ export const ItemProductTableStyle = styled.div`
   display: flex;
   margin-top: 20px;
   align-items: center;
-  height: 100px;
+  height: 90px;
 
   border-radius: 5px;
 
   img {
     height: 100%;
-    border-radius: 10px;
+    border-radius: 20px;
   }
   .containerContent {
     width: 100%;
@@ -101,15 +100,19 @@ export const ItemProductTableStyle = styled.div`
     .title {
       width: 100%;
       font-weight: 600;
-      font-size: 22px;
+      font-size: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     .subContainer {
       display: flex;
-      height: 60px;
+      height: 70px;
 
       .subContainerCount {
-        width: 40%;
+        width: 50%;
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -117,20 +120,15 @@ export const ItemProductTableStyle = styled.div`
         color: black;
 
         button {
-          border: none;
-          border-radius: 5px;
-          height: 30px;
-          width: 30px;
-
-          img {
-            height: 30px;
-            width: 30px;
-            color: red;
-          }
+          border: solid 1px rgba(0, 0, 0, 0.1);
+          border-radius: 6px;
+          height: 25px;
+          width: 25px;
         }
 
         .countProduct {
           font-weight: 900;
+          font-size: 14px;
         }
       }
 
@@ -143,7 +141,8 @@ export const ItemProductTableStyle = styled.div`
         align-items: space-between;
         .description {
           height: 100%;
-          padding-top: 3px;
+
+          padding-top: 5px;
         }
         .price {
           height: 100%;

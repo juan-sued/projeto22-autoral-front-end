@@ -21,8 +21,6 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
   const { userInfo, signOut } = useAuth();
 
-  const navigate = useNavigate();
-
   const { cart, setCart } = useCart();
 
   const cartFormatted = cart.map(product => ({
@@ -61,8 +59,6 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     requestOrder(orderData, signOut, success);
   }
 
-  console.log('cartFormatted', cartFormatted[0]);
-
   return (
     <>
       <Back />
@@ -76,7 +72,6 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
                   key={product.id}
                   image={product.image}
                   price={product.priceFormatted}
-                  subTotal={product.subTotal}
                   description={product.name}
                   amount={product.amountInCart}
                   name={product.name}

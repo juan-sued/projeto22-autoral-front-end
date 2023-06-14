@@ -24,10 +24,10 @@ const CheckboxBlockStyle = styled.div`
   .checkBox {
     display: block;
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 3px solid rgba(255, 255, 255, 0);
-    border-radius: 10px;
+    border-radius: 5px;
     position: relative;
     overflow: hidden;
     box-shadow: 0px 0px 0px 2px purple;

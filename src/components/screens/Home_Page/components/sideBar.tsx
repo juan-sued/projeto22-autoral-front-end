@@ -27,7 +27,7 @@ export default function SideBar() {
 
   const { cart, setCart } = useCart();
 
-  const cartFormatted = cart.map(product => ({
+  const cartFormatted = cart?.map(product => ({
     ...product,
     priceFormatted: formatPrice(product.price),
     subTotal: formatPrice(product.price * product.amountInCart)
@@ -63,7 +63,7 @@ export default function SideBar() {
     } else if (text.nameIcon === 'inventory_2') {
       navigate('stock');
     } else {
-      console.log('não carrinho');
+      console.log('não faz nada');
     }
   };
 

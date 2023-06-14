@@ -37,6 +37,7 @@ import { HomeResponseAPI } from '../Home_Page/HomePage';
 import moreOrderImage from '@/assets/copoHome.jpg';
 import moreOrderImage2 from '@/assets/copoHome2.jpg';
 import { ProductCustomized } from '@/util/requests';
+import { generateValueBetween } from '@/util/utilsFunctions';
 
 export const exampleProductsOrder: responseProducts = {
   sizes: [
@@ -774,10 +775,11 @@ export const exampleHomeContent: HomeResponseAPI = {
     }
   ]
 };
+const randomNumber = generateValueBetween();
 
 export const exampleNewOrderCustomized: ProductCustomized = {
-  id: 2,
-  name: 'açaí incrível do juan',
+  id: randomNumber,
+  name: 'produto' + randomNumber,
   image: '',
   price: 2.5,
   cupSize: {

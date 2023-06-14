@@ -1,4 +1,4 @@
-import { axiosI } from '@/services/axios';
+import { axiosI } from '@/Routes/services/axios';
 
 interface UpdateDataUser {
   name: string;
@@ -35,7 +35,6 @@ async function requestUpdateUser({
     });
     setStateButton('err');
     setTimeout(() => {
-      console.log('aqui');
       setStateButton('success');
     }, 3000);
   }

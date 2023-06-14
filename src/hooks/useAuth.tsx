@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { axiosI } from '@/services/axios';
+import { axiosI } from '@/Routes/services/axios';
 
 export interface User {
   id: number;

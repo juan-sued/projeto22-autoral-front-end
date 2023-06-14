@@ -25,6 +25,7 @@ export interface responseProducts {
 }
 //topping === cobertura
 export interface objNewOrderParams {
+  id: number;
   name: string;
   image: string;
   price: number;
@@ -37,23 +38,11 @@ export interface objNewOrderParams {
 }
 
 const MakeOrderPage: React.FC = () => {
-  const { addProductOrder } = useCart();
+  const { addProductOrderInCart, cart } = useCart();
 
   const { userInfo } = useAuth();
   const navigate = useNavigate();
   const [stateButton, setStateButton] = useState('');
-
-  const [objNewOrder, setObjNewOrder] = useState<objNewOrderParams>({
-    name: '',
-    image: '',
-    price: 0,
-    cupSizeId: 23,
-    flavoursIds: [124, 5, 3],
-    complementsIds: [85, 32, 90],
-    toppingsIds: [10, 23, 50],
-    fruitId: 92,
-    plusIds: [231, 111, 282]
-  });
 
   const [cupSizeId, setCupSizeId] = useState<number[]>([]);
   const [flavoursIds, setFlavoursIds] = useState<number[]>([]);
@@ -63,7 +52,18 @@ const MakeOrderPage: React.FC = () => {
   const [plusIds, setPlusIds] = useState<number[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [name, setName] = useState<string>('');
-
+  const [objNewOrder, setObjNewOrder] = useState<objNewOrderParams>({
+    id: 0,
+    image: '',
+    price: totalPrice,
+    name: name,
+    cupSizeId: cupSizeId[0],
+    flavoursIds: flavoursIds,
+    complementsIds: complementsIds,
+    toppingsIds: toppingsIds,
+    fruitId: fruitId[0],
+    plusIds: plusIds
+  });
   useEffect(() => {
     const totalPriceCupSize = calculateTotalPrice(
       cupSizeId,
@@ -80,33 +80,33 @@ const MakeOrderPage: React.FC = () => {
     setTotalPrice(total);
   }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
 
-  async function handleCreateOrder() {
-    setStateButton('loading');
-
-    const nameProduct = name ? name : 'Açaí incrível do' + userInfo?.name;
-
-    setObjNewOrder({
-      image: '',
-      price: totalPrice,
-      name: nameProduct,
-      cupSizeId: cupSizeId[0],
-      flavoursIds: flavoursIds,
-      complementsIds: complementsIds,
-      toppingsIds: toppingsIds,
-      fruitId: fruitId[0],
-      plusIds: plusIds
-    });
-
-    const productsUnavailable = await addProductOrder(objNewOrder);
-
-    if (productsUnavailable) {
-      setStateButton('');
-
-      alert(
-        'Produtos em falta no estoque: ' + formatListNames(productsUnavailable)
-      );
-    } else {
+  useEffect(() => {
+    if (objNewOrder && objNewOrder.id > 0) {
+      addProductOrderInCart(objNewOrder);
       navigate('/cart');
+    }
+  }, [objNewOrder]);
+  async function handleCreateOrder() {
+    try {
+      setStateButton('loading');
+
+      const nameProduct = name ? name : 'Açaí incrível do ' + userInfo?.name;
+      const idInCart = cart.length + 1;
+      const updatedObjNewOrder = {
+        id: idInCart,
+        image: '',
+        price: totalPrice,
+        name: nameProduct,
+        cupSizeId: cupSizeId[0],
+        flavoursIds: flavoursIds,
+        complementsIds: complementsIds,
+        toppingsIds: toppingsIds,
+        fruitId: fruitId[0],
+        plusIds: plusIds
+      };
+      setObjNewOrder(updatedObjNewOrder);
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -115,9 +115,6 @@ const MakeOrderPage: React.FC = () => {
       <ModalLoading stateButton={stateButton}>
         <div className="containerModal">
           <PopsicleLoading />
-          <div className="Message">
-            Verificando disponibilidades dos produtos
-          </div>
         </div>
       </ModalLoading>
 

@@ -1,8 +1,8 @@
-import { axiosI } from '@/services/axios';
+import { ordersRouter } from '@/Routes/services/axios';
 
 const requestOrder = async (orderData: any, signOut: any, success: any) => {
   try {
-    const resp = await axiosI.post('/orders', orderData);
+    const resp = await ordersRouter.post('/orders', orderData);
     if (resp.status === 201) {
       success();
     }

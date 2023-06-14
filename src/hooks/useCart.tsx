@@ -1,10 +1,7 @@
 import { createContext, useContext, useState } from 'react';
-import { axiosI, productsRouter } from '@/services/axios';
+import { axiosI, productsRouter } from '@/Routes/services/axios';
 import { Product } from './useProducts';
 import { objNewOrderParams } from '@/components/screens/MakeOrder_Page';
-import productRequests, {
-  ProductCustomized
-} from '@/util/requests/products/productsRequests';
 
 interface UpdateProductAmount {
   productId: number;
@@ -13,9 +10,7 @@ interface UpdateProductAmount {
 
 interface CartContextType {
   addProduct: (productId: number) => Promise<void>;
-  addProductOrder: (
-    objectNewOrder: objNewOrderParams
-  ) => Promise<string[] | undefined>;
+  addProductOrderInCart: (objectNewOrder: objNewOrderParams) => void;
   updateProductAmount: ({
     productId,
     amount
@@ -26,9 +21,11 @@ interface CartContextType {
   setCart: (cart: (CartProduct | CartProductCustomized)[]) => void;
 }
 
-interface CartProductCustomized extends ProductCustomized {
+interface CartProductCustomized extends objNewOrderParams {
+  id: number;
   amountInCart: number;
 }
+
 interface CartProduct extends Product {
   amountInCart: number;
 }
@@ -48,32 +45,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   );
 
-  async function addProductOrder(objectNewOrder: objNewOrderParams) {
-    //envia obj pro back, back retorna um cartProduct
+  async function addProductOrderInCart(objectNewOrder: objNewOrderParams) {
     try {
-      const result: ProductCustomized | string[] =
-        await productRequests.postRegisterProductCustomized(objectNewOrder);
-      if (Array.isArray(result)) return result;
-
       const cartUpdated: (CartProduct | CartProductCustomized)[] = [...cart];
 
-      const foundProductInCart = cartUpdated.find(
-        product => product.id === result.id
-      );
-
-      if (foundProductInCart) {
-        const updatedProduct = { ...foundProductInCart };
-        updatedProduct.amountInCart++;
-        const index = cartUpdated.indexOf(foundProductInCart);
-        cartUpdated[index] = updatedProduct;
-      } else {
-        const CartProductCustomized: CartProductCustomized = {
-          ...result,
-          amountInCart: 1
-        };
-        cartUpdated.push(CartProductCustomized);
-      }
-
+      const newProductCustomized: CartProductCustomized = {
+        ...objectNewOrder,
+        amountInCart: 1
+      };
+      cartUpdated.push(newProductCustomized);
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
@@ -83,37 +63,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   async function addProduct(productId: number) {
     try {
-      const cartUpdated = [...cart];
-      //verifica se ja tem o produto no carrinho
+      const cartUpdated: (CartProduct | CartProductCustomized)[] = [...cart];
       const foundProductInCart = cartUpdated.find(
         product => product.id === productId
       );
-      const product: Product = (await productsRouter.get('/' + productId)).data;
+      if (!foundProductInCart) return alert('Produto não presente no carrinho');
 
-      const currentAmountProduct = foundProductInCart
-        ? foundProductInCart.amountInCart
-        : 0;
+      const updatedProduct = { ...foundProductInCart };
 
-      const amountProduct = currentAmountProduct + 1;
-      if (amountProduct > product.amount) {
-        alert('Quantidade solicitada fora de estoque');
-        return;
-      }
-      if (foundProductInCart) {
-        foundProductInCart.amountInCart++;
-      } else {
-        const product = await axiosI
-          .get(`${productId}`)
-          .then(({ data }) => data);
+      updatedProduct.amountInCart++;
+      const index = cartUpdated.indexOf(foundProductInCart);
+      cartUpdated[index] = updatedProduct;
 
-        const newProduct: CartProduct = {
-          ...product,
-          amount: 1
-        };
-        //adiciona o produto novo no cart atualizado
-        cartUpdated.push(newProduct);
-      }
-      //atualiza o carrinho
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
@@ -130,15 +91,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   }) {
     try {
       if (amount <= 0) return;
-
-      const stockProductAmount = await axiosI
-        .get(`/products/${productId}`)
-        .then(({ data }) => data.availables);
-
-      if (amount > stockProductAmount) {
-        console.log('Quantidade solicitada fora de estoque');
-        return;
-      }
 
       const cartUpdated = [...cart];
 
@@ -186,7 +138,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         updateProductAmount,
         removeProduct,
         setCart,
-        addProductOrder
+        addProductOrderInCart
       }}
     >
       {children}
