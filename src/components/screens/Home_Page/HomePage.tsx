@@ -14,7 +14,7 @@ import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
 import { Product } from '@/hooks/useProducts';
-import { axiosI } from '@/services/axios';
+import { axiosI } from '@/Routes/services/axios';
 import pagesRequests from '@/util/requests/pages/pagesRequests';
 import productRequests from '@/util/requests/products/productsRequests';
 import { useEffect, useState } from 'react';

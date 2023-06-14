@@ -3,7 +3,7 @@ import { objNewOrderParams } from './../../../components/screens/MakeOrder_Page/
 import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
 import { ObjNewProduct } from '@/components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '@/hooks/useProducts';
-import { axiosI, productsRouter } from '@/services/axios';
+import { axiosI, productsRouter } from '@/Routes/services/axios';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -43,6 +43,22 @@ async function postRegisterProductCustomized(
     const { data } = await productsRouter.post(
       `/new-order-client`,
       objNewProduct
+    );
+
+    return data;
+  } catch (err) {
+    console.error(err);
+    return mocks.exampleNewOrderCustomized;
+  }
+}
+
+async function getVerifyAmountProductCustomizedAvaibles(
+  productCustomized: ProductCustomized
+): Promise<ProductCustomized> {
+  try {
+    const { data } = await productsRouter.post(
+      `/verify-product-customized`,
+      productCustomized
     );
 
     return data;
@@ -222,7 +238,8 @@ const productRequests = {
   getMoreOrders,
   getFavoriteds,
   getProductById,
-  postRegisterProductCustomized
+  postRegisterProductCustomized,
+  getVerifyAmountProductCustomizedAvaibles
 };
 
 export default productRequests;

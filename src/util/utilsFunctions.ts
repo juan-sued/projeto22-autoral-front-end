@@ -100,11 +100,17 @@ function getRandomHttpCatCode(): number {
   return httpCatCodes[randomIndex];
 }
 
+function generateValueBetween() {
+  const randomNumber = Math.floor(Math.random() * 10000) + 1;
+  return randomNumber;
+}
+
 export {
   incrementStarsFeedback,
   increaseCardSizeToggle,
   calculateTotalPrice,
   checkAllProductsAvailability,
   formatListNames,
+  generateValueBetween,
   getRandomHttpCatCode
 };

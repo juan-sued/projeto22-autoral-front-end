@@ -11,5 +11,8 @@ const axiosBasic = axios.create({
 const productsRouter = axios.create({
   baseURL: 'http://localhost:4000/products'
 });
+const ordersRouter = axios.create({
+  baseURL: 'http://localhost:4000/orders'
+});
 
-export { axiosI, axiosBasic, productsRouter };
+export { axiosI, axiosBasic, productsRouter, ordersRouter };

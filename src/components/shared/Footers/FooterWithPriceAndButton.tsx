@@ -68,7 +68,7 @@ export default function FooterWithPriceAndButton({
 }
 
 const FooterWithPriceAndButtonStyle = styled.div`
-  background-color: red;
+  z-index: 100000;
 
   footer {
     display: flex;
@@ -83,7 +83,6 @@ const FooterWithPriceAndButtonStyle = styled.div`
     padding: 20px;
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 2px 2px 0px 0px;
-    z-index: 2;
 
     button {
       background: #7159c1;

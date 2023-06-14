@@ -1,5 +1,5 @@
 import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
-import { axiosI } from '@/services/axios';
+import { axiosI } from '@/Routes/services/axios';
 import { UserAndAddressesInfo } from '@/components/screens/MyInformations_Page/MyInformation';
 import { User } from '@/hooks/useAuth';
 

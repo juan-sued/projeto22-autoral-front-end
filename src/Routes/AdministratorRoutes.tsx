@@ -7,6 +7,7 @@ import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
 import React from 'react';
 import StockPage from '@/components/screens/Stock_Page/StockPage';
 import MakeOrderPage from '@/components/screens/MakeOrder_Page';
+//criar pagina erro com     <Route path="*" element={<NotFoundPage />} />
 
 const AdministratorRoutes: React.FC = () => (
   <Routes>
