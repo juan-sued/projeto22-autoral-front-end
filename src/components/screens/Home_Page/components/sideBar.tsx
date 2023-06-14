@@ -29,8 +29,8 @@ export default function SideBar() {
 
   const cartFormatted = cart.map(product => ({
     ...product,
-    priceFormatted: formatPrice(Number(product.price)),
-    subTotal: formatPrice(Number(product.price) * Number(product.amount))
+    priceFormatted: formatPrice(product.price),
+    subTotal: formatPrice(product.price * product.amountInCart)
   }));
 
   const [state, setState] = React.useState({

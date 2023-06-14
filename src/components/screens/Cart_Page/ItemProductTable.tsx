@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import { MdAdd, MdRemove } from 'react-icons/md';
 
-import iconpositive from '@/assets/iconpositive.svg';
 import { useCart } from '@/hooks/useCart';
-import InputNumber from '@/components/shared/Inputs/InputNumber';
 import imageAcai from '@/assets/copoHome.jpg';
-import CheckboxBlock from '@/components/shared/Checkboxs/CheckBoxBlock';
+import CheckboxBlock from '@/components/shared/Checkboxs/CheckboxBlock';
 
 interface ItemProductTableProps {
   image: string;
-
   name: string;
   price: string;
   subTotal: string;
