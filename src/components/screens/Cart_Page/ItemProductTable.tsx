@@ -85,7 +85,7 @@ export const ItemProductTableStyle = styled.div`
   display: flex;
   margin-top: 20px;
   align-items: center;
-  height: 95px;
+  height: 90px;
 
   border-radius: 5px;
 
