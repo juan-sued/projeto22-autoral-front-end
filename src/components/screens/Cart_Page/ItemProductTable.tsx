@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import iconremove from '@/assets/iconremove.svg';
+import { MdAdd, MdRemove } from 'react-icons/md';
 
-import iconnegative from '@/assets/iconnegative.svg';
-import iconpositive from '@/assets/iconpositive.svg';
 import { useCart } from '@/hooks/useCart';
-import InputNumber from '@/components/shared/Inputs/InputNumber';
+import imageAcai from '@/assets/copoHome.jpg';
+import CheckboxBlock from '@/components/shared/Checkboxs/CheckboxBlock';
 
 interface ItemProductTableProps {
   image: string;
-  price: number;
-  subTotal: number;
+  name: string;
+  price: string;
+  subTotal: string;
   description: string;
   amount: number;
   id: number;
@@ -20,6 +20,7 @@ function ItemProductTable({
   price,
   subTotal,
   description,
+  name,
   amount,
   id
 }: ItemProductTableProps) {
@@ -51,54 +52,28 @@ function ItemProductTable({
 
   return (
     <ItemProductTableStyle>
-      <div className="itemTable">
-        <div className="column">
-          <div className="nameColumn">Açaí</div>
-          <img className="productImage" src={image} alt="" />
-          <div className="nameColumn description">{description}</div>
-        </div>
-
-        <div className="column">
-          <div className="nameColumn">Preço</div>
-          <p className="value">{price}</p>
-        </div>
-
-        <div className="column">
-          <div className="nameColumn qtd">Qtd.</div>
-          <div className="inputContainer">
-            <button
-              className="iconButton"
-              onClick={() => handleProductIncrement({ id, amount })}
-            >
-              <img src={iconpositive} alt="" />
-            </button>
-
-            <InputNumber amount={amount} />
-
-            <button
-              className="iconButton"
-              disabled={amount <= 1}
-              onClick={() => handleProductDecrement({ id, amount })}
-            >
-              <img src={iconnegative} alt="" />
-            </button>
+      <CheckboxBlock />
+      <img src={image ? image : imageAcai} alt="" />
+      <div className="containerContent">
+        <div className="title">{name}</div>
+        <div className="subContainer">
+          <div className="subContainerPrice">
+            <h2 className="description">{description}</h2>
+            <p className="price">{price}</p>
           </div>
-        </div>
-
-        <div className="column">
-          <div className="nameColumn">SubTotal</div>
-          <p className="value">{subTotal}</p>
-        </div>
-
-        <div className="containerDivider">
-          <div className="divider"></div>
-
-          <div className="column buttons">
+          <div className="subContainerCount">
             <button
               className="iconButton"
               onClick={() => handleRemoveProduct(id)}
             >
-              <img src={iconremove} alt="" />
+              <MdRemove size={20} className="iconButton" />
+            </button>
+            <p className="countProduct">{amount}</p>
+            <button
+              className="iconButton"
+              onClick={() => handleProductIncrement({ id, amount })}
+            >
+              <MdAdd className="iconButton" size={20} />
             </button>
           </div>
         </div>
@@ -106,9 +81,80 @@ function ItemProductTable({
     </ItemProductTableStyle>
   );
 }
-
 export const ItemProductTableStyle = styled.div`
-  /* Estilos do componente ItemProductTable */
-`;
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  height: 100px;
 
+  border-radius: 5px;
+
+  img {
+    height: 100%;
+    border-radius: 10px;
+  }
+  .containerContent {
+    width: 100%;
+    padding: 10px 0px 10px 10px;
+
+    .title {
+      width: 100%;
+      font-weight: 600;
+      font-size: 22px;
+    }
+
+    .subContainer {
+      display: flex;
+      height: 60px;
+
+      .subContainerCount {
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 22px;
+        color: black;
+
+        button {
+          border: none;
+          border-radius: 5px;
+          height: 30px;
+          width: 30px;
+
+          img {
+            height: 30px;
+            width: 30px;
+            color: red;
+          }
+        }
+
+        .countProduct {
+          font-weight: 900;
+        }
+      }
+
+      .subContainerPrice {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: space-between;
+        .description {
+          height: 100%;
+          padding-top: 3px;
+        }
+        .price {
+          height: 100%;
+          display: grid;
+          align-items: end;
+          font-size: 20px;
+          font-weight: 900;
+          color: purple;
+        }
+      }
+    }
+  }
+`;
 export default ItemProductTable;

@@ -14,6 +14,7 @@ import TitlePage from '@/components/shared/Titles/TitlePage';
 import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
 import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
 import mocks from './mock';
+import { useAuth } from '@/hooks/useAuth';
 export interface responseProducts {
   sizes: Product[];
   flavours: Product[];
@@ -24,6 +25,9 @@ export interface responseProducts {
 }
 //topping === cobertura
 export interface objNewOrderParams {
+  name: string;
+  image: string;
+  price: number;
   cupSizeId: number;
   flavoursIds: number[];
   complementsIds: number[];
@@ -33,9 +37,16 @@ export interface objNewOrderParams {
 }
 
 const MakeOrderPage: React.FC = () => {
+  const { addProductOrder } = useCart();
+
+  const { userInfo } = useAuth();
   const navigate = useNavigate();
   const [stateButton, setStateButton] = useState('');
+
   const [objNewOrder, setObjNewOrder] = useState<objNewOrderParams>({
+    name: '',
+    image: '',
+    price: 0,
     cupSizeId: 23,
     flavoursIds: [124, 5, 3],
     complementsIds: [85, 32, 90],
@@ -50,7 +61,8 @@ const MakeOrderPage: React.FC = () => {
   const [toppingsIds, setToppingsIds] = useState<number[]>([]);
   const [fruitId, setFruitId] = useState<number[]>([]);
   const [plusIds, setPlusIds] = useState<number[]>([]);
-  const [totalPrice, setTotalPrice] = useState<string>('');
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [name, setName] = useState<string>('');
 
   useEffect(() => {
     const totalPriceCupSize = calculateTotalPrice(
@@ -65,13 +77,18 @@ const MakeOrderPage: React.FC = () => {
 
     const total = totalPriceCupSize + totalPricePlus;
 
-    setTotalPrice(formatPrice(total));
+    setTotalPrice(total);
   }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
 
-  const { addProductOrder } = useCart();
-
   async function handleCreateOrder() {
+    setStateButton('loading');
+
+    const nameProduct = name ? name : 'Açaí incrível do' + userInfo?.name;
+
     setObjNewOrder({
+      image: '',
+      price: totalPrice,
+      name: nameProduct,
       cupSizeId: cupSizeId[0],
       flavoursIds: flavoursIds,
       complementsIds: complementsIds,
@@ -79,16 +96,17 @@ const MakeOrderPage: React.FC = () => {
       fruitId: fruitId[0],
       plusIds: plusIds
     });
-    setStateButton('loading');
-    const result = await addProductOrder(objNewOrder);
-    if (!result) throw new Error('Deu ruim pegando products');
 
-    setStateButton('');
-    if (result.unavailables.length === 0) {
-      navigate('/cart');
+    const productsUnavailable = await addProductOrder(objNewOrder);
+
+    if (productsUnavailable) {
+      setStateButton('');
+
+      alert(
+        'Produtos em falta no estoque: ' + formatListNames(productsUnavailable)
+      );
     } else {
-      const names = result.unavailables.map(product => product.name);
-      alert('Produtos em falta no estoque: ' + formatListNames(names));
+      navigate('/cart');
     }
   }
 
@@ -164,7 +182,7 @@ const MakeOrderPage: React.FC = () => {
       />
 
       <FooterWithPriceAndButton
-        total={totalPrice}
+        total={formatPrice(totalPrice)}
         handleCreateOrder={handleCreateOrder}
         stateButton={stateButton}
       />

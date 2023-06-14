@@ -59,10 +59,12 @@ const GlobalStyles = createGlobalStyle`
 scrollbar-width: none;
 overflow-x: hidden;
   overflow-y: hidden;
+  display: none;
 
 }
 ::-webkit-scrollbar-track {
   background: transparent;
+ display: none;
 }
 -ms-overflow-style: none;
 scrollbar-width: none;
@@ -71,6 +73,9 @@ overflow-y: hidden;
 
 
  
+  --purple-bold: rgb(142, 28, 90);
+
+
 
   
 `;
