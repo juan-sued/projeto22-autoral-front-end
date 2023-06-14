@@ -72,7 +72,7 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
                   key={product.id}
                   image={product.image}
                   price={product.priceFormatted}
-                  description={product.name}
+                  description={'teste de descrição'}
                   amount={product.amountInCart}
                   name={product.name}
                   id={product.id}

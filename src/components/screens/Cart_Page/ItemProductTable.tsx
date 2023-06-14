@@ -85,7 +85,7 @@ export const ItemProductTableStyle = styled.div`
   display: flex;
   margin-top: 20px;
   align-items: center;
-  height: 90px;
+  height: 95px;
 
   border-radius: 5px;
 
@@ -96,6 +96,7 @@ export const ItemProductTableStyle = styled.div`
   .containerContent {
     width: 100%;
     padding: 10px 0px 10px 10px;
+    max-width: 195px;
 
     .title {
       width: 100%;

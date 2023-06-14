@@ -90,7 +90,11 @@ const MakeOrderPage: React.FC = () => {
     try {
       setStateButton('loading');
 
-      const nameProduct = name ? name : 'Açaí incrível do ' + userInfo?.name;
+      const nameProduct = name
+        ? name
+        : userInfo?.name !== undefined
+        ? 'Açaí -' + userInfo?.name
+        : 'Açaí';
       const idInCart = cart.length + 1;
       const updatedObjNewOrder = {
         id: idInCart,
