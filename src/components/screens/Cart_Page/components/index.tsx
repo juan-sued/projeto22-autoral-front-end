@@ -28,12 +28,12 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
   const cartFormatted = cart.map(product => ({
     ...product,
     priceFormatted: formatPrice(product.price),
-    subTotal: formatPrice(product.price * product.amount)
+    subTotal: formatPrice(product.price * product.amountInCart)
   }));
 
   const total = formatPrice(
     cart.reduce((sumTotal, product) => {
-      return sumTotal + product.price * product.amount;
+      return sumTotal + product.price * product.amountInCart;
     }, 0)
   );
 
@@ -44,7 +44,7 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
         name: products.name,
         price: products.price,
         image: products.image,
-        amount: products.amount
+        amount: products.amountInCart
       };
     });
 
@@ -61,23 +61,28 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     requestOrder(orderData, signOut, success);
   }
 
+  console.log('cartFormatted', cartFormatted[0]);
+
   return (
     <>
       <Back />
       <TitlePage title={'Meu Carrinho'} to={'/'} />
       <Container>
         <ProductTable>
-          {cartFormatted.map((product, index) => (
-            <ItemProductTable
-              key={product.id}
-              image={product.image}
-              price={Number(product.priceFormatted)}
-              subTotal={Number(product.subTotal)}
-              description={product.name}
-              amount={product.amount}
-              id={product.id}
-            />
-          ))}
+          {cartFormatted.length === 0
+            ? 'carrinho vazio'
+            : cartFormatted.map((product, index) => (
+                <ItemProductTable
+                  key={product.id}
+                  image={product.image}
+                  price={product.priceFormatted}
+                  subTotal={product.subTotal}
+                  description={product.name}
+                  amount={product.amountInCart}
+                  name={product.name}
+                  id={product.id}
+                />
+              ))}
         </ProductTable>
         <FooterWithPriceAndButton
           isCart={true}

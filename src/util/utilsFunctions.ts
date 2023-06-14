@@ -36,56 +36,34 @@ function calculateTotalPrice(ids: number[], products: Product[]): number {
     .reduce((accumulator, price) => accumulator + price, 0);
 }
 
-interface ProductsAvailablesCheck {
-  id: number;
-  name: string;
-  quantity: number;
-}
-
 export interface CheckAllProductsAvailability {
-  availables: ProductsAvailablesCheck[];
-  unavailables: ProductsAvailablesCheck[];
+  availables: Product[];
+  unavailables: Product[];
 }
 
 async function checkAllProductsAvailability(
   products: any
 ): Promise<CheckAllProductsAvailability> {
   try {
-    const availabilityList: ProductsAvailablesCheck[] = [];
-    const unavailabilityList: ProductsAvailablesCheck[] = [];
+    const availabilityList: Product[] = [];
+    const unavailabilityList: Product[] = [];
 
     for (const key in products) {
       if (Array.isArray(products[key])) {
         for (const productId of products[key]) {
           const product = await productRequests.getProductById(productId);
           if (product.amount <= 0) {
-            unavailabilityList.push({
-              id: product.id,
-              name: product.name,
-              quantity: product.amount
-            });
+            unavailabilityList.push(product);
           } else {
-            availabilityList.push({
-              id: product.id,
-              name: product.name,
-              quantity: product.amount
-            });
+            availabilityList.push(product);
           }
         }
       } else {
         const product = await productRequests.getProductById(products[key]);
         if (product.amount <= 0) {
-          unavailabilityList.push({
-            id: product.id,
-            name: product.name,
-            quantity: product.amount
-          });
+          unavailabilityList.push(product);
         } else {
-          availabilityList.push({
-            id: products[key],
-            name: product.name,
-            quantity: product.amount
-          });
+          availabilityList.push(product);
         }
       }
     }

@@ -1,56 +1,83 @@
 import { createContext, useContext, useState } from 'react';
-import { axiosI } from '@/services/axios';
+import { axiosI, productsRouter } from '@/services/axios';
 import { Product } from './useProducts';
-import productRequests from '@/util/requests/products/productsRequests';
 import { objNewOrderParams } from '@/components/screens/MakeOrder_Page';
-import {
-  CheckAllProductsAvailability,
-  checkAllProductsAvailability
-} from '@/util/utilsFunctions';
+import productRequests, {
+  ProductCustomized
+} from '@/util/requests/products/productsRequests';
+
+interface UpdateProductAmount {
+  productId: number;
+  amount: number;
+}
 
 interface CartContextType {
-  cart: Product[];
   addProduct: (productId: number) => Promise<void>;
   addProductOrder: (
     objectNewOrder: objNewOrderParams
-  ) => Promise<CheckAllProductsAvailability>;
+  ) => Promise<string[] | undefined>;
   updateProductAmount: ({
     productId,
     amount
-  }: {
-    productId: number;
-    amount: number;
-  }) => Promise<void>;
+  }: UpdateProductAmount) => Promise<void>;
   removeProduct: (productId: number) => void;
-  setCart: (cart: Product[]) => void;
+  cart: (CartProduct | CartProductCustomized)[];
+
+  setCart: (cart: (CartProduct | CartProductCustomized)[]) => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+interface CartProductCustomized extends ProductCustomized {
+  amountInCart: number;
+}
+interface CartProduct extends Product {
+  amountInCart: number;
+}
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [cart, setCart] = useState<Product[]>(() => {
-    const storagedCart = localStorage.getItem('gellatoCart');
+  const [cart, setCart] = useState<(CartProduct | CartProductCustomized)[]>(
+    () => {
+      const storagedCart = localStorage.getItem('gellatoCart');
 
-    if (storagedCart) {
-      return JSON.parse(storagedCart);
+      if (storagedCart) {
+        return JSON.parse(storagedCart);
+      }
+
+      return [];
     }
-
-    return [];
-  });
+  );
 
   async function addProductOrder(objectNewOrder: objNewOrderParams) {
+    //envia obj pro back, back retorna um cartProduct
     try {
-      const result = await checkAllProductsAvailability(objectNewOrder);
-      if (result) {
-        return result;
+      const result: ProductCustomized | string[] =
+        await productRequests.postRegisterProductCustomized(objectNewOrder);
+      if (Array.isArray(result)) return result;
+
+      const cartUpdated: (CartProduct | CartProductCustomized)[] = [...cart];
+
+      const foundProductInCart = cartUpdated.find(
+        product => product.id === result.id
+      );
+
+      if (foundProductInCart) {
+        const updatedProduct = { ...foundProductInCart };
+        updatedProduct.amountInCart++;
+        const index = cartUpdated.indexOf(foundProductInCart);
+        cartUpdated[index] = updatedProduct;
       } else {
-        throw new Error('Failed to check product availability.'); // Lança um erro caso o resultado seja undefined
+        const CartProductCustomized: CartProductCustomized = {
+          ...result,
+          amountInCart: 1
+        };
+        cartUpdated.push(CartProductCustomized);
       }
+
+      setCart(cartUpdated);
+      localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
       console.log('error', error);
-      return { availables: [], unavailables: [] }; // Valor padrão a ser retornado em caso de erro
     }
   }
 
@@ -61,31 +88,25 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       const foundProductInCart = cartUpdated.find(
         product => product.id === productId
       );
-      const stockProductAmount = await axiosI
-        .get(`/products/${productId}`)
-        .then(({ data }) => data.availables);
+      const product: Product = (await productsRouter.get('/' + productId)).data;
 
-      //pega a quantidade atual do produto no carrinho
       const currentAmountProduct = foundProductInCart
-        ? foundProductInCart.amount
+        ? foundProductInCart.amountInCart
         : 0;
 
       const amountProduct = currentAmountProduct + 1;
-      //se a quantidade do produto no escolhido for maior que stock ==> quantidade insuficiente
-      if (amountProduct > stockProductAmount) {
+      if (amountProduct > product.amount) {
         alert('Quantidade solicitada fora de estoque');
         return;
       }
-      //se ja tiver o produto no stock, ele pega a quantidade que ja tem + 1
       if (foundProductInCart) {
-        foundProductInCart.amount++;
+        foundProductInCart.amountInCart++;
       } else {
-        //senão tiver, ele puxa os dados do produto com a quantidade 1
         const product = await axiosI
-          .get(`/products/${productId}`)
+          .get(`${productId}`)
           .then(({ data }) => data);
 
-        const newProduct: Product = {
+        const newProduct: CartProduct = {
           ...product,
           amount: 1
         };
@@ -126,7 +147,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       );
 
       if (foundProductInCart) {
-        foundProductInCart.amount = amount;
+        foundProductInCart.amountInCart = amount;
         setCart(cartUpdated);
         localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
       } else {
@@ -150,7 +171,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         setCart(cartUpdated);
         localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
       } else {
-        throw Error();
+        throw Error('aaa');
       }
     } catch {
       console.log('Erro na remoção do produto');
@@ -172,6 +193,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     </CartContext.Provider>
   );
 };
+
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const useCart = (): CartContextType => {
   const context = useContext(CartContext);

@@ -8,8 +8,8 @@ const axiosBasic = axios.create({
   baseURL: 'https://'
 });
 
-const axiosHttpCats = axios.create({
-  baseURL: 'https://http.cat/'
+const productsRouter = axios.create({
+  baseURL: 'http://localhost:4000/products'
 });
 
-export { axiosI, axiosBasic, axiosHttpCats };
+export { axiosI, axiosBasic, productsRouter };

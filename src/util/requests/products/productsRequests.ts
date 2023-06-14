@@ -1,7 +1,9 @@
+import mocks from '@/components/screens/MakeOrder_Page/mock';
+import { objNewOrderParams } from './../../../components/screens/MakeOrder_Page/index';
 import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
 import { ObjNewProduct } from '@/components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
 import { Product } from '@/hooks/useProducts';
-import { axiosI } from '@/services/axios';
+import { axiosI, productsRouter } from '@/services/axios';
 
 interface SetObjNewProduct {
   (obj: ObjNewProduct): void;
@@ -18,6 +20,35 @@ async function postRegisterProduct(
   } catch (err) {
     console.error(err);
     setObjNewProduct({ ...objNewProduct, price: '' });
+  }
+}
+
+export interface ProductCustomized {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  cupSize: Product;
+  flavours: Product[];
+  complements: Product[];
+  toppings: Product[];
+  fruit: Product;
+  plus: Product[];
+}
+
+async function postRegisterProductCustomized(
+  objNewProduct: objNewOrderParams
+): Promise<ProductCustomized> {
+  try {
+    const { data } = await productsRouter.post(
+      `/new-order-client`,
+      objNewProduct
+    );
+
+    return data;
+  } catch (err) {
+    console.error(err);
+    return mocks.exampleNewOrderCustomized;
   }
 }
 
@@ -122,7 +153,7 @@ async function getProductById(productId: string): Promise<Product> {
       category: 'produto x',
       isFavorited: false,
       description: '1 Litro',
-      amount: Math.floor(Math.random() * 5),
+      amount: 3,
       unitOfMeasure: 'unit',
       quantityForUnity: 1
     };
@@ -190,7 +221,8 @@ const productRequests = {
   getOfertDay,
   getMoreOrders,
   getFavoriteds,
-  getProductById
+  getProductById,
+  postRegisterProductCustomized
 };
 
 export default productRequests;

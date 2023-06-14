@@ -36,6 +36,7 @@ import { responseProducts } from '.';
 import { HomeResponseAPI } from '../Home_Page/HomePage';
 import moreOrderImage from '@/assets/copoHome.jpg';
 import moreOrderImage2 from '@/assets/copoHome2.jpg';
+import { ProductCustomized } from '@/util/requests';
 
 export const exampleProductsOrder: responseProducts = {
   sizes: [
@@ -774,9 +775,154 @@ export const exampleHomeContent: HomeResponseAPI = {
   ]
 };
 
+export const exampleNewOrderCustomized: ProductCustomized = {
+  id: 2,
+  name: 'açaí incrível do juan',
+  image: '',
+  price: 2.5,
+  cupSize: {
+    id: 0,
+    name: 'Aveia',
+    price: 0,
+    image: moreOrderImage,
+    category: 'categoria x',
+    isFavorited: false,
+    description: 'Granola boa',
+    amount: 12,
+    unitOfMeasure: 'unity',
+
+    quantityForUnity: 1
+  },
+  flavours: [
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+      quantityForUnity: 1
+    },
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    }
+  ],
+  complements: [
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    }
+  ],
+  toppings: [
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    }
+  ],
+  fruit: {
+    id: 0,
+    name: 'Aveia',
+    price: 0,
+    image: moreOrderImage,
+    category: 'categoria x',
+    isFavorited: false,
+    description: 'Granola boa',
+    amount: 12,
+    unitOfMeasure: 'unity',
+
+    quantityForUnity: 1
+  },
+  plus: [
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    },
+    {
+      id: 0,
+      name: 'Aveia',
+      price: 0,
+      image: moreOrderImage,
+      category: 'categoria x',
+      isFavorited: false,
+      description: 'Granola boa',
+      amount: 12,
+      unitOfMeasure: 'unity',
+
+      quantityForUnity: 1
+    }
+  ]
+};
+
 const mocks = {
   exampleProductsOrder,
-  exampleHomeContent
+  exampleHomeContent,
+  exampleNewOrderCustomized
 };
 
 export default mocks;
