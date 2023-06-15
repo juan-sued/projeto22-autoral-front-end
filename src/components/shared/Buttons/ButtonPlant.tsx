@@ -2,12 +2,19 @@ import styled from 'styled-components';
 import buttonPlant1 from '@/assets/buttonplant1.svg';
 import buttonPlant2 from '@/assets/buttonplant2.svg';
 import buttonPlant3 from '@/assets/buttonplant3.svg';
+import { useNavigate } from 'react-router-dom';
 
-export default function ButtonPlant() {
+interface ButtonPlantProps {
+  title: string;
+  to: string;
+}
+
+const ButtonPlant: React.FC<ButtonPlantProps> = ({ title, to }) => {
+  const navigate = useNavigate();
   return (
-    <ButtonPlantStyle>
+    <ButtonPlantStyle onClick={() => navigate(to)}>
       <button>
-        Ver
+        {title}
         <div className="icon-1">
           <img src={buttonPlant1} alt="" />
         </div>
@@ -20,10 +27,13 @@ export default function ButtonPlant() {
       </button>
     </ButtonPlantStyle>
   );
-}
+};
+
+export default ButtonPlant;
 
 const ButtonPlantStyle = styled.div`
   width: 100%;
+  max-width: 400px;
   button {
     position: relative;
     background: #fec195;

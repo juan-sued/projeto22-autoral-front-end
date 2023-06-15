@@ -4,6 +4,7 @@ import { MdAdd, MdRemove } from 'react-icons/md';
 import { useCart } from '@/hooks/useCart';
 import imageAcai from '@/assets/copoHome.jpg';
 import CheckboxBlock from '@/components/shared/Checkboxs/CheckboxBlock';
+import { useState } from 'react';
 
 interface ItemProductTableProps {
   image: string;
@@ -12,18 +13,19 @@ interface ItemProductTableProps {
   description: string;
   amount: number;
   id: number;
+  selectProductInCart: (value: number) => void;
 }
 
 function ItemProductTable({
   image,
   price,
-
   description,
   name,
   amount,
-  id
+  id,
+  selectProductInCart
 }: ItemProductTableProps) {
-  const { updateProductAmount, removeProduct } = useCart();
+  const { updateProductAmount } = useCart();
 
   function handleProductIncrement({
     id,
@@ -45,13 +47,9 @@ function ItemProductTable({
     updateProductAmount({ productId: id, amount: amount - 1 });
   }
 
-  function handleRemoveProduct(productId: number) {
-    removeProduct(productId);
-  }
-
   return (
     <ItemProductTableStyle>
-      <CheckboxBlock />
+      <CheckboxBlock selectProductInCart={selectProductInCart} id={id} />
       <img src={image ? image : imageAcai} alt="" />
       <div className="containerContent">
         <div className="title">{name}</div>
@@ -80,6 +78,7 @@ function ItemProductTable({
     </ItemProductTableStyle>
   );
 }
+
 export const ItemProductTableStyle = styled.div`
   width: 100%;
   display: flex;

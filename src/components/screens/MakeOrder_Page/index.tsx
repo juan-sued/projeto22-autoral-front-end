@@ -186,6 +186,9 @@ const MakeOrderPage: React.FC = () => {
         total={formatPrice(totalPrice)}
         handleCreateOrder={handleCreateOrder}
         stateButton={stateButton}
+        enableAdd={
+          cupSizeId.length > 0 && flavoursIds.length > 0 ? true : false
+        }
       />
     </MakeOrderPageStyle>
   );

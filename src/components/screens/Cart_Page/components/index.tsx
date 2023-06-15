@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { formatPrice } from '@/util/format';
 
 import { Container } from './styles';
@@ -12,6 +12,8 @@ import { useAuth } from '@/hooks/useAuth';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import ItemProductTable from '../ItemProductTable';
+import ButtonOnlyWords from '@/components/shared/Buttons/ButtonOnlyWords';
+import MessageNotFound from '@/components/shared/Errors/MessageNotFound';
 
 interface CartProps {
   message?: string;
@@ -21,7 +23,7 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
   const { userInfo, signOut } = useAuth();
 
-  const { cart, setCart } = useCart();
+  const { cart, setCart, removeAllProductsSelecteds } = useCart();
 
   const cartFormatted = cart.map(product => ({
     ...product,
@@ -59,31 +61,57 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     requestOrder(orderData, signOut, success);
   }
 
+  const [productsIdsSelecteds, setProductsIdsSelecteds] = useState<number[]>(
+    []
+  );
+  function selectProductInCart(id: number) {
+    // Verifica se o produto já está selecionado
+    const isSelected = productsIdsSelecteds.includes(id);
+
+    if (isSelected) {
+      // Remove o produto da lista de produtos selecionados
+      const updatedSelecteds = productsIdsSelecteds.filter(
+        productId => productId !== id
+      );
+      setProductsIdsSelecteds(updatedSelecteds);
+    } else {
+      // Adiciona o produto à lista de produtos selecionados
+      const updatedSelecteds = [...productsIdsSelecteds, id];
+      setProductsIdsSelecteds(updatedSelecteds);
+    }
+  }
+
+  console.log(productsIdsSelecteds);
   return (
     <>
       <Back />
       <TitlePage title={'Meu Carrinho'} to={'/'} />
       <Container>
         <ProductTable>
-          {cartFormatted.length === 0
-            ? 'carrinho vazio'
-            : cartFormatted.map((product, index) => (
-                <ItemProductTable
-                  key={product.id}
-                  image={product.image}
-                  price={product.priceFormatted}
-                  description={'teste de descrição'}
-                  amount={product.amountInCart}
-                  name={product.name}
-                  id={product.id}
-                />
-              ))}
+          {cartFormatted.length === 0 ? (
+            <MessageNotFound />
+          ) : (
+            cartFormatted.map((product, index) => (
+              <ItemProductTable
+                key={product.id}
+                image={product.image}
+                price={product.priceFormatted}
+                description={'teste de descrição'}
+                amount={product.amountInCart}
+                name={product.name}
+                id={product.id}
+                selectProductInCart={selectProductInCart}
+              />
+            ))
+          )}
         </ProductTable>
         <FooterWithPriceAndButton
           isCart={true}
           isSigned={isSigned}
           handleCreateOrder={handleCreateOrder}
           total={total.toString()}
+          productsIdsSelecteds={productsIdsSelecteds}
+          setProductsIdsSelecteds={setProductsIdsSelecteds}
         />
       </Container>
     </>

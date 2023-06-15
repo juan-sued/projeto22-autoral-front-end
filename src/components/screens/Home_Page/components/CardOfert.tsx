@@ -20,7 +20,7 @@ export default function CardOfert({ objHomeResponseAPI }: CardOfertProps) {
           <h1>
             Você <strong>merece</strong> essa oferta.
           </h1>
-          <ButtonPlant />
+          <ButtonPlant title="Ver" to="/make-order" />
         </div>
         <div className="cardOfert cover">
           <div className="pointGold one"></div>

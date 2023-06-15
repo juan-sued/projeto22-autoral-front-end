@@ -1,22 +1,42 @@
 import styled from 'styled-components';
+interface CheckboxBlockProps {
+  selectProductInCart: (value: number) => void;
+  id: number;
+}
 
-export default function CheckboxBlock() {
+const CheckboxBlock: React.FC<CheckboxBlockProps> = ({
+  selectProductInCart,
+  id
+}) => {
   return (
     <CheckboxBlockStyle>
       <div className="content">
         <label className="checkBox">
-          <input id="ch1" type="checkbox" />
+          <input
+            id="ch1"
+            type="checkbox"
+            onChange={() => selectProductInCart(id)}
+          />
           <div className="transition"></div>
         </label>
       </div>
     </CheckboxBlockStyle>
   );
-}
+};
+export default CheckboxBlock;
 
 const CheckboxBlockStyle = styled.div`
   width: 90px;
   display: grid;
   place-items: center;
+
+  :active {
+    transform: scale(0.9);
+  }
+  :hover {
+    transform: scale(1.2);
+  }
+
   .clear {
     clear: both;
   }

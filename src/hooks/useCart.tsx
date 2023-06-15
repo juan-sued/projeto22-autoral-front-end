@@ -15,7 +15,7 @@ interface CartContextType {
     productId,
     amount
   }: UpdateProductAmount) => Promise<void>;
-  removeProduct: (productId: number) => void;
+  removeAllProductsSelecteds: (productsIds: number[]) => void;
   cart: (CartProduct | CartProductCustomized)[];
 
   setCart: (cart: (CartProduct | CartProductCustomized)[]) => void;
@@ -110,23 +110,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  function removeProduct(productId: number) {
+  async function removeAllProductsSelecteds(productIds: number[]) {
     try {
-      const cartUpdated = [...cart];
-
-      const indexProductCart = cartUpdated.findIndex(
-        product => product.id === productId
+      const cartUpdated = cart.filter(
+        product => !productIds.includes(product.id)
       );
-
-      if (indexProductCart >= 0) {
-        cartUpdated.splice(indexProductCart, 1);
-        setCart(cartUpdated);
-        localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
-      } else {
-        throw Error('aaa');
-      }
-    } catch {
-      console.log('Erro na remoção do produto');
+      setCart(cartUpdated);
+      localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
+    } catch (error) {
+      console.log('Error removing products:', error);
     }
   }
 
@@ -136,7 +128,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         cart,
         addProduct,
         updateProductAmount,
-        removeProduct,
+        removeAllProductsSelecteds,
         setCart,
         addProductOrderInCart
       }}
