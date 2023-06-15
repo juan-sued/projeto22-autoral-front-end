@@ -65,7 +65,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   }
   const isMostOrdered = titleSession === 'Mais pedidos';
   const isFavorite = titleSession === 'Meus favoritos';
-
+  //aas
   return (
     <CarouselListContainer margin_top={margin_top}>
       {titleSession && <TitleAndArrow titleSession={titleSession} />}
