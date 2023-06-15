@@ -23,7 +23,7 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
   const { userInfo, signOut } = useAuth();
 
-  const { cart, setCart, removeAllProductsSelecteds } = useCart();
+  const { cart, setCart } = useCart();
 
   const cartFormatted = cart.map(product => ({
     ...product,
@@ -81,7 +81,6 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     }
   }
 
-  console.log(productsIdsSelecteds);
   return (
     <>
       <Back />

@@ -30,6 +30,8 @@ export default function FooterWithPriceAndButton({
   const navigate = useNavigate();
   const { removeAllProductsSelecteds } = useCart();
 
+  const enable = (enableAdd && !isCart) || (!enableAdd && isCart);
+
   async function deleteProductsInCart() {
     try {
       if (setStateButton) setStateButton('loading');
@@ -46,7 +48,7 @@ export default function FooterWithPriceAndButton({
   }
   if (isCart && productsIdsSelecteds?.length === 0) {
     return (
-      <FooterWithPriceAndButtonStyle enableAdd={enableAdd}>
+      <FooterWithPriceAndButtonStyle enable={enable}>
         <footer>
           {isSigned ? (
             <button
@@ -65,7 +67,7 @@ export default function FooterWithPriceAndButton({
               {stateButton === 'loading' ? <Loading /> : 'Fazer login'}
             </button>
           )}
-          <Total enableAdd={enableAdd}>
+          <Total enable={enable}>
             <span>TOTAL</span>
             <strong>{total}</strong>
           </Total>
@@ -73,12 +75,12 @@ export default function FooterWithPriceAndButton({
       </FooterWithPriceAndButtonStyle>
     );
   } else if (
-    isCart &&
+    enable &&
     productsIdsSelecteds &&
     productsIdsSelecteds?.length > 0
   ) {
     return (
-      <FooterWithPriceAndButtonStyle enableAdd={enableAdd}>
+      <FooterWithPriceAndButtonStyle enable={enable}>
         <footer>
           <button
             className="buttonDelete"
@@ -97,25 +99,25 @@ export default function FooterWithPriceAndButton({
     );
   } else {
     return (
-      <FooterWithPriceAndButtonStyle enableAdd={enableAdd}>
+      <FooterWithPriceAndButtonStyle enable={enable}>
         <footer>
           <button
             className="buttonAddCart"
             disabled={stateButton === 'loading' ? true : false}
             type="button"
-            onClick={enableAdd ? handleCreateOrder : message}
+            onClick={enable ? handleCreateOrder : message}
           >
             <p className="text">
               {stateButton === 'loading' ? (
                 <Loading />
-              ) : enableAdd ? (
+              ) : enable ? (
                 'Adicionar ao carrinho'
               ) : (
                 'Escolha ao menos um tamanho e sabor'
               )}
             </p>
           </button>
-          <Total enableAdd={enableAdd}>
+          <Total enable={enable}>
             <span>TOTAL</span>
             <strong>{total}</strong>
           </Total>
@@ -125,7 +127,7 @@ export default function FooterWithPriceAndButton({
   }
 }
 interface FooterWithPriceAndButtonStyleProps {
-  enableAdd: boolean;
+  enable: boolean;
 }
 const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStyleProps>`
   z-index: 100000;
@@ -170,11 +172,11 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     .buttonAddCart {
       transition: all 0.6s ease;
 
-      width: ${props => (props.enableAdd ? '50' : '100')}%;
+      width: ${props => (props.enable ? '50' : '100')}%;
 
       .text {
         animation: ${props =>
-          props.enableAdd ? 'fadeAnimation 2s ease-in' : 'none'};
+          props.enable ? 'fadeAnimation 2s ease-in' : 'none'};
       }
     }
     .buttonDelete {
@@ -198,16 +200,14 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
 `;
 
 interface TotalProps {
-  enableAdd: boolean;
+  enable: boolean;
 }
 
 export const Total = styled.div<TotalProps>`
       transition: all 2s ease;
-
-  display: ${props => (props.enableAdd ? 'flex' : 'none')};
-  align-items: baseline;
-  animation: ${props =>
-    props.enableAdd ? 'fadeAnimation 2s ease-in' : 'none'};
+    display: ${props => (props.enable ? 'flex' : 'none')};
+    align-items: baseline;
+    animation: ${props => (props.enable ? 'fadeAnimation 2s ease-in' : 'none')};
      
 
   span {

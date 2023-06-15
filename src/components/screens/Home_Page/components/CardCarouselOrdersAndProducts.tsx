@@ -1,31 +1,36 @@
 import styled from 'styled-components';
 import { formatPrice } from '@/util/format';
-
+import CheckboxHeart from '@/components/shared/Checkboxs/CheckboxHeart';
+import { useProduct } from '@/hooks/useProducts';
+import copoAcai from '@/assets/copoHome.jpg';
 interface CardCarouselOrdersAndProductsProps {
   image: string;
   name: string;
   price: number;
-  icon: string;
+  id: number;
+  isFavorited: boolean;
 }
 
 export default function CardCarouselOrdersAndProducts({
   image,
   name,
   price,
-  icon
+  id,
+  isFavorited
 }: CardCarouselOrdersAndProductsProps) {
   const priceFormatted = formatPrice(price);
 
+  const imageBanner = image ? image : copoAcai;
   return (
     <CardOfProduct>
       <div className="bannerContainer">
-        <img className="banner" src={image} alt="" />
+        <img className="banner" src={imageBanner} alt="" />
       </div>
       <div className="container">
         <h1 className="title">{name}</h1>
         <div className="priceProductContainer">
           <p className="priceProduct">{priceFormatted}</p>
-          <img src={icon} alt="" />
+          <CheckboxHeart isFavorited={isFavorited} id={id} />
         </div>
       </div>
     </CardOfProduct>
@@ -82,7 +87,7 @@ box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 
     p {
       font-size: 20px;

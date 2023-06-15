@@ -93,7 +93,7 @@ const MakeOrderPage: React.FC = () => {
       const nameProduct = name
         ? name
         : userInfo?.name !== undefined
-        ? 'Açaí -' + userInfo?.name
+        ? 'Açaí - ' + userInfo?.name
         : 'Açaí';
       const idInCart = cart.length + 1;
       const updatedObjNewOrder = {

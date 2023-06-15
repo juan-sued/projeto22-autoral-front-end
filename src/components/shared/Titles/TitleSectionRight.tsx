@@ -57,7 +57,6 @@ const TitleSectionRightContainer = styled.div<TitleSectionRightContainerProps>`
     .line {
       background-color: ${props => props.colorLine};
       height: 1px;
-      width: 103%;
       position: relative;
       bottom: ${props => (props.fontSize === '26px' ? '7px' : '13px')};
       right: 0;

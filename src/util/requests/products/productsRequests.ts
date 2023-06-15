@@ -231,6 +231,14 @@ function getFavoriteds(
     .catch(err => console.error(err));
 }
 
+async function updateIsFavorite(productId: number): Promise<void> {
+  try {
+    await productsRouter.put(`/favorited/${productId}`);
+  } catch (err) {
+    throw new Error('Erro ao favoritar');
+  }
+}
+
 const productRequests = {
   postRegisterProduct,
   getProductsByCharacter,
@@ -239,7 +247,8 @@ const productRequests = {
   getFavoriteds,
   getProductById,
   postRegisterProductCustomized,
-  getVerifyAmountProductCustomizedAvaibles
+  getVerifyAmountProductCustomizedAvaibles,
+  updateIsFavorite
 };
 
 export default productRequests;

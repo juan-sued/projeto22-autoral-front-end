@@ -78,21 +78,16 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
         <PopsicleLoading />
       ) : (
         <div className="rowOfCardsContainer">
-          {objctResponseAPI.map((order, index) => {
-            const icon = isMostOrdered
-              ? order.isFavorited
-                ? iconFavorited
-                : addFavorites
-              : iconExitFavorites;
-
+          {objctResponseAPI.map(order => {
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={order.id}>
                 {isMostOrdered || isFavorite ? (
                   <CardCarouselOrdersAndProducts
+                    isFavorited={order.isFavorited}
                     image={order.image}
                     name={order.name}
                     price={Number(order.price)}
-                    icon={icon}
+                    id={order.id}
                   />
                 ) : (
                   <CardCarouselProduct

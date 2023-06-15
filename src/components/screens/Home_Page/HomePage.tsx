@@ -13,7 +13,7 @@ import Main from '@/components/shared/Main';
 import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
-import { Product } from '@/hooks/useProducts';
+import { Product, useProduct } from '@/hooks/useProducts';
 import { axiosI } from '@/Routes/services/axios';
 import pagesRequests from '@/util/requests/pages/pagesRequests';
 import productRequests from '@/util/requests/products/productsRequests';
@@ -30,19 +30,24 @@ export default function HomePage() {
 
   const [objHomeResponseAPI, setObjHomeResponseAPI] =
     useState<HomeResponseAPI | null>(null);
-  const [favoritedsList, setFavoritedsList] = useState<Product[]>([]);
 
+  const [favoritedsList, setFavoritedsList] = useState<Product[]>([]);
+  const [unFavoriteProducts, setUnFavoriteProducts] = useState<Product[]>([]);
+
+  const { productsAndCategories } = useProduct();
   useEffect(() => {
     if (signed && axiosI.defaults.headers['Authorization'] !== undefined) {
-      productRequests.getFavoriteds(favoritedsList, setFavoritedsList, signOut);
+      const favoriteProducts = productsAndCategories.productsList.filter(
+        product => product.isFavorited
+      );
+      setFavoritedsList(favoriteProducts);
     }
 
-    pagesRequests.homeContent(
-      objHomeResponseAPI,
-      setObjHomeResponseAPI,
-      signOut
+    const unFavoriteProducts = productsAndCategories.productsList.filter(
+      product => product.isFavorited === false
     );
-  }, [signed]);
+    setUnFavoriteProducts(unFavoriteProducts);
+  }, [signed, productsAndCategories]);
 
   return (
     <>
@@ -56,14 +61,22 @@ export default function HomePage() {
         <Divider />
 
         <CarouselListProduct
-          objctResponseAPI={mocks.exampleHomeContent.listMoreOrders}
+          objctResponseAPI={
+            unFavoriteProducts.length > 0
+              ? unFavoriteProducts
+              : mocks.exampleHomeContent.listMoreOrders
+          }
           titleSession={'Mais pedidos'}
           margin_top={-50}
         />
 
         {signed ? (
           <CarouselListProduct
-            objctResponseAPI={mocks.exampleHomeContent.listMyFavoriteds}
+            objctResponseAPI={
+              favoritedsList.length > 0
+                ? favoritedsList
+                : mocks.exampleHomeContent.listMyFavoriteds
+            }
             titleSession={'Meus favoritos'}
             margin_top={-50}
           />

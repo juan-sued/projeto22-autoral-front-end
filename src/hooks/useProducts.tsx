@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { axiosI } from '@/Routes/services/axios';
+import { productsRouter } from '@/Routes/services/axios';
+import productRequests from '@/util/requests/products/productsRequests';
 
 export interface Product {
   id: number;
@@ -27,6 +27,9 @@ interface ProductsAndCategories {
 
 interface ProductsContextType {
   productsAndCategories: ProductsAndCategories;
+  updateIsFavorited: (productId: number) => void;
+  keyRequestProduct: boolean;
+  setKeyRequestProduct: (value: boolean) => void;
 }
 
 const ProductsContext = createContext<ProductsContextType | undefined>(
@@ -36,16 +39,17 @@ const ProductsContext = createContext<ProductsContextType | undefined>(
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
+  const [keyRequestProduct, setKeyRequestProduct] = useState<boolean>(false);
+
   const [productsAndCategories, setProductsAndCategories] =
     useState<ProductsAndCategories>({
       productsList: [],
       categoriesList: []
     });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    axiosI
-      .get('/products')
+    productsRouter
+      .get('/')
       .then(({ data }) => {
         setProductsAndCategories(data);
       })
@@ -59,9 +63,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
           productsList: [
             {
               id: 1,
-              name: 'e',
+              name: 'Açaí da Ana',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto x',
               isFavorited: false,
               description: '1 Litro',
@@ -71,9 +75,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
             },
             {
               id: 2,
-              name: 'banana',
+              name: 'Açaí da Alessandra',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto y',
               isFavorited: false,
               description: '1 Litro',
@@ -85,7 +89,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
               id: 3,
               name: 'morango',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
@@ -97,7 +101,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
               id: 4,
               name: 'chocolate',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
@@ -109,7 +113,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
               id: 5,
               name: 'morango',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
@@ -121,7 +125,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
               id: 6,
               name: 'menta',
               price: 2.5,
-              image: 'https://asdasdasdasdasd',
+              image: '',
               category: 'produto z',
               isFavorited: true,
               description: '1 Litro',
@@ -134,12 +138,51 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 
         setProductsAndCategories(testArr);
 
-        console.error(err);
+        console.error('erro ao pegar produtos', err);
       });
-  }, []);
+  }, [keyRequestProduct]);
+
+  async function updateIsFavorited(productId: number) {
+    try {
+      await productRequests.updateIsFavorite(productId);
+      setKeyRequestProduct(!keyRequestProduct);
+    } catch (error) {
+      const productsUpdated: ProductsAndCategories = {
+        ...productsAndCategories
+      };
+
+      console.log(productsAndCategories);
+      const newProductsWithFavorited = productsUpdated.productsList.map(
+        product => {
+          if (product.id === productId) {
+            return {
+              ...product,
+              isFavorited: !product.isFavorited
+            };
+          }
+          return product;
+        }
+      );
+      console.log(newProductsWithFavorited);
+
+      setProductsAndCategories({
+        ...productsAndCategories,
+        productsList: newProductsWithFavorited
+      });
+
+      console.log('erro ao atualizar favorito', error);
+    }
+  }
 
   return (
-    <ProductsContext.Provider value={{ productsAndCategories }}>
+    <ProductsContext.Provider
+      value={{
+        productsAndCategories,
+        updateIsFavorited,
+        keyRequestProduct,
+        setKeyRequestProduct
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   );
