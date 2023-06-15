@@ -1,24 +1,19 @@
-import { useProduct } from '@/hooks/useProducts';
 import styled from 'styled-components';
-import { useState } from 'react';
+
 import iconRemoveFavorite from '@/assets/iconExitFavorites.svg';
 interface CheckboxHeartProps {
-  id: number;
   isFavorited: boolean;
+  selectedProduct: () => void;
+  clicked: boolean;
+  isHidden: boolean;
 }
 
-const CheckboxHeart: React.FC<CheckboxHeartProps> = ({ id, isFavorited }) => {
-  const { updateIsFavorited } = useProduct();
-  const [clicked, setClicked] = useState(isFavorited);
-
-  function selectedProduct() {
-    try {
-      setClicked(!clicked); // Inverte o valor de clicked
-      updateIsFavorited(id);
-    } catch (error) {
-      console.log('Erro ao favoritar', error);
-    }
-  }
+const CheckboxHeart: React.FC<CheckboxHeartProps> = ({
+  isFavorited,
+  clicked,
+  selectedProduct,
+  isHidden
+}) => {
   if (isFavorited) {
     return (
       <CheckboxHeartStyle>
@@ -29,6 +24,7 @@ const CheckboxHeart: React.FC<CheckboxHeartProps> = ({ id, isFavorited }) => {
             className="like"
             checked={clicked || isFavorited}
             onChange={selectedProduct}
+            disabled={clicked}
           />
           <img src={iconRemoveFavorite} alt="" className="iconRemove" />
         </div>
