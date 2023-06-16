@@ -115,6 +115,13 @@ export default function StockPage() {
 
   const [toggleModal, setToggleModal] = useState(false);
 
+  async function searchProducts() {
+    const filteredsProducts: Product[] =
+      await productRequests.getProductsByCharacter(searchProduct.searchBar);
+
+    setResponseProducts(filteredsProducts);
+  }
+
   return (
     <>
       {toggleModal ? (
@@ -130,12 +137,7 @@ export default function StockPage() {
       <SearchBar
         searchBar={searchProduct.searchBar}
         onChange={handleChangeText}
-        sendSearch={() =>
-          productRequests.getProductsByCharacter(
-            searchProduct,
-            setResponseProducts
-          )
-        }
+        sendSearch={searchProducts}
       />
 
       <Main margin_top={'80'}>

@@ -54,7 +54,8 @@ export default function CardCarouselProduct({
     quantityForUnity > 1 && quantityForUnity < 300 ? textShowUnity : '';
   const priceFormatted = formatPrice(price);
 
-  const { ref, inView, entry } = useInView({
+  const { ref, inView } = useInView({
+    delay: 200,
     threshold: 0
   });
   const delay = index / 10 + 0.5;
@@ -114,6 +115,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   color: ${props => (props.isSelected ? '#7fff7f' : 'white')};
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   border: 3px solid ${props => (props.isSelected ? '#7fff7f' : 'transparent')};
+  opacity: 0;
   ${props =>
     props.inView
       ? ` animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`

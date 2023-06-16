@@ -68,18 +68,13 @@ async function getVerifyAmountProductCustomizedAvaibles(
   }
 }
 
-async function getProductsByCharacter(
-  searchProduct: { searchBar: string },
-  setResponseProducts: (value: Product[]) => void
-): Promise<void> {
+async function getProductsByCharacter(character: string): Promise<Product[]> {
   try {
-    const { data } = await axiosI.get(
-      `/products/product?name=${searchProduct.searchBar}`
-    );
-    setResponseProducts(data);
+    const { data } = await axiosI.get(`/products/product?name=${character}`);
+    return data;
   } catch (err) {
     console.error(err);
-    setResponseProducts([
+    return [
       {
         id: 1,
         name: 'produto 1',
@@ -152,7 +147,7 @@ async function getProductsByCharacter(
         unitOfMeasure: 'unit',
         quantityForUnity: 1
       }
-    ]);
+    ];
   }
 }
 

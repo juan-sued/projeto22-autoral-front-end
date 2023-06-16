@@ -45,6 +45,7 @@ export default function CardCarouselOrdersAndProducts({
   }
 
   const { ref, inView } = useInView({
+    delay: 200,
     threshold: 0
   });
   const imageBanner = image ? image : copoAcai;
@@ -93,10 +94,10 @@ const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
   color: white;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   padding-top: 0;
-
+  opacity: 0;
   ${props =>
     props.inView
-      ? ` animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
+      ? ` ;animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
       : ''}
   .bannerContainer {
     width: 100%;
