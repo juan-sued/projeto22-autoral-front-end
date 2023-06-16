@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import iconExitFavorites from '@/assets/iconExitFavorites.svg';
-import iconFavorited from '@/assets/iconFavorited.svg';
-import addFavorites from '@/assets/addFavorites.svg';
 
 import { Product } from '@/hooks/useProducts';
 import { formatListNames } from '@/util/utilsFunctions';
@@ -78,7 +75,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
         <PopsicleLoading />
       ) : (
         <div className="rowOfCardsContainer">
-          {objctResponseAPI.map(order => {
+          {objctResponseAPI.map((order, index) => {
             return (
               <React.Fragment key={order.id}>
                 {isMostOrdered || isFavorite ? (
@@ -88,6 +85,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                     name={order.name}
                     price={Number(order.price)}
                     id={order.id}
+                    index={index}
                   />
                 ) : (
                   <CardCarouselProduct
@@ -100,6 +98,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
                     name={order.name}
                     showPrice={showPrice}
                     isSelected={productIds.includes(order.id)}
+                    index={index}
                   />
                 )}
               </React.Fragment>
@@ -132,9 +131,10 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
     justify-content: start;
     align-items: center;
     overflow-x: scroll;
+
     padding-left: 13px;
     margin-right: 0px;
-    padding-top: 100px;
+    padding-top: 150px;
     padding-bottom: 20px;
   }
 `;

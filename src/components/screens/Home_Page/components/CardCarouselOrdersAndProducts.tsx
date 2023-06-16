@@ -6,12 +6,15 @@ import { useProduct } from '@/hooks/useProducts';
 
 import { useState } from 'react';
 
+import { useInView } from 'react-intersection-observer';
+
 interface CardCarouselOrdersAndProductsProps {
   image: string;
   name: string;
   price: number;
   id: number;
   isFavorited: boolean;
+  index: number;
 }
 
 export default function CardCarouselOrdersAndProducts({
@@ -19,7 +22,8 @@ export default function CardCarouselOrdersAndProducts({
   name,
   price,
   id,
-  isFavorited
+  isFavorited,
+  index
 }: CardCarouselOrdersAndProductsProps) {
   const priceFormatted = formatPrice(price);
   const { updateIsFavorited } = useProduct();
@@ -33,18 +37,24 @@ export default function CardCarouselOrdersAndProducts({
       }, 1000);
       setClicked(!clicked);
       updateIsFavorited(id);
+
+      setIsHidden(false);
     } catch (error) {
       console.log('Erro ao favoritar', error);
     }
   }
 
+  const { ref, inView } = useInView({
+    threshold: 0
+  });
   const imageBanner = image ? image : copoAcai;
+  const delay = index / 10 + 0.5;
 
   if (isHidden) {
     return null; // Retorna null para ocultar o card
   } else {
     return (
-      <CardOfProduct>
+      <CardOfProductStyle ref={ref} inView={inView} delay={delay}>
         <div className="bannerContainer">
           <img className="banner" src={imageBanner} alt="" />
         </div>
@@ -60,12 +70,16 @@ export default function CardCarouselOrdersAndProducts({
             />
           </div>
         </div>
-      </CardOfProduct>
+      </CardOfProductStyle>
     );
   }
 }
 
-const CardOfProduct = styled.div`
+interface CardOfProductStyleProps {
+  inView: boolean;
+  delay: number;
+}
+const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
   height: 250px;
   min-width: 175px;
   max-width: 175px;
@@ -80,11 +94,16 @@ const CardOfProduct = styled.div`
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   padding-top: 0;
 
+  ${props =>
+    props.inView
+      ? ` animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
+      : ''}
   .bannerContainer {
     width: 100%;
     overflow: hidden;
     border-radius: 10px 10px 100px 100px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
       rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     height: 100%;
   }
@@ -119,4 +138,15 @@ const CardOfProduct = styled.div`
       }
     }
   }
-}`;
+
+  @keyframes fadeTranslate {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-20px);
+    }
+  }
+`;

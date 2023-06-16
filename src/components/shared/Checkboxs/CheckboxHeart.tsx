@@ -24,7 +24,7 @@ const CheckboxHeart: React.FC<CheckboxHeartProps> = ({
             className="like"
             checked={clicked || isFavorited}
             onChange={selectedProduct}
-            disabled={clicked}
+            disabled={isHidden}
           />
           <img src={iconRemoveFavorite} alt="" className="iconRemove" />
         </div>
@@ -85,7 +85,7 @@ const CheckboxHeartStyle = styled.div`
     height: 25px;
     :hover {
       transform: scale(1.2);
-      animation: shake 0.3s infinite;
+      animation: shake 0.15s infinite;
 }
     }
     :active {
@@ -147,7 +147,7 @@ const CheckboxHeartStyle = styled.div`
     transform:  translateX(0px) rotate(-5deg);
   }
   50% {
-    transform:  translateX(3px) rotate(5deg);
+    transform:  translateX(2px) rotate(2deg);
   }
   100% {
     transform:  translateX(0px) rotate(-5deg);

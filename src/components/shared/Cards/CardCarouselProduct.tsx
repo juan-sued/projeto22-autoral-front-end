@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { Product } from '@/hooks/useProducts';
 import { formatPrice } from '@/util/format';
+import { useInView } from 'react-intersection-observer';
 
 interface CardCarouselProductProps
   extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
   incrementProduct: (value: number) => number[];
   showPrice: boolean;
   isSelected: boolean;
+  index: number;
 }
 
 export default function CardCarouselProduct({
@@ -20,7 +22,8 @@ export default function CardCarouselProduct({
   incrementProduct,
   name,
   showPrice,
-  isSelected = false
+  isSelected = false,
+  index
 }: CardCarouselProductProps) {
   let scaleImage = 0.5;
 
@@ -51,8 +54,16 @@ export default function CardCarouselProduct({
     quantityForUnity > 1 && quantityForUnity < 300 ? textShowUnity : '';
   const priceFormatted = formatPrice(price);
 
+  const { ref, inView, entry } = useInView({
+    threshold: 0
+  });
+  const delay = index / 10 + 0.5;
+
   return (
     <CardOfProduct
+      ref={ref}
+      inView={inView}
+      delay={delay}
       scaleImage={scaleImage}
       isSelected={isSelected}
       onClick={() => incrementProduct(id)}
@@ -84,6 +95,8 @@ export default function CardCarouselProduct({
 interface CardOfProductProps {
   scaleImage: number;
   isSelected: boolean;
+  inView: boolean;
+  delay: number;
 }
 
 const CardOfProduct = styled.div<CardOfProductProps>`
@@ -101,6 +114,10 @@ const CardOfProduct = styled.div<CardOfProductProps>`
   color: ${props => (props.isSelected ? '#7fff7f' : 'white')};
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   border: 3px solid ${props => (props.isSelected ? '#7fff7f' : 'transparent')};
+  ${props =>
+    props.inView
+      ? ` animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
+      : ''}
 
   .containerTitle {
     width: 100%;
@@ -155,6 +172,17 @@ const CardOfProduct = styled.div<CardOfProductProps>`
         translateY(${props => (props.isSelected ? '-50px' : '0')});
       transition: transform 0.2s ease-in-out;
       border-radius: 100px;
+    }
+  }
+
+  @keyframes fadeTranslate {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-5px);
     }
   }
 `;
