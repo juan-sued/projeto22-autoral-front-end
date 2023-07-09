@@ -41,7 +41,6 @@ export default function CardIdentify({
 
   const dayCreatedAt = returnDayFormated(userDetails.createdAt);
   const dayUpdatedAt = returnDayFormated(userDetails.updatedAt);
-
   const [updateDataUser, setUpdateDataUser] = useState<UpdateDataUser>({
     name: '',
     email: '',
@@ -138,9 +137,21 @@ export default function CardIdentify({
 const CardIdentifyStyle = styled.div`
   background-color: white;
   width: 100%;
-  height: auto;
+
   border-radius: 10px;
   padding: 15px;
+  animation: normal 0.5s fadeTranslate;
+
+  @keyframes fadeTranslate {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
 
   section {
     display: flex;
@@ -148,5 +159,4 @@ const CardIdentifyStyle = styled.div`
     justify-content: start;
     align-items: center;
   }
-}
 `;

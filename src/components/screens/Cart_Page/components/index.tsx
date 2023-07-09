@@ -6,18 +6,24 @@ import styled from 'styled-components';
 
 import requestOrder from './requestOrder';
 
-import { useCart } from '@/hooks/useCart';
+import { CartProduct, CartProductCustomized, useCart } from '@/hooks/useCart';
 
 import { useAuth } from '@/hooks/useAuth';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import ItemProductTable from '../ItemProductTable';
-import ButtonOnlyWords from '@/components/shared/Buttons/ButtonOnlyWords';
 import MessageNotFound from '@/components/shared/Errors/MessageNotFound';
 
 interface CartProps {
   message?: string;
   isSigned?: boolean;
+}
+export interface OrderData {
+  products: (CartProduct | CartProductCustomized)[];
+  details: {
+    total: number;
+    subTotal: number;
+  };
 }
 
 const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
@@ -31,26 +37,17 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
     subTotal: formatPrice(product.price * product.amountInCart)
   }));
 
-  const total = formatPrice(
-    cart.reduce((sumTotal, product) => {
-      return sumTotal + product.price * product.amountInCart;
-    }, 0)
-  );
+  const total = cart.reduce((sumTotal, product) => {
+    return sumTotal + product.price * product.amountInCart;
+  }, 0);
 
   function handleCreateOrder() {
-    const order = cart.map(products => {
-      return {
-        id: products.id,
-        name: products.name,
-        price: products.price,
-        image: products.image,
-        amount: products.amountInCart
-      };
-    });
-
-    const orderData = {
-      user: userInfo?.id,
-      order
+    const orderData: OrderData = {
+      products: cart,
+      details: {
+        total: total,
+        subTotal: total
+      }
     };
 
     const success = () => {
@@ -108,7 +105,7 @@ const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
           isCart={true}
           isSigned={isSigned}
           handleCreateOrder={handleCreateOrder}
-          total={total.toString()}
+          total={formatPrice(total)}
           productsIdsSelecteds={productsIdsSelecteds}
           setProductsIdsSelecteds={setProductsIdsSelecteds}
         />

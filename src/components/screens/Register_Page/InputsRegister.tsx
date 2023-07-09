@@ -3,6 +3,7 @@ import Loading from '@/components/shared/Loaders/Loading';
 import { ContainerFormClass, InputClass } from './styles';
 import signUpRequest from './singUpRequest';
 import ButtonSubmit from '@/components/shared/Buttons/ButtonSubmit';
+import { useNavigate } from 'react-router-dom';
 
 export interface SignUpData {
   name: string;
@@ -17,11 +18,10 @@ export default function SignUpForm() {
     password: ''
   });
 
+  const navigate = useNavigate();
   const [inputConfirmPassword, setInputConfirmPassword] = useState('');
 
   const [stateColorButton, setStateColorButton] = useState('#ffffff');
-
-  const [success, setSuccess] = useState(false);
 
   const handleChangText = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'confirmPassword')
@@ -32,17 +32,19 @@ export default function SignUpForm() {
       [e.target.name]: e.target.value
     });
   };
+  function sucess() {
+    navigate('/sign-in');
+  }
 
   function newRegister(event: FormEvent) {
     event.preventDefault();
-
     if (inputConfirmPassword !== signUpData.password) {
       setInputConfirmPassword('');
       setStateColorButton('#e21a26');
       return;
     }
 
-    signUpRequest({ signUpData, setStateColorButton });
+    signUpRequest({ signUpData, setStateColorButton, sucess });
   }
 
   if (

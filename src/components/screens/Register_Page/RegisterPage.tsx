@@ -20,7 +20,7 @@ export default function RegisterPage() {
         <Main margin_top={'90'}>
           <Logo src={logo} alt="" />
           <InputsRegister />
-          <Link to="/">
+          <Link to="/sign-in">
             <ButtonOnlyWords>Já possui cadastro? Faça login!</ButtonOnlyWords>
           </Link>
         </Main>

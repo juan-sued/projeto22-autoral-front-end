@@ -96,6 +96,7 @@ export default function CardAddAddress({
               onChange={handleChangeText}
               marginRight={'10px'}
               maxWidth={'350px'}
+              type="TextArea"
             />
             <InputInfoField
               nameInput={'Número: '}
@@ -118,6 +119,7 @@ export default function CardAddAddress({
               value={createDataAddress.neighborhood}
               onChange={handleChangeText}
               marginRight={'10px'}
+              type="text"
             />
           </section>
           <InputInfoField
@@ -158,7 +160,18 @@ const CardAddressStyle = styled.div<{ displayToggle: boolean }>`
   overflow-y: hidden;
   padding-top: 20px;
   height: auto;
+  animation: normal 0.5s fadeSmallBig;
 
+  @keyframes fadeSmallBig {
+    0% {
+      opacity: 0;
+      scale: 0;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+  }
   section {
     display: flex;
     width: 100%;

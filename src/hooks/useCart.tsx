@@ -1,7 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { axiosI, productsRouter } from '@/Routes/services/axios';
-import { Product } from './useProducts';
-import { objNewOrderParams } from '@/components/screens/MakeOrder_Page';
+import { IProductInsert } from './useProducts';
 
 interface UpdateProductAmount {
   productId: number;
@@ -10,50 +8,43 @@ interface UpdateProductAmount {
 
 interface CartContextType {
   addProduct: (productId: number) => Promise<void>;
-  addProductOrderInCart: (objectNewOrder: objNewOrderParams) => void;
+  addProductOrderInCart: (objectNewOrder: IProductInsert) => void;
   updateProductAmount: ({
     productId,
     amount
   }: UpdateProductAmount) => Promise<void>;
   removeAllProductsSelecteds: (productsIds: number[]) => void;
-  cart: (CartProduct | CartProductCustomized)[];
+  cart: CartProduct[];
 
-  setCart: (cart: (CartProduct | CartProductCustomized)[]) => void;
+  setCart: (cart: CartProduct[]) => void;
 }
 
-interface CartProductCustomized extends objNewOrderParams {
-  id: number;
-  amountInCart: number;
-}
-
-interface CartProduct extends Product {
+export interface CartProduct extends IProductInsert {
   amountInCart: number;
 }
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [cart, setCart] = useState<(CartProduct | CartProductCustomized)[]>(
-    () => {
-      const storagedCart = localStorage.getItem('gellatoCart');
+  const [cart, setCart] = useState<CartProduct[]>(() => {
+    const storagedCart = localStorage.getItem('gellatoCart');
 
-      if (storagedCart) {
-        return JSON.parse(storagedCart);
-      }
-
-      return [];
+    if (storagedCart) {
+      return JSON.parse(storagedCart);
     }
-  );
 
-  async function addProductOrderInCart(objectNewOrder: objNewOrderParams) {
+    return [];
+  });
+
+  async function addProductOrderInCart(objectNewOrder: IProductInsert) {
     try {
-      const cartUpdated: (CartProduct | CartProductCustomized)[] = [...cart];
+      const cartUpdated: CartProduct[] = [...cart];
 
-      const newProductCustomized: CartProductCustomized = {
+      const newProduct: CartProduct = {
         ...objectNewOrder,
         amountInCart: 1
       };
-      cartUpdated.push(newProductCustomized);
+      cartUpdated.push(newProduct);
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
@@ -63,7 +54,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   async function addProduct(productId: number) {
     try {
-      const cartUpdated: (CartProduct | CartProductCustomized)[] = [...cart];
+      const cartUpdated: CartProduct[] = [...cart];
       const foundProductInCart = cartUpdated.find(
         product => product.id === productId
       );
@@ -98,13 +89,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         product => product.id === productId
       );
 
-      if (foundProductInCart) {
-        foundProductInCart.amountInCart = amount;
-        setCart(cartUpdated);
-        localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
-      } else {
-        throw Error();
-      }
+      if (!foundProductInCart)
+        throw Error('produto não encontrado no carrinho');
+
+      foundProductInCart.amountInCart = amount;
+      setCart(cartUpdated);
+      localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch {
       console.log('Erro na alteração de quantidade do produto');
     }

@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Product } from '@/hooks/useProducts';
 
 import { formatPrice } from '@/util/format';
 import { calculateTotalPrice, formatListNames } from '@/util/utilsFunctions';
@@ -15,27 +14,17 @@ import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
 import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
 import mocks from './mock';
 import { useAuth } from '@/hooks/useAuth';
-export interface responseProducts {
-  sizes: Product[];
-  flavours: Product[];
-  complements: Product[];
-  toppings: Product[];
-  fruits: Product[];
-  plus: Product[];
+import { IStock } from '@/util/requests/products/stockRequests';
+import { IProductInsert } from '@/hooks/useProducts';
+export interface IResponseStock {
+  sizes: IStock[];
+  flavours: IStock[];
+  complements: IStock[];
+  toppings: IStock[];
+  fruits: IStock[];
+  plus: IStock[];
 }
 //topping === cobertura
-export interface objNewOrderParams {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  cupSizeId: number;
-  flavoursIds: number[];
-  complementsIds: number[];
-  toppingsIds: number[];
-  fruitId: number;
-  plusIds: number[];
-}
 
 const MakeOrderPage: React.FC = () => {
   const { addProductOrderInCart, cart } = useCart();
@@ -52,7 +41,7 @@ const MakeOrderPage: React.FC = () => {
   const [plusIds, setPlusIds] = useState<number[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [name, setName] = useState<string>('');
-  const [objNewOrder, setObjNewOrder] = useState<objNewOrderParams>({
+  const [objNewOrder, setObjNewOrder] = useState<IProductInsert>({
     id: 0,
     image: '',
     price: totalPrice,
@@ -95,7 +84,7 @@ const MakeOrderPage: React.FC = () => {
         : userInfo?.name !== undefined
         ? 'Açaí - ' + userInfo?.name
         : 'Açaí';
-      const idInCart = cart.length + 1;
+      const idInCart = cart.length + 1 * 100000000;
       const updatedObjNewOrder = {
         id: idInCart,
         image: '',

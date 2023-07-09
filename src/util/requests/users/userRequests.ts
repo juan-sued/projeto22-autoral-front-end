@@ -1,4 +1,4 @@
-import { axiosI } from '@/Routes/services/axios';
+import { axiosI } from '@/services/axios';
 
 interface UpdateDataUser {
   name: string;

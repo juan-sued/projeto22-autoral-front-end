@@ -1,12 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { axiosI } from '@/Routes/services/axios';
+import { axiosI } from '@/services/axios';
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  isAdministrator: boolean;
+  permissions: {
+    id: number;
+    name: string;
+    access: string;
+    description: string;
+  };
 }
 
 interface AuthContextType {
@@ -43,12 +48,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     password: string;
   }
 
-  const exempleUserInfo: User = {
-    id: 2,
-    email: 'juansued19@gmail.com',
-    name: 'juan',
-    isAdministrator: true
-  };
   const signIn = async (
     signInData: signInData,
     setStateCollorButton: (value: string) => void,
@@ -59,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const { data } = await axiosI.post('auth/sign-in', signInData);
 
-      setUserInfo(exempleUserInfo);
+      setUserInfo(data.user);
 
       axiosI.defaults.headers['Authorization'] = `Bearer ${data.token}`;
       localStorage.setItem('TBAuthUser', JSON.stringify(data.user));
@@ -67,10 +66,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       navigate('/');
     } catch (err) {
-      setUserInfo(exempleUserInfo);
-      axiosI.defaults.headers['Authorization'] = `Bearer ${'aaaa'}`;
-      localStorage.setItem('TBAuthUser', JSON.stringify(exempleUserInfo));
-      localStorage.setItem('TBAuthToken', 'aaaa');
       setSignIndata({
         email: '',
         password: ''

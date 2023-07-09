@@ -1,17 +1,13 @@
+import { IProductBasic } from './../../../hooks/useProducts';
 import mocks from '@/components/screens/MakeOrder_Page/mock';
-import { objNewOrderParams } from './../../../components/screens/MakeOrder_Page/index';
-import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
-import { ObjNewProduct } from '@/components/screens/Stock_Page/inputsRegisterProduct/InputsRegisterProduct';
-import { Product } from '@/hooks/useProducts';
-import { axiosI, productsRouter } from '@/Routes/services/axios';
+import { axiosI } from '@/services/axios';
+import { IProductInsert, IProductById } from '@/hooks/useProducts';
 
-interface SetObjNewProduct {
-  (obj: ObjNewProduct): void;
-}
+type TPostProduct = Omit<IProductInsert, 'id'>;
 
-async function postRegisterProduct(
-  objNewProduct: ObjNewProduct,
-  setObjNewProduct: SetObjNewProduct,
+async function postProduct(
+  objNewProduct: TPostProduct,
+  setObjNewProduct: (obj: TPostProduct) => void,
   success: () => void
 ): Promise<void> {
   try {
@@ -19,31 +15,15 @@ async function postRegisterProduct(
     success();
   } catch (err) {
     console.error(err);
-    setObjNewProduct({ ...objNewProduct, price: '' });
+    setObjNewProduct({ ...objNewProduct, price: 0 });
   }
 }
 
-export interface ProductCustomized {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  cupSize: Product;
-  flavours: Product[];
-  complements: Product[];
-  toppings: Product[];
-  fruit: Product;
-  plus: Product[];
-}
-
-async function postRegisterProductCustomized(
-  objNewProduct: objNewOrderParams
-): Promise<ProductCustomized> {
+async function postRegisterProduct(
+  objNewProduct: IProductInsert
+): Promise<IProductInsert> {
   try {
-    const { data } = await productsRouter.post(
-      `/new-order-client`,
-      objNewProduct
-    );
+    const { data } = await axiosI.post(`products/`, objNewProduct);
 
     return data;
   } catch (err) {
@@ -52,198 +32,93 @@ async function postRegisterProductCustomized(
   }
 }
 
-async function getVerifyAmountProductCustomizedAvaibles(
-  productCustomized: ProductCustomized
-): Promise<ProductCustomized> {
+async function getProductsByCharacter(
+  character: string
+): Promise<IProductBasic[] | null> {
   try {
-    const { data } = await productsRouter.post(
-      `/verify-product-customized`,
-      productCustomized
-    );
+    const { data } = await axiosI.get(`/products/title?char=${character}`);
 
     return data;
   } catch (err) {
-    console.error(err);
-    return mocks.exampleNewOrderCustomized;
+    console.error('erro ao pegar products por caracter', err);
+    return null;
   }
 }
 
-async function getProductsByCharacter(character: string): Promise<Product[]> {
-  try {
-    const { data } = await axiosI.get(`/products/product?name=${character}`);
-    return data;
-  } catch (err) {
-    console.error(err);
-    return [
-      {
-        id: 1,
-        name: 'produto 1',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto x',
-        isFavorited: false,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      },
-      {
-        id: 2,
-        name: 'banana',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto y',
-        isFavorited: false,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      },
-      {
-        id: 3,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto z',
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      },
-      {
-        id: 4,
-        name: 'chocolate',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto z',
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      },
-      {
-        id: 5,
-        name: 'morango',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto z',
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      },
-      {
-        id: 6,
-        name: 'menta',
-        price: 2.5,
-        image: 'https://asdasdasdasdasd',
-        category: 'produto z',
-        isFavorited: true,
-        description: '1 Litro',
-        amount: 2,
-        unitOfMeasure: 'unit',
-        quantityForUnity: 1
-      }
-    ];
-  }
-}
-
-async function getProductById(productId: string): Promise<Product> {
+async function getProductById(productId: string): Promise<IProductById | null> {
   try {
     const { data } = await axiosI.get(`/products/${productId}`);
     return data;
   } catch (err) {
-    return {
-      id: 1,
-      name: 'produto ' + Math.floor(Math.random() * 5),
-      price: 2.5,
-      image: 'https://asdasdas',
-      category: 'produto x',
-      isFavorited: false,
-      description: '1 Litro',
-      amount: 3,
-      unitOfMeasure: 'unit',
-      quantityForUnity: 1
-    };
+    console.error('erro ao pegar products por caracter', err);
+    return null;
   }
 }
 
-interface ResponseAPI {}
-
-function getOfertDay(
-  objResponseAPI: HomeResponseAPI,
-  setObjResponseAPI: (value: ResponseAPI) => void,
-  signOut: () => void
-): void {
-  axiosI
-    .get('/products/ofert-day')
-    .then(response => {
-      if (response.status === 200) {
-        setObjResponseAPI({ ...objResponseAPI, ofertOfDay: response.data });
-      }
-    })
-    .catch(err => {
-      if (err.response && err.response.status === 401) {
-        signOut();
-      }
-      console.log(err);
-    });
+interface IOfertsOfDay {
+  userId: number;
+  productId: number;
+  description: string;
+  showInit: Date;
+  showFinal: Date;
+  createdAt: Date;
+  price_ofert: string;
+  product: IProductById;
 }
 
-function getMoreOrders(
-  objResponseAPI: ResponseAPI,
-  setObjResponseAPI: (value: ResponseAPI) => void,
+async function getOfertDay(
   signOut: () => void
-): void {
-  axiosI
-    .get('/more-orders')
-    .then(response => {
-      if (response.status === 200) {
-        setObjResponseAPI({ ...objResponseAPI, moreOrders: response.data });
-      }
-    })
-    .catch(err => {
-      if (err.response && err.response.status === 401) {
-        signOut();
-      }
-      console.log(err);
-    });
-}
-
-function getFavoriteds(
-  favoritedsList: Product[],
-  setFavoritedsList: (value: Product[]) => void,
-  signOut: () => void
-): void {
-  axiosI
-    .get(`/favoriteds`)
-    .then(({ data }) => {
-      setFavoritedsList([...favoritedsList, data]);
-    })
-    .catch(err => console.error(err));
-}
-
-async function updateIsFavorite(productId: number): Promise<void> {
+): Promise<IOfertsOfDay[] | null> {
   try {
-    await productsRouter.put(`/favorited/${productId}`);
-  } catch (err) {
-    throw new Error('Erro ao favoritar');
+    const { data } = await axiosI.get('/products/oferts-day');
+    return data;
+  } catch (err: any) {
+    if (err.response && err.response.status === 401) {
+      signOut();
+    }
+
+    return null;
+  }
+}
+
+async function getMoreOrders(
+  signOut: () => void
+): Promise<IProductBasic[] | null> {
+  try {
+    const { data } = await axiosI.get('/products/more-orders');
+    return data;
+  } catch (err: any) {
+    if (err.response && err.response.status === 401) {
+      signOut();
+    }
+
+    return null;
+  }
+}
+
+async function getFavoritedsByUserId(
+  signOut: () => void
+): Promise<IProductBasic[] | null> {
+  try {
+    const { data } = await axiosI.get('/products/favoriteds');
+    return data;
+  } catch (err: any) {
+    if (err.response && err.response.status === 401) {
+      signOut();
+    }
+
+    return null;
   }
 }
 
 const productRequests = {
-  postRegisterProduct,
+  postProduct,
   getProductsByCharacter,
   getOfertDay,
   getMoreOrders,
-  getFavoriteds,
   getProductById,
-  postRegisterProductCustomized,
-  getVerifyAmountProductCustomizedAvaibles,
-  updateIsFavorite
+  postRegisterProduct,
+  getFavoritedsByUserId
 };
 
 export default productRequests;

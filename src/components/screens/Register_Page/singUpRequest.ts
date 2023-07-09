@@ -1,22 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import { axiosI } from '@/Routes/services/axios';
+import { axiosI } from '@/services/axios';
 import { SignUpData } from './InputsRegister';
 
 interface SignUpRequestProps {
   signUpData: SignUpData;
   setStateColorButton: React.Dispatch<React.SetStateAction<string>>;
+  sucess: () => void;
 }
 
 async function SignUpRequest({
   signUpData,
-  setStateColorButton
+  setStateColorButton,
+  sucess
 }: SignUpRequestProps) {
-  const navigate = useNavigate();
-
   setStateColorButton('#8a8893');
   try {
-    await axiosI.post('auth/sign-up', signUpData);
-    navigate('/sign-in');
+    await axiosI.post('/auth/sign-up', signUpData);
+    sucess();
   } catch (err) {
     setStateColorButton('#e21a27');
   }

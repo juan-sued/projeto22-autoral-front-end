@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import CardProduct from './CardProduct';
 import { Product } from '@/hooks/useProducts';

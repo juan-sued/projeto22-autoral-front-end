@@ -23,54 +23,33 @@ interface Address {
   id: string;
 }
 
-export interface UserAndAddressesInfo {
-  user: UserDetails;
+export interface UserAndAddressesInfo extends UserDetails {
   addresses?: Address[];
 }
-const exemple = {
-  user: {
-    id: 0,
-    isAdministrator: true,
-    name: '',
-    email: '',
-    cpf: '',
-    phone: '',
-    createdAt: '',
-    updatedAt: ''
-  },
-
-  addresses: []
-};
 
 export default function MyInformationPage() {
   const { userInfo } = useAuth();
 
   const [userAndAddressesInfo, setUserAndAddressesInfo] =
-    useState<UserAndAddressesInfo>(exemple);
+    useState<UserAndAddressesInfo | null>(null);
 
   const [requestKey, setRequestKey] = useState(false);
   const [editToggleCard, setEditToggleCard] = useState(false);
 
   useEffect(() => {
-    pagesRequests.getMyInformationsPage(
-      userAndAddressesInfo,
-      setUserAndAddressesInfo,
-      userInfo
-    );
-    return () => {
-      setUserAndAddressesInfo(exemple);
-    };
+    pagesRequests.getMyInformationsPage(setUserAndAddressesInfo, userInfo);
   }, [requestKey]);
+  console.log(userAndAddressesInfo, userInfo);
 
-  if (userAndAddressesInfo.user && userAndAddressesInfo.addresses) {
+  if (userAndAddressesInfo) {
     return (
       <>
         <TitlePage title={'Minha informações'} to={'/'} />
         <Main margin_top="0">
           <ContainerCard>
-            {userAndAddressesInfo.user ? (
+            {userAndAddressesInfo ? (
               <CardIdentify
-                userDetails={userAndAddressesInfo.user}
+                userDetails={userAndAddressesInfo}
                 id={userInfo ? userInfo.id : 0}
                 requestKey={requestKey}
                 setRequestKey={setRequestKey}
@@ -137,9 +116,10 @@ const ContainerCard = styled.div`
   background-color: purple;
   min-height: 350px;
   width: 90%;
-  height: 100%;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  min-height: 300px;
+  margin-bottom: 20px;
 
   button {
     :hover {

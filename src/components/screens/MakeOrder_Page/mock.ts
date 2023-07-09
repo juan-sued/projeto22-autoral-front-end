@@ -10,9 +10,7 @@ import complementBiscoitosCanudos from '@/assets/complement-biscoitos-canudos.pn
 import complementConfete from '@/assets/complement-confete-chocolate.png';
 import complementFlocoArroz from '@/assets/complement-floco-de-arroz.png';
 import complementGranulado from '@/assets/complement-granulado.png';
-
 import complementGranola from '@/assets/complement-granola.png';
-
 import bolcaacaihortela from '@/assets/bolcaacaihortela.png';
 import complementLeiteEmPo from '@/assets/complement-leite-em-po.png';
 import complementSucrilhos from '@/assets/complement-sucrilhos.png';

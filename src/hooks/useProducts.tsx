@@ -1,35 +1,58 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { productsRouter } from '@/Routes/services/axios';
+import { createContext, useContext, useState } from 'react';
+import { axiosI } from '@/services/axios';
 import productRequests from '@/util/requests/products/productsRequests';
-
-export interface Product {
+import imageDefault from '@/assets/copoHome.jpg';
+import { IStock } from '@/util/requests/products/stockRequests';
+import { useAuth } from './useAuth';
+export interface IProductBasic {
   id: number;
   name: string;
-  price: number;
   image: string;
-  category: string;
-  isFavorited: boolean;
-  description: string;
-  amount: number;
-  unitOfMeasure: string;
-  quantityForUnity: number;
+  price: string;
+}
+export interface IProductInsert {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  cupSizeId: number;
+  flavoursIds: number[];
+  complementsIds: number[];
+  toppingsIds: number[];
+  fruitId: number;
+  plusIds: number[];
+}
+export type TStockObj = { stock: IStock };
+
+export interface IProductById {
+  id: number;
+  name: string;
+  image: string;
+  price: string;
+  cupSizeId: number;
+  cupSize: IStock;
+  stock: TStockObj[];
 }
 
-interface Category {
+export interface ICategory {
   id: number;
   name: string;
+  description: string;
 }
 
 interface ProductsAndCategories {
-  productsList: Product[];
-  categoriesList: Category[];
+  products: IProductBasic[];
+  categories: ICategory[];
 }
 
 interface ProductsContextType {
-  productsAndCategories: ProductsAndCategories;
+  productsAndCategories: ProductsAndCategories | null;
   updateIsFavorited: (productId: number) => void;
   keyRequestProduct: boolean;
   setKeyRequestProduct: (value: boolean) => void;
+  getFavoritedsProducts: (
+    signOut: () => void
+  ) => Promise<IProductBasic[] | null>;
 }
 
 const ProductsContext = createContext<ProductsContextType | undefined>(
@@ -39,148 +62,74 @@ const ProductsContext = createContext<ProductsContextType | undefined>(
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
+  const [productsAndCategories, setProductsAndCategories] =
+    useState<ProductsAndCategories | null>(null);
   const [keyRequestProduct, setKeyRequestProduct] = useState<boolean>(false);
 
-  const [productsAndCategories, setProductsAndCategories] =
-    useState<ProductsAndCategories>({
-      productsList: [],
-      categoriesList: []
-    });
+  if (!productsAndCategories) getProductsAndCategories();
 
-  useEffect(() => {
-    productsRouter
-      .get('/')
+  async function getProductsAndCategories() {
+    axiosI
+      .get('/products')
       .then(({ data }) => {
         setProductsAndCategories(data);
       })
       .catch(err => {
-        const testArr: ProductsAndCategories = {
-          categoriesList: [
-            { id: 2, name: 'sabores de açaí' },
-            { id: 3, name: 'adicionais' },
-            { id: 4, name: 'caldas' }
+        const MOCK_ARR: ProductsAndCategories = {
+          categories: [
+            { id: 2, name: 'sabores de açaí', description: 'descrição foda' },
+            { id: 3, name: 'adicionais', description: 'descrição foda' },
+            { id: 4, name: 'caldas', description: 'descrição foda' }
           ],
-          productsList: [
+          products: [
             {
               id: 1,
-              name: 'Açaí da Ana',
-              price: 2.5,
-              image: '',
-              category: 'produto x',
-              isFavorited: false,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
+              name: 'produto 1',
+              image: imageDefault,
+              price: '27'
             },
             {
               id: 2,
-              name: 'Açaí da Alessandra',
-              price: 2.5,
-              image: '',
-              category: 'produto y',
-              isFavorited: false,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
+              name: 'produto 2',
+              image: imageDefault,
+              price: '20'
             },
             {
               id: 3,
-              name: 'morango',
-              price: 2.5,
-              image: '',
-              category: 'produto z',
-              isFavorited: true,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
-            },
-            {
-              id: 4,
-              name: 'chocolate',
-              price: 2.5,
-              image: '',
-              category: 'produto z',
-              isFavorited: true,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
-            },
-            {
-              id: 5,
-              name: 'morango',
-              price: 2.5,
-              image: '',
-              category: 'produto z',
-              isFavorited: true,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
-            },
-            {
-              id: 6,
-              name: 'menta',
-              price: 2.5,
-              image: '',
-              category: 'produto z',
-              isFavorited: true,
-              description: '1 Litro',
-              amount: 12,
-              unitOfMeasure: 'ml',
-              quantityForUnity: 700
+              name: 'produto 3',
+              image: imageDefault,
+              price: '17.20'
             }
           ]
         };
 
-        setProductsAndCategories(testArr);
+        setProductsAndCategories(MOCK_ARR);
 
         console.error('erro ao pegar produtos', err);
       });
-  }, [keyRequestProduct]);
+  }
 
   async function updateIsFavorited(productId: number) {
     try {
-      await productRequests.updateIsFavorite(productId);
+      //await productRequests.updateIsFavorite(productId);
       setKeyRequestProduct(!keyRequestProduct);
     } catch (error) {
-      const productsUpdated: ProductsAndCategories = {
-        ...productsAndCategories
-      };
-
-      console.log(productsAndCategories);
-      const newProductsWithFavorited = productsUpdated.productsList.map(
-        product => {
-          if (product.id === productId) {
-            return {
-              ...product,
-              isFavorited: !product.isFavorited
-            };
-          }
-          return product;
-        }
-      );
-      console.log(newProductsWithFavorited);
-
-      setProductsAndCategories({
-        ...productsAndCategories,
-        productsList: newProductsWithFavorited
-      });
-
-      console.log('erro ao atualizar favorito', error);
+      return new Error('Erro ao atualizar favorito');
     }
   }
-
+  async function getFavoritedsProducts(
+    signOut: () => void
+  ): Promise<IProductBasic[] | null> {
+    return await productRequests.getFavoritedsByUserId(signOut);
+  }
   return (
     <ProductsContext.Provider
       value={{
         productsAndCategories,
         updateIsFavorited,
         keyRequestProduct,
-        setKeyRequestProduct
+        setKeyRequestProduct,
+        getFavoritedsProducts
       }}
     >
       {children}

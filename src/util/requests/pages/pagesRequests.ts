@@ -1,27 +1,10 @@
-import { HomeResponseAPI } from '@/components/screens/Home_Page/HomePage';
-import { axiosI } from '@/Routes/services/axios';
+import { axiosI } from '@/services/axios';
 import { UserAndAddressesInfo } from '@/components/screens/MyInformations_Page/MyInformation';
 import { User } from '@/hooks/useAuth';
 
-function homeContent(
-  objHomeResponseAPI: HomeResponseAPI | null,
-  setObjHomeResponseAPI: (value: HomeResponseAPI | null) => void,
-  signOut: () => void
-): void {
-  axiosI
-    .get(`/home-content`)
-    .then(({ data }) => {
-      setObjHomeResponseAPI(data);
-    })
-    .catch(err => console.error(err));
-}
-
-interface UserInfo extends User {}
-
 function getMyInformationsPage(
-  userAndAddressesInfo: UserAndAddressesInfo,
   setUserAndAddressesInfo: (value: UserAndAddressesInfo) => void,
-  userInfo: UserInfo | null
+  userInfo: User | null
 ): void {
   if (userInfo) {
     axiosI
@@ -29,12 +12,13 @@ function getMyInformationsPage(
       .then(({ data }) => {
         setUserAndAddressesInfo(data);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+      });
   }
 }
 
 const pagesRequests = {
-  homeContent,
   getMyInformationsPage
 };
 

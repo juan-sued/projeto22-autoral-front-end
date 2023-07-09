@@ -19,7 +19,7 @@ export default function SideBar() {
   const { userInfo, signOut } = useAuth();
 
   function shortName() {
-    if (userInfo !== null) {
+    if (userInfo) {
       const nameShorten = userInfo.name.split(' ');
       return nameShorten[0] + ' ' + nameShorten[1];
     }
@@ -77,7 +77,8 @@ export default function SideBar() {
   ];
 
   // adiciona buttons de administrador
-  if (userInfo?.isAdministrator === true) {
+  console.log(userInfo);
+  if (userInfo?.permissions.access.toLocaleLowerCase().includes('high')) {
     listButtonsSideBar.splice(
       1,
       0,

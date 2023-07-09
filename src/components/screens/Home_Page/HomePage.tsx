@@ -13,40 +13,26 @@ import Main from '@/components/shared/Main';
 import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
-import { Product, useProduct } from '@/hooks/useProducts';
-import { axiosI } from '@/Routes/services/axios';
-import pagesRequests from '@/util/requests/pages/pagesRequests';
-import productRequests from '@/util/requests/products/productsRequests';
+import { IProductBasic, useProduct } from '@/hooks/useProducts';
 import { useEffect, useState } from 'react';
 import mocks from '../MakeOrder_Page/mock';
 
-export interface HomeResponseAPI {
-  listMyFavoriteds: Product[];
-  listMoreOrders: Product[];
-}
-
 export default function HomePage() {
-  const { userInfo, signOut, signed } = useAuth();
+  const { userInfo, signed, signOut } = useAuth();
+  console.log(userInfo);
+  const [favoritedsList, setFavoritedsList] = useState<IProductBasic[] | null>(
+    null
+  );
 
-  const [objHomeResponseAPI, setObjHomeResponseAPI] =
-    useState<HomeResponseAPI | null>(null);
+  const { productsAndCategories, getFavoritedsProducts } = useProduct();
 
-  const [favoritedsList, setFavoritedsList] = useState<Product[]>([]);
-  const [unFavoriteProducts, setUnFavoriteProducts] = useState<Product[]>([]);
-
-  const { productsAndCategories } = useProduct();
   useEffect(() => {
-    if (signed && axiosI.defaults.headers['Authorization'] !== undefined) {
-      const favoriteProducts = productsAndCategories.productsList.filter(
-        product => product.isFavorited
-      );
-      setFavoritedsList(favoriteProducts);
+    if (signed) {
+      async () => {
+        const favorites = await getFavoritedsProducts(signOut);
+        setFavoritedsList(favorites);
+      };
     }
-
-    const unFavoriteProducts = productsAndCategories.productsList.filter(
-      product => product.isFavorited === false
-    );
-    setUnFavoriteProducts(unFavoriteProducts);
   }, [signed, productsAndCategories]);
 
   return (
@@ -61,22 +47,14 @@ export default function HomePage() {
         <Divider />
 
         <CarouselListProduct
-          objctResponseAPI={
-            unFavoriteProducts.length > 0
-              ? unFavoriteProducts
-              : mocks.exampleHomeContent.listMoreOrders
-          }
+          objctResponseAPI={productsAndCategories?.products}
           titleSession={'Mais pedidos'}
           margin_top={-50}
         />
 
         {signed ? (
           <CarouselListProduct
-            objctResponseAPI={
-              favoritedsList.length > 0
-                ? favoritedsList
-                : mocks.exampleHomeContent.listMyFavoriteds
-            }
+            objctResponseAPI={favoritedsList ? favoritedsList : undefined}
             titleSession={'Meus favoritos'}
             margin_top={-50}
           />

@@ -1,5 +1,5 @@
 import { UpdateDataAddress } from '@/components/screens/MyInformations_Page/components/CardAddress';
-import { axiosI } from '@/Routes/services/axios';
+import { axiosBasic, axiosI } from '@/services/axios';
 
 interface CreateDataAddress {
   street: string;
@@ -39,16 +39,16 @@ function postAddresses(
     });
 }
 
-import { axiosBasic } from '@/Routes/services/axios';
 import { formatCEP } from '@brazilian-utils/brazilian-utils';
+import axios from 'axios';
 
 function getCep(
   createDataAddress: CreateDataAddress,
   setCreateDataAddress: (value: CreateDataAddress) => void,
   setStateButton: (value: '' | 'err' | 'loading' | 'success') => void
 ): void {
-  axiosBasic
-    .get(`viacep.com.br/ws/${createDataAddress.cep}/json/`)
+  axios
+    .get(`https://viacep.com.br/ws/${createDataAddress.cep}/json/`)
     .then(({ data }) => {
       const cepFormated = formatCEP(data.cep);
 
@@ -81,7 +81,7 @@ async function deleteAddress(
   requestKey: boolean,
   setRequestKey: (value: boolean) => void
 ) {
-  axiosI
+  await axiosI
     .delete(URL)
     .then(({ data }) => {
       setRequestKey(!requestKey);

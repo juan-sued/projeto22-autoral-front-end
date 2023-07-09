@@ -1,3 +1,4 @@
+import { TextareaAutosize } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +11,21 @@ interface InputInfoFieldProps {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maxWidth?: string;
-  type?: string;
+  type?:
+    | 'number'
+    | 'text'
+    | 'password'
+    | 'checkbox'
+    | 'radio'
+    | 'email'
+    | 'date'
+    | 'time'
+    | 'url'
+    | 'search'
+    | 'TextArea'
+    | 'select'
+    | 'file';
+  isResize?: boolean;
 }
 
 const InputInfoField: React.FC<InputInfoFieldProps> = ({
@@ -24,26 +39,45 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
   maxWidth,
   type = 'text'
 }) => {
-  return (
-    <InputInfoFieldStyle
-      className="phone"
-      border={editToggle}
-      marginRight={marginRight}
-      maxWidth={maxWidth}
-    >
-      <h1>{nameInput}</h1>
-      <input
-        className="inputPhone"
-        type={type}
-        placeholder={placeholder}
-        disabled={!editToggle}
-        name={name}
-        value={value}
-        onChange={onChange}
-        min={0}
-      />
-    </InputInfoFieldStyle>
-  );
+  if (type === 'TextArea') {
+    return (
+      <InputInfoFieldStyle
+        border={editToggle}
+        marginRight={marginRight}
+        maxWidth={maxWidth}
+      >
+        <h1>{nameInput}</h1>
+        <textarea
+          className="TextAreaAutoSize"
+          maxRows={5}
+          placeholder={placeholder}
+          disabled={!editToggle}
+          onChange={onChange}
+          name={name}
+          value={value}
+        />
+      </InputInfoFieldStyle>
+    );
+  } else {
+    return (
+      <InputInfoFieldStyle
+        border={editToggle}
+        marginRight={marginRight}
+        maxWidth={maxWidth}
+      >
+        <h1>{nameInput}</h1>
+        <input
+          type={type}
+          placeholder={placeholder}
+          disabled={!editToggle}
+          name={name}
+          value={value}
+          onChange={onChange}
+          min={0}
+        />
+      </InputInfoFieldStyle>
+    );
+  }
 };
 
 interface InputInfoFieldStyleProps {
@@ -58,10 +92,27 @@ const InputInfoFieldStyle = styled.div<InputInfoFieldStyleProps>`
   margin-right: ${props => props.marginRight};
 
   max-width: ${props => props.maxWidth};
-  
+
   h1 {
     font-weight: 500;
     margin-bottom: 5px;
+  }
+
+  .TextAreaAutoSize {
+    border: none;
+    font-size: 17px;
+    background-color: transparent;
+    border-radius: 5px;
+    box-shadow: ${props =>
+      props.border ? 'inset 0px 0px 4px rgba(0, 0, 0, 0.25)' : 'none'};
+    padding-left: 10px;
+    padding-top: 9px;
+    width: 100%;
+    margin-right: 10px;
+    min-height: 39px;
+    max-width: 220px;
+    max-height: 150px;
+    resize: vertical;
   }
 
   input {
@@ -77,6 +128,5 @@ const InputInfoFieldStyle = styled.div<InputInfoFieldStyleProps>`
     width: 100%;
     margin-right: 10px;
   }
-};
 `;
 export default InputInfoField;
