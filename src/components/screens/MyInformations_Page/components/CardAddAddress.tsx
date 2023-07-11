@@ -42,7 +42,9 @@ export default function CardAddAddress({
       );
   }
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCreateDataAddress({
       ...createDataAddress,
       [e.target.name]: e.target.value
@@ -54,7 +56,9 @@ export default function CardAddAddress({
     setRequestKey(!requestKey);
   };
 
-  function updateAddress(event: React.FormEvent<HTMLFormElement>) {
+  function updateAddress(
+    event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
+  ) {
     event.preventDefault();
     setStateButton('loading');
 

@@ -1,5 +1,4 @@
-import { Product } from '@/hooks/useProducts';
-import productRequests from './requests/products/productsRequests';
+import { IProductBasic } from '@/hooks/useProducts';
 
 const incrementStarsFeedback = (stars: string): string[] => {
   const arrStars: string[] = [];
@@ -26,61 +25,25 @@ const increaseCardSizeToggle = (
   setStateCard(!stateCard);
 };
 
-function calculateTotalPrice(ids: number[], products: Product[]): number {
+function excludeEmpty<T, Key extends keyof T>(entity: T): Omit<T, Key> {
+  const newEntity = JSON.parse(JSON.stringify(entity));
+  for (const key in entity) {
+    if (newEntity[key] === '') {
+      delete newEntity[key];
+    }
+  }
+
+  return newEntity;
+}
+
+function calculateTotalPrice(ids: number[], products: IProductBasic[]): number {
   return ids
     .filter(productId => products.some(product => product.id === productId))
     .map(
       productId =>
-        products.find(product => product.id === productId)?.price || 0
+        Number(products.find(product => product.id === productId)?.price) || 0
     )
     .reduce((accumulator, price) => accumulator + price, 0);
-}
-
-export interface CheckAllProductsAvailability {
-  availables: Product[];
-  unavailables: Product[];
-}
-
-async function checkAllProductsAvailability(
-  products: any
-): Promise<CheckAllProductsAvailability> {
-  try {
-    const availabilityList: Product[] = [];
-    const unavailabilityList: Product[] = [];
-
-    for (const key in products) {
-      if (Array.isArray(products[key])) {
-        for (const productId of products[key]) {
-          const product = await productRequests.getProductById(productId);
-          if (product.amount <= 0) {
-            unavailabilityList.push(product);
-          } else {
-            availabilityList.push(product);
-          }
-        }
-      } else {
-        const product = await productRequests.getProductById(products[key]);
-        if (product.amount <= 0) {
-          unavailabilityList.push(product);
-        } else {
-          availabilityList.push(product);
-        }
-      }
-    }
-
-    const result: CheckAllProductsAvailability = {
-      availables: availabilityList,
-      unavailables: unavailabilityList
-    };
-
-    return result;
-  } catch (error) {
-    console.error('Erro ao verificar disponibilidade do estoque:', error);
-    return {
-      availables: [],
-      unavailables: []
-    };
-  }
 }
 
 function formatListNames(arr: string[]): string {
@@ -109,7 +72,7 @@ export {
   incrementStarsFeedback,
   increaseCardSizeToggle,
   calculateTotalPrice,
-  checkAllProductsAvailability,
+  excludeEmpty,
   formatListNames,
   generateValueBetween,
   getRandomHttpCatCode

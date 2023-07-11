@@ -1,3 +1,4 @@
+import { UserAndAddressesInfo } from '@/components/screens/MyInformations_Page/MyInformation';
 import { axiosI } from '@/services/axios';
 
 interface UpdateDataUser {
@@ -8,7 +9,7 @@ interface UpdateDataUser {
 }
 
 interface RequestUpdateUserProps {
-  updateDataUser: UpdateDataUser;
+  objFormated: Partial<UpdateDataUser>;
   success: () => void;
   setStateButton: (value: '' | 'err' | 'loading' | 'success') => void;
   id: number;
@@ -16,14 +17,14 @@ interface RequestUpdateUserProps {
 }
 
 async function requestUpdateUser({
-  updateDataUser,
+  objFormated,
   success,
   setStateButton,
   id,
   setUpdateDataUser
 }: RequestUpdateUserProps) {
   try {
-    await axiosI.patch(`/users/`, updateDataUser);
+    await axiosI.patch(`/users/`, objFormated);
     success();
   } catch (err) {
     console.error(err);
@@ -40,8 +41,23 @@ async function requestUpdateUser({
   }
 }
 
+async function getUserAndAddresses(
+  setUserAndAddressesInfo: (
+    value: React.SetStateAction<UserAndAddressesInfo | null>
+  ) => void,
+  id: number | undefined
+) {
+  try {
+    const { data } = await axiosI.get(`/users/${id}`);
+    setUserAndAddressesInfo(data);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 const userRequests = {
-  requestUpdateUser
+  requestUpdateUser,
+  getUserAndAddresses
 };
 
 export default userRequests;

@@ -9,7 +9,9 @@ interface InputInfoFieldProps {
   marginRight?: string;
   name?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   maxWidth?: string;
   type?:
     | 'number'
@@ -49,7 +51,7 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
         <h1>{nameInput}</h1>
         <textarea
           className="TextAreaAutoSize"
-          maxRows={5}
+          maxLength={200}
           placeholder={placeholder}
           disabled={!editToggle}
           onChange={onChange}

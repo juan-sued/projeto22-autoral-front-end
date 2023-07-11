@@ -33,6 +33,7 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1;
     background-color:#EEEDF4;
     font-family: 'Josefin Slab', serif;
+  
   }
   ol, ul {
     list-style: none;

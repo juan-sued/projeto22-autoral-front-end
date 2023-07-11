@@ -6,6 +6,7 @@ import { User } from '@/hooks/useAuth';
 import userRequests from '@/util/requests/users/userRequests';
 import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
 import InputInfoField from '@/components/shared/Inputs/InputInfoField';
+import { excludeEmpty } from '@/util/utilsFunctions';
 
 export interface UserDetails extends User {
   cpf: string;
@@ -41,14 +42,10 @@ export default function CardIdentify({
 
   const dayCreatedAt = returnDayFormated(userDetails.createdAt);
   const dayUpdatedAt = returnDayFormated(userDetails.updatedAt);
-  const [updateDataUser, setUpdateDataUser] = useState<UpdateDataUser>({
-    name: '',
-    email: '',
-    cpf: '',
-    phone: ''
-  });
 
-  const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setUpdateDataUser({ ...updateDataUser, [e.target.name]: e.target.value });
   };
 
@@ -63,11 +60,20 @@ export default function CardIdentify({
     //aparecer uma popup aqui
   };
 
+  const [updateDataUser, setUpdateDataUser] = useState<UpdateDataUser>({
+    name: '',
+    email: '',
+    cpf: '',
+    phone: ''
+  });
   function updateUser(event: FormEvent) {
     event.preventDefault();
     setStateButton('loading');
+    const objFormated = excludeEmpty(updateDataUser);
+    console.log(objFormated);
+
     userRequests.requestUpdateUser({
-      updateDataUser,
+      objFormated,
       setUpdateDataUser,
       success,
       setStateButton,
