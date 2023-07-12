@@ -19,9 +19,9 @@ export default function CardAddAddress({
   setEditToggleCard
 }: CardAddAddressProps) {
   const [stateButton, setStateButton] = useState<
-    '' | 'err' | 'loading' | 'success'
+    '' | 'err' | 'loading' | 'success' | string
   >('');
-  const [editToggle, setEditToggle] = useState(true);
+  const [editToggle, setEditToggle] = useState(false);
 
   const [createDataAddress, setCreateDataAddress] = useState({
     street: '',
@@ -30,16 +30,25 @@ export default function CardAddAddress({
     state: '',
     city: '',
     cep: '',
-    addressDetail: ''
+    addressesDetail: ''
   });
 
   function searchCep() {
-    if (createDataAddress.cep.length === 8)
+    const cep = createDataAddress.cep;
+
+    if (cep.length > 8) {
+      const createDataAddressFormated = {
+        ...createDataAddress,
+        cep: cep.replace(/-/g, '')
+      };
+
+      console.log(createDataAddress);
       addressesRequests.getCep(
-        createDataAddress,
+        createDataAddressFormated,
         setCreateDataAddress,
         setStateButton
       );
+    }
   }
 
   const handleChangeText = (
@@ -56,10 +65,11 @@ export default function CardAddAddress({
     setRequestKey(!requestKey);
   };
 
-  function updateAddress(
-    event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
-  ) {
+  function addAddress(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log(createDataAddress);
+    if (!createDataAddress.number) return alert('O número deve ser preenchido');
+
     setStateButton('loading');
 
     addressesRequests.postAddresses(
@@ -73,7 +83,7 @@ export default function CardAddAddress({
   return (
     <Container displayToggle={editToggleCard}>
       <CardAddressStyle displayToggle={editToggleCard}>
-        <form onSubmit={updateAddress}>
+        <form onSubmit={addAddress}>
           <section>
             <InputInfoField
               nameInput={'CEP: (Apenas números)'}
@@ -138,15 +148,17 @@ export default function CardAddAddress({
             nameInput={'Complemento: '}
             editToggle={editToggle}
             placeholder={'ex: Ao lado da praça XV'}
-            name={'addressDetail'}
-            value={createDataAddress.addressDetail}
+            name={'addressesDetail'}
+            value={createDataAddress.addressesDetail}
             onChange={handleChangeText}
+            isRequired={false}
           />
 
           <ButtonSubmitHover
             stateButton={stateButton}
             editToggle={editToggle}
             setEditToggle={setEditToggle}
+            nameButton="ADICIONAR"
           />
         </form>
       </CardAddressStyle>

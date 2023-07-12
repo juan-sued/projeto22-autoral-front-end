@@ -1,5 +1,5 @@
 import { UpdateDataAddress } from '@/components/screens/MyInformations_Page/components/CardAddress';
-import { axiosBasic, axiosI } from '@/services/axios';
+import { axiosI } from '@/services/axios';
 
 interface CreateDataAddress {
   street: string;
@@ -8,7 +8,7 @@ interface CreateDataAddress {
   state: string;
   city: string;
   cep: string;
-  addressDetail: string;
+  addressesDetail: string;
 }
 
 function postAddresses(
@@ -18,11 +18,12 @@ function postAddresses(
   setCreateDataAddress: (value: CreateDataAddress) => void
 ): void {
   axiosI
-    .post(`/users/addresses/`, createDataAddress)
+    .post(`/addresses/`, createDataAddress)
     .then(({ data }) => {
       success();
     })
     .catch(err => {
+      console.log(err);
       setStateButton('err');
       setCreateDataAddress({
         street: '',
@@ -31,7 +32,7 @@ function postAddresses(
         state: '',
         city: '',
         cep: '',
-        addressDetail: ''
+        addressesDetail: ''
       });
       setTimeout(() => {
         setStateButton('');
@@ -59,7 +60,7 @@ function getCep(
         state: data.uf,
         city: data.localidade,
         cep: cepFormated,
-        addressDetail: data.complemento
+        addressesDetail: data.complemento
       });
     })
     .catch(err => {
@@ -71,7 +72,7 @@ function getCep(
         state: '',
         city: '',
         cep: '',
-        addressDetail: ''
+        addressesDetail: ''
       });
     });
 }
@@ -105,7 +106,7 @@ async function updateAddress({
   setUpdateDataAddress
 }: RequestUpdateAddressProps) {
   try {
-    await axiosI.patch(`/users/addresses/${idAddress}`, updateDataAddress);
+    await axiosI.patch(`/addresses/${idAddress}`, updateDataAddress);
     success();
   } catch (err) {
     setStateButton('err');

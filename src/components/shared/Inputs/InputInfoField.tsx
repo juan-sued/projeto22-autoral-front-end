@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface InputInfoFieldProps {
+  isRequired?: boolean;
   placeholder: string;
   nameInput: string;
   editToggle: boolean;
@@ -39,8 +40,13 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
   value,
   onChange,
   maxWidth,
+  isRequired = true,
   type = 'text'
 }) => {
+  function viewInputValue() {
+    alert(placeholder);
+  }
+
   if (type === 'TextArea') {
     return (
       <InputInfoFieldStyle
@@ -57,6 +63,7 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
           onChange={onChange}
           name={name}
           value={value}
+          required={isRequired}
         />
       </InputInfoFieldStyle>
     );
@@ -66,6 +73,7 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
         border={editToggle}
         marginRight={marginRight}
         maxWidth={maxWidth}
+        onClick={viewInputValue}
       >
         <h1>{nameInput}</h1>
         <input
@@ -76,6 +84,8 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
           value={value}
           onChange={onChange}
           min={0}
+          minLength={0}
+          required={isRequired}
         />
       </InputInfoFieldStyle>
     );
@@ -129,6 +139,8 @@ const InputInfoFieldStyle = styled.div<InputInfoFieldStyleProps>`
     padding-right: 5px;
     width: 100%;
     margin-right: 10px;
+
+    text-overflow: ellipsis;
   }
 `;
 export default InputInfoField;

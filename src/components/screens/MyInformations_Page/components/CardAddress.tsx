@@ -67,7 +67,9 @@ export default function CardAddress({
     }
   );
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setUpdateDataAddress({
       ...updateDataAddress,
       [e.target.name]: e.target.value
@@ -116,7 +118,7 @@ export default function CardAddress({
               type="button"
               onClick={() => setCardHeightToggle(!cardHeightToggle)}
             >
-              {cardHeightToggle ? (
+              {!cardHeightToggle ? (
                 <MdExpandLess color="purple" size="35px" />
               ) : (
                 <MdExpandMore size="35px" color="purple" />
@@ -189,6 +191,7 @@ export default function CardAddress({
             stateButton={stateButton}
             editToggle={editToggle}
             setEditToggle={setEditToggle}
+            nameButton="EDITAR"
           />
         </form>
       </CardAddressStyle>

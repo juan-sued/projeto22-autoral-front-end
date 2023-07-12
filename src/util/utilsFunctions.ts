@@ -36,6 +36,15 @@ function excludeEmpty<T, Key extends keyof T>(entity: T): Omit<T, Key> {
   return newEntity;
 }
 
+function alertEmpty<T, Key extends keyof T>(entity: T) {
+  const newEntity = JSON.parse(JSON.stringify(entity));
+  for (const key in entity) {
+    if (newEntity[key] === '') {
+      return alert(key + ' não pode estar vazio');
+    }
+  }
+}
+
 function calculateTotalPrice(ids: number[], products: IProductBasic[]): number {
   return ids
     .filter(productId => products.some(product => product.id === productId))
@@ -75,5 +84,6 @@ export {
   excludeEmpty,
   formatListNames,
   generateValueBetween,
-  getRandomHttpCatCode
+  getRandomHttpCatCode,
+  alertEmpty
 };

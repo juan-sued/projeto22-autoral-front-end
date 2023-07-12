@@ -6,12 +6,14 @@ interface ButtonSubmitHoverProps {
   stateButton: string;
   setEditToggle: React.Dispatch<React.SetStateAction<boolean>>;
   editToggle: boolean;
+  nameButton: string;
 }
 
 const ButtonSubmitHover: React.FC<ButtonSubmitHoverProps> = ({
   stateButton,
   setEditToggle,
-  editToggle
+  editToggle,
+  nameButton
 }) => {
   return (
     <ButtonSubmitHoverStyle toggle={editToggle} stateButton={stateButton}>
@@ -22,11 +24,11 @@ const ButtonSubmitHover: React.FC<ButtonSubmitHoverProps> = ({
         disabled={stateButton === 'loading' || stateButton === 'err'}
       >
         {stateButton === 'err' ? (
-          'Erro ao atualizar'
+          'Erro ao ' + nameButton.toLowerCase()
         ) : stateButton === 'loading' ? (
           <Loading width={'25'} />
         ) : (
-          'EDITAR'
+          nameButton
         )}
       </button>
       <button
@@ -84,6 +86,5 @@ const ButtonSubmitHoverStyle = styled.div<{
   .submitButton {
     display: ${props => (props.toggle ? 'block' : 'none')};
   }
-};
 `;
 export default ButtonSubmitHover;

@@ -134,6 +134,7 @@ export default function CardIdentify({
           stateButton={stateButton}
           editToggle={editToggle}
           setEditToggle={setEditToggle}
+          nameButton="EDITAR"
         />
       </form>
     </CardIdentifyStyle>
