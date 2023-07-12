@@ -13,7 +13,9 @@ interface CreateDataAddress {
 
 function postAddresses(
   success: () => void,
-  setStateButton: (value: '' | 'err' | 'loading' | 'success') => void,
+  setStateButton: (
+    value: '' | 'err' | 'loading' | 'success' | 'conflict'
+  ) => void,
   createDataAddress: CreateDataAddress,
   setCreateDataAddress: (value: CreateDataAddress) => void
 ): void {
@@ -23,7 +25,9 @@ function postAddresses(
       success();
     })
     .catch(err => {
-      console.log(err);
+      if (err.response && err.response.status === 409)
+        alert('Endereço já cadastrado');
+
       setStateButton('err');
       setCreateDataAddress({
         street: '',

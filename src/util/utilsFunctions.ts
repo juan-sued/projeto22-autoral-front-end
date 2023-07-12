@@ -45,6 +45,15 @@ function alertEmpty<T, Key extends keyof T>(entity: T) {
   }
 }
 
+function clearFields<T, Key extends keyof T>(entity: T) {
+  const newEntity = JSON.parse(JSON.stringify(entity));
+  for (const key in entity) {
+    newEntity[key] = '';
+  }
+
+  return newEntity;
+}
+
 function calculateTotalPrice(ids: number[], products: IProductBasic[]): number {
   return ids
     .filter(productId => products.some(product => product.id === productId))
@@ -85,5 +94,6 @@ export {
   formatListNames,
   generateValueBetween,
   getRandomHttpCatCode,
-  alertEmpty
+  alertEmpty,
+  clearFields
 };

@@ -44,7 +44,7 @@ const InputInfoField: React.FC<InputInfoFieldProps> = ({
   type = 'text'
 }) => {
   function viewInputValue() {
-    alert(placeholder);
+    if (!editToggle) alert(placeholder);
   }
 
   if (type === 'TextArea') {

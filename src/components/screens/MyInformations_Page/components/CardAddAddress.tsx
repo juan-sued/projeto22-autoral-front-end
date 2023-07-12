@@ -4,6 +4,7 @@ import iconsearch from '@/assets/iconsearch.svg';
 import addressesRequests from '@/util/requests/users/addresses/addressesRequests';
 import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
 import InputInfoField from '@/components/shared/Inputs/InputInfoField';
+import { alertEmpty, clearFields } from '@/util/utilsFunctions';
 
 interface CardAddAddressProps {
   requestKey: boolean;
@@ -62,13 +63,16 @@ export default function CardAddAddress({
 
   const success = () => {
     setEditToggleCard(!editToggleCard);
+    setCreateDataAddress(clearFields(createDataAddress));
+
     setRequestKey(!requestKey);
+    setStateButton('');
   };
 
   function addAddress(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(createDataAddress);
-    if (!createDataAddress.number) return alert('O número deve ser preenchido');
+
+    alertEmpty(createDataAddress);
 
     setStateButton('loading');
 
