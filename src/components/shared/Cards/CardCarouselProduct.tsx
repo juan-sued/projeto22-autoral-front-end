@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { BsCheckCircleFill } from 'react-icons/bs';
-import { Product } from '@/hooks/useProducts';
 import { formatPrice } from '@/util/format';
 import { useInView } from 'react-intersection-observer';
+import { IStock } from '@/util/requests/products/stockRequests';
 
 interface CardCarouselProductProps
-  extends Omit<Product, 'category' | 'description' | 'amount' | 'isFavorited'> {
+  extends Omit<IStock, 'category' | 'description' | 'amount' | 'categoryId'> {
   incrementProduct: (value: number) => number[];
   showPrice: boolean;
   isSelected: boolean;
@@ -16,18 +15,20 @@ interface CardCarouselProductProps
 export default function CardCarouselProduct({
   image,
   price,
-  quantityForUnity,
-  unitOfMeasure,
+  quantity_for_unity,
+  unit_of_measure,
   id,
   incrementProduct,
-  name,
+  title,
   showPrice,
   isSelected = false,
   index
 }: CardCarouselProductProps) {
-  let scaleImage = 0.5;
+  console.log(quantity_for_unity, unit_of_measure);
 
-  switch (quantityForUnity) {
+  let scaleImage = 0.5;
+  const quantityForUnityNumber = Number(quantity_for_unity);
+  switch (quantityForUnityNumber) {
     case 1000:
       scaleImage = 0.7;
       break;
@@ -48,18 +49,19 @@ export default function CardCarouselProduct({
       break;
   }
 
-  const textShowUnity = '( ' + quantityForUnity + ' Un)';
+  const textShowUnity = '( ' + quantityForUnityNumber + ' Un)';
 
   const showUnity =
-    quantityForUnity > 1 && quantityForUnity < 300 ? textShowUnity : '';
-  const priceFormatted = formatPrice(price);
+    quantityForUnityNumber > 1 && quantityForUnityNumber < 300
+      ? textShowUnity
+      : '';
+  const priceFormatted = formatPrice(Number(price));
 
   const { ref, inView } = useInView({
     delay: 200,
     threshold: 0
   });
   const delay = index / 10 + 0.5;
-
   return (
     <CardOfProduct
       ref={ref}
@@ -74,9 +76,9 @@ export default function CardCarouselProduct({
       </div>
       <div className="containerTitle">
         <h1 className="title">
-          {unitOfMeasure === 'unity'
-            ? name
-            : quantityForUnity + unitOfMeasure.toString()}
+          {unit_of_measure === 'unity'
+            ? title
+            : quantityForUnityNumber + unit_of_measure}
         </h1>
         <p className="description">{showUnity}</p>
       </div>

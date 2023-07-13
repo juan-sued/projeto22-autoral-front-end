@@ -13,7 +13,6 @@ interface CardCarouselOrdersAndProductsProps {
   name: string;
   price: number;
   id: number;
-  isFavorited: boolean;
   index: number;
 }
 
@@ -22,12 +21,11 @@ export default function CardCarouselOrdersAndProducts({
   name,
   price,
   id,
-  isFavorited,
   index
 }: CardCarouselOrdersAndProductsProps) {
   const priceFormatted = formatPrice(price);
   const { updateIsFavorited } = useProduct();
-  const [clicked, setClicked] = useState(isFavorited);
+  const [clicked, setClicked] = useState(true);
   const [isHidden, setIsHidden] = useState(false);
 
   function selectedProduct() {
@@ -52,7 +50,7 @@ export default function CardCarouselOrdersAndProducts({
   const delay = index / 10 + 0.5;
 
   if (isHidden) {
-    return null; // Retorna null para ocultar o card
+    return null;
   } else {
     return (
       <CardOfProductStyle ref={ref} inView={inView} delay={delay}>
@@ -67,7 +65,7 @@ export default function CardCarouselOrdersAndProducts({
               isHidden={isHidden}
               selectedProduct={selectedProduct}
               clicked={clicked}
-              isFavorited={isFavorited}
+              isFavorited={true}
             />
           </div>
         </div>

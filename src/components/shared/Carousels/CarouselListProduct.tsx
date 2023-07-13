@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Product } from '@/hooks/useProducts';
 import { formatListNames } from '@/util/utilsFunctions';
 import CardCarouselOrdersAndProducts from '@/components/screens/Home_Page/components/CardCarouselOrdersAndProducts';
 import CardCarouselProduct from '../Cards/CardCarouselProduct';
 import PopsicleLoading from '../Loaders/PopsicleLoading';
 import TitleAndArrow from '../Titles/TitleAndArrow';
+import { IProductBasic } from '@/hooks/useProducts';
+import { IStock } from '@/util/requests/products/stockRequests';
 
 interface CarouselListProductProps {
   titleSession?: string;
   margin_top: number;
-  objctResponseAPI: Product[] | undefined;
+  objctResponseAPI: IProductBasic[] | IStock[] | undefined;
   setProductIds?: (value: number[]) => void;
   productIds?: number[];
   amountSelection?: number;
@@ -62,52 +63,66 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   }
   const isMostOrdered = titleSession === 'Mais pedidos';
   const isFavorite = titleSession === 'Meus favoritos';
-  //aas
-  return (
-    <CarouselListContainer margin_top={margin_top}>
-      {titleSession && <TitleAndArrow titleSession={titleSession} />}
-      <div className="listProductsAdd">
-        {productsSelecteds.length > 0
-          ? `Você escolheu: ${formatListNames(productsSelecteds)}`
-          : ''}
-      </div>
-      {objctResponseAPI.length === 0 ? (
-        <PopsicleLoading />
-      ) : (
-        <div className="rowOfCardsContainer">
-          {objctResponseAPI.map((order, index) => {
-            return (
-              <React.Fragment key={order.id}>
-                {isMostOrdered || isFavorite ? (
-                  <CardCarouselOrdersAndProducts
-                    isFavorited={order.isFavorited}
-                    image={order.image}
-                    name={order.name}
-                    price={Number(order.price)}
-                    id={order.id}
-                    index={index}
-                  />
-                ) : (
-                  <CardCarouselProduct
-                    image={order.image}
-                    price={order.price}
-                    quantityForUnity={order.quantityForUnity}
-                    id={order.id}
-                    unitOfMeasure={order.unitOfMeasure}
-                    incrementProduct={incrementProduct}
-                    name={order.name}
-                    showPrice={showPrice}
-                    isSelected={productIds.includes(order.id)}
-                    index={index}
-                  />
-                )}
-              </React.Fragment>
-            );
-          })}
+
+  if (isMostOrdered || isFavorite) {
+    return (
+      <CarouselListContainer margin_top={margin_top}>
+        {titleSession && <TitleAndArrow titleSession={titleSession} />}
+        <div className="listProductsAdd">
+          {productsSelecteds.length > 0
+            ? `Você escolheu: ${formatListNames(productsSelecteds)}`
+            : ''}
         </div>
-      )}
-    </CarouselListContainer>
-  );
+        {objctResponseAPI.length === 0 ? (
+          <PopsicleLoading />
+        ) : (
+          <div className="rowOfCardsContainer">
+            {objctResponseAPI.map((order, index) => (
+              <CardCarouselOrdersAndProducts
+                image={order.image}
+                name={order.name}
+                price={Number(order.price)}
+                id={order.id}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
+      </CarouselListContainer>
+    );
+  } else {
+    return (
+      <CarouselListContainer margin_top={margin_top}>
+        {titleSession && <TitleAndArrow titleSession={titleSession} />}
+        <div className="listProductsAdd">
+          {productsSelecteds.length > 0
+            ? `Você escolheu: ${formatListNames(productsSelecteds)}`
+            : ''}
+        </div>
+        {objctResponseAPI.length === 0 ? (
+          <PopsicleLoading />
+        ) : (
+          <div className="rowOfCardsContainer">
+            {objctResponseAPI.map((order, index) => (
+              <CardCarouselProduct
+                key={order.id}
+                image={order.image}
+                price={order.price}
+                unit_of_measure={order.unit_of_measure}
+                id={order.id}
+                unitOfMeasure={order.unitOfMeasure}
+                incrementProduct={incrementProduct}
+                name={order.name}
+                showPrice={showPrice}
+                isSelected={productIds.includes(order.id)}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
+      </CarouselListContainer>
+    );
+  }
 };
 
 const CarouselListContainer = styled.div<{ margin_top: number }>`

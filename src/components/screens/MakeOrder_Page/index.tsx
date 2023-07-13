@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 import { formatPrice } from '@/util/format';
-import { calculateTotalPrice, formatListNames } from '@/util/utilsFunctions';
+import { calculateTotalPrice } from '@/util/utilsFunctions';
 import { useCart } from '@/hooks/useCart';
-import CarouselListProduct from '@/components/shared/Carousels/CarouselListProduct';
+import CarouselListStock from '@/components/shared/Carousels/CarouselListStock';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import TitlePage from '@/components/shared/Titles/TitlePage';
@@ -14,23 +14,103 @@ import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
 import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
 import mocks from './mock';
 import { useAuth } from '@/hooks/useAuth';
-import { IStock } from '@/util/requests/products/stockRequests';
-import { IProductInsert } from '@/hooks/useProducts';
-export interface IResponseStock {
-  sizes: IStock[];
-  flavours: IStock[];
-  complements: IStock[];
-  toppings: IStock[];
-  fruits: IStock[];
-  plus: IStock[];
+import stockRequests, { IStock } from '@/util/requests/products/stockRequests';
+import { ICategory, IProductInsert } from '@/hooks/useProducts';
+import Loading from '@/components/shared/Loaders/Loading';
+import Main from '@/components/shared/Main';
+
+export type IResponseStock = Record<string, CategoryWithStock>;
+
+interface CategoryWithStock extends ICategory {
+  stock: IStock[];
 }
-//topping === cobertura
 
 const MakeOrderPage: React.FC = () => {
   const { addProductOrderInCart, cart } = useCart();
 
   const { userInfo } = useAuth();
   const navigate = useNavigate();
+  const example: IResponseStock = {
+    'categoria 1': {
+      id: 4,
+      name: 'categoria 1',
+      description: 'descrição categoria 1',
+      stock: [
+        {
+          id: 6,
+          title: 'Product 1',
+          description: 'Description 1',
+          image: '',
+          price: '9.99',
+          quantity_for_unity: '1.5',
+          unit_of_measure: 'unit',
+          amount: 10,
+          categoryId: 4,
+          category: {
+            id: 4,
+            name: 'categoria 1',
+            description: 'descrição categoria 1'
+          }
+        }
+      ]
+    },
+    'categoria 2': {
+      id: 5,
+      name: 'categoria 2',
+      description: 'descrição categoria 2',
+      stock: [
+        {
+          id: 7,
+          title: 'Tamanho 1000ml',
+          description: 'Maior que temos',
+          image: 'asdasdasdasda',
+          price: '27',
+          quantity_for_unity: '1000',
+          unit_of_measure: 'ml',
+          amount: 12,
+          categoryId: 5,
+          category: {
+            id: 5,
+            name: 'categoria 2',
+            description: 'descrição categoria 2'
+          }
+        },
+        {
+          id: 8,
+          title: 'Biscoito',
+          description: 'Maior que temos',
+          image: 'asdasdasdasda',
+          price: '27',
+          quantity_for_unity: '2',
+          unit_of_measure: 'unit',
+          amount: 12,
+          categoryId: 5,
+          category: {
+            id: 5,
+            name: 'categoria 2',
+            description: 'descrição categoria 2'
+          }
+        }
+      ]
+    },
+    'categoria 3': {
+      id: 6,
+      name: 'categoria 3',
+      description: 'descrição categoria 3',
+      stock: []
+    }
+  };
+  const [responseStock, setResponseStock] = useState<IResponseStock | null>(
+    null
+  );
+
+  function sucess(data: IResponseStock) {
+    setResponseStock(data);
+  }
+  useEffect(() => {
+    stockRequests.getAllStockByCategory(sucess);
+  }, []);
+
   const [stateButton, setStateButton] = useState('');
 
   const [cupSizeId, setCupSizeId] = useState<number[]>([]);
@@ -75,6 +155,7 @@ const MakeOrderPage: React.FC = () => {
       navigate('/cart');
     }
   }, [objNewOrder]);
+
   async function handleCreateOrder() {
     try {
       setStateButton('loading');
@@ -103,84 +184,94 @@ const MakeOrderPage: React.FC = () => {
     }
   }
 
-  return (
-    <MakeOrderPageStyle>
-      <ModalLoading stateButton={stateButton}>
-        <div className="containerModal">
+  if (responseStock) {
+    return (
+      <MakeOrderPageStyle>
+        <ModalLoading stateButton={stateButton}>
+          <div className="containerModal">
+            <PopsicleLoading />
+          </div>
+        </ModalLoading>
+
+        <TitlePage title={'Escolher pedido'} />
+        <TitleSectionLeft titleSession={'Primeiro um tamanho'} />
+        <TitleSectionRight titleSession={'Quanto maior, melhor'} />
+        <CarouselListStock
+          margin_top={0}
+          objctResponseAPI={responseStock['Tamanhos'].stock}
+          setProductIds={setCupSizeId}
+          productIds={cupSizeId}
+          amountSelection={1}
+          showPrice={true}
+        />
+        <TitleSectionLeft titleSession={'Agora os sabores'} />
+
+        <TitleSectionRight titleSession={'Quantos quiser'} />
+
+        <CarouselListStock
+          margin_top={50}
+          objctResponseAPI={responseStock['categoria 2'].stock}
+          setProductIds={setFlavoursIds}
+          productIds={flavoursIds}
+          amountSelection={responseStock['categoria 2'].stock.length}
+        />
+        <TitleSectionLeft titleSession={'Agora os complementos'} />
+        <TitleSectionRight titleSession={'Até 5 (cinco)'} />
+        <CarouselListStock
+          margin_top={50}
+          objctResponseAPI={responseStock['categoria 3'].stock}
+          setProductIds={setComplementsIds}
+          productIds={complementsIds}
+          amountSelection={5}
+        />
+        <TitleSectionLeft titleSession={'Caldas'} />
+        <TitleSectionRight titleSession={'Quantas quiser'} />
+        <CarouselListStock
+          margin_top={50}
+          objctResponseAPI={responseStock['categoria 1'].stock}
+          setProductIds={setToppingsIds}
+          productIds={toppingsIds}
+          amountSelection={responseStock['categoria 1'].stock.length}
+        />
+        <TitleSectionLeft titleSession={'Agora uma fruta'} />
+        <TitleSectionRight titleSession={'Porque a gente é saudável'} />
+        <CarouselListStock
+          margin_top={50}
+          objctResponseAPI={responseStock['categoria 2'].stock}
+          setProductIds={setFruitId}
+          productIds={fruitId}
+          amountSelection={1}
+        />
+        <TitleSectionLeft titleSession={'Adicionais'} />
+        <TitleSectionRight titleSession={'A cereja do bolo'} />
+        <CarouselListStock
+          margin_top={50}
+          objctResponseAPI={responseStock['categoria 3'].stock}
+          setProductIds={setPlusIds}
+          productIds={plusIds}
+          amountSelection={responseStock['categoria 1'].stock.length}
+          showPrice={true}
+        />
+
+        <FooterWithPriceAndButton
+          total={formatPrice(totalPrice)}
+          handleCreateOrder={handleCreateOrder}
+          stateButton={stateButton}
+          enableAdd={
+            cupSizeId.length > 0 && flavoursIds.length > 0 ? true : false
+          }
+        />
+      </MakeOrderPageStyle>
+    );
+  } else {
+    return (
+      <MakeOrderPageStyle>
+        <Main margin_top="250">
           <PopsicleLoading />
-        </div>
-      </ModalLoading>
-
-      <TitlePage title={'Escolher pedido'} />
-      <TitleSectionLeft titleSession={'Primeiro um tamanho'} />
-      <TitleSectionRight titleSession={'Quanto maior, melhor'} />
-      <CarouselListProduct
-        margin_top={0}
-        objctResponseAPI={mocks.exampleProductsOrder.sizes}
-        setProductIds={setCupSizeId}
-        productIds={cupSizeId}
-        amountSelection={1}
-        showPrice={true}
-      />
-      <TitleSectionLeft titleSession={'Agora os sabores'} />
-
-      <TitleSectionRight titleSession={'Quantos quiser'} />
-
-      <CarouselListProduct
-        margin_top={50}
-        objctResponseAPI={mocks.exampleProductsOrder.flavours}
-        setProductIds={setFlavoursIds}
-        productIds={flavoursIds}
-        amountSelection={mocks.exampleProductsOrder.flavours.length}
-      />
-      <TitleSectionLeft titleSession={'Agora os complementos'} />
-      <TitleSectionRight titleSession={'Até 5 (cinco)'} />
-      <CarouselListProduct
-        margin_top={50}
-        objctResponseAPI={mocks.exampleProductsOrder.complements}
-        setProductIds={setComplementsIds}
-        productIds={complementsIds}
-        amountSelection={5}
-      />
-      <TitleSectionLeft titleSession={'Caldas'} />
-      <TitleSectionRight titleSession={'Quantas quiser'} />
-      <CarouselListProduct
-        margin_top={50}
-        objctResponseAPI={mocks.exampleProductsOrder.toppings}
-        setProductIds={setToppingsIds}
-        productIds={toppingsIds}
-        amountSelection={mocks.exampleProductsOrder.toppings.length}
-      />
-      <TitleSectionLeft titleSession={'Agora uma fruta'} />
-      <TitleSectionRight titleSession={'Porque a gente é saudável'} />
-      <CarouselListProduct
-        margin_top={50}
-        objctResponseAPI={mocks.exampleProductsOrder.fruits}
-        setProductIds={setFruitId}
-        productIds={fruitId}
-        amountSelection={1}
-      />
-      <TitleSectionLeft titleSession={'Adicionais'} />
-      <TitleSectionRight titleSession={'A cereja do bolo'} />
-      <CarouselListProduct
-        margin_top={50}
-        objctResponseAPI={mocks.exampleProductsOrder.plus}
-        setProductIds={setPlusIds}
-        productIds={plusIds}
-        amountSelection={mocks.exampleProductsOrder.plus.length}
-        showPrice={true}
-      />
-
-      <FooterWithPriceAndButton
-        total={formatPrice(totalPrice)}
-        handleCreateOrder={handleCreateOrder}
-        stateButton={stateButton}
-        enableAdd={
-          cupSizeId.length > 0 && flavoursIds.length > 0 ? true : false
-        }
-      />
-    </MakeOrderPageStyle>
-  );
+        </Main>
+      </MakeOrderPageStyle>
+    );
+  }
 };
 
 export default MakeOrderPage;

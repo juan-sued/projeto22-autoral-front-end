@@ -1,5 +1,6 @@
 import { axiosI } from '@/services/axios';
 import { ICategory } from '@/hooks/useProducts';
+import { IResponseStock } from '@/components/screens/MakeOrder_Page';
 
 export interface IStock {
   id: number;
@@ -51,6 +52,19 @@ async function getStocksByCharacter(
   }
 }
 
+async function getAllStockByCategory(
+  sucess: (value: IResponseStock) => void
+): Promise<void> {
+  try {
+    const { data } = await axiosI.get(`/stock/stock-for-categories`);
+
+    sucess(data);
+  } catch (err) {
+    console.error(err);
+    console.log('erro ao pegar stock por categoria');
+  }
+}
+
 async function getStockById(stockId: string): Promise<IStock> {
   try {
     const { data } = await axiosI.get(`/stock/${stockId}`);
@@ -78,7 +92,8 @@ async function getStockById(stockId: string): Promise<IStock> {
 const stockRequests = {
   postStock,
   getStocksByCharacter,
-  getStockById
+  getStockById,
+  getAllStockByCategory
 };
 
 export default stockRequests;

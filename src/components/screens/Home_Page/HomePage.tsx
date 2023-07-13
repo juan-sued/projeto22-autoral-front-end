@@ -19,7 +19,6 @@ import mocks from '../MakeOrder_Page/mock';
 
 export default function HomePage() {
   const { userInfo, signed, signOut } = useAuth();
-  console.log(userInfo);
   const [favoritedsList, setFavoritedsList] = useState<IProductBasic[] | null>(
     null
   );
@@ -34,7 +33,7 @@ export default function HomePage() {
       };
     }
   }, [signed, productsAndCategories]);
-
+  console.log(productsAndCategories);
   return (
     <>
       <SideBar />
