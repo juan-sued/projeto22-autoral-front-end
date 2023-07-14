@@ -2,30 +2,28 @@ import styled from 'styled-components';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { formatPrice } from '@/util/format';
 import { useInView } from 'react-intersection-observer';
+import imageCup from '@/assets/copoHome.jpg';
 import { IStock } from '@/util/requests/products/stockRequests';
-
-interface CardCarouselProductProps
+interface CardCarouselStockProps
   extends Omit<IStock, 'category' | 'description' | 'amount' | 'categoryId'> {
-  incrementProduct: (value: number) => number[];
+  incrementStock: (value: number) => number[];
   showPrice: boolean;
   isSelected: boolean;
   index: number;
 }
 
-export default function CardCarouselProduct({
+export default function CardCarouselStock({
   image,
   price,
   quantity_for_unity,
   unit_of_measure,
   id,
-  incrementProduct,
+  incrementStock,
   title,
   showPrice,
   isSelected = false,
   index
-}: CardCarouselProductProps) {
-  console.log(quantity_for_unity, unit_of_measure);
-
+}: CardCarouselStockProps) {
   let scaleImage = 0.5;
   const quantityForUnityNumber = Number(quantity_for_unity);
   switch (quantityForUnityNumber) {
@@ -63,16 +61,16 @@ export default function CardCarouselProduct({
   });
   const delay = index / 10 + 0.5;
   return (
-    <CardOfProduct
+    <CardOfStock
       ref={ref}
       inView={inView}
       delay={delay}
       scaleImage={scaleImage}
       isSelected={isSelected}
-      onClick={() => incrementProduct(id)}
+      onClick={() => incrementStock(id)}
     >
       <div className="halfCircle">
-        <img src={image} alt="" />
+        <img src={image.includes('https://') ? image : imageCup} alt="" />
       </div>
       <div className="containerTitle">
         <h1 className="title">
@@ -83,26 +81,26 @@ export default function CardCarouselProduct({
         <p className="description">{showUnity}</p>
       </div>
 
-      <div className="priceProductContainer">
-        <p className="priceProduct">{showPrice ? priceFormatted : ''}</p>
+      <div className="priceStockContainer">
+        <p className="priceStock">{showPrice ? priceFormatted : ''}</p>
         <BsCheckCircleFill
           size={16}
           className="iconCheck"
           color={isSelected ? '#7fff7f' : 'transparent'}
         />
       </div>
-    </CardOfProduct>
+    </CardOfStock>
   );
 }
 
-interface CardOfProductProps {
+interface CardOfStockProps {
   scaleImage: number;
   isSelected: boolean;
   inView: boolean;
   delay: number;
 }
 
-const CardOfProduct = styled.div<CardOfProductProps>`
+const CardOfStock = styled.div<CardOfStockProps>`
   height: 250px;
   width: 175px;
   min-width: 175px;
@@ -138,7 +136,7 @@ const CardOfProduct = styled.div<CardOfProductProps>`
     }
   }
 
-  .priceProductContainer {
+  .priceStockContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;

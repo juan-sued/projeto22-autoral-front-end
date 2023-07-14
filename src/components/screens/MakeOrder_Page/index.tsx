@@ -6,18 +6,15 @@ import { useEffect, useState } from 'react';
 import { formatPrice } from '@/util/format';
 import { calculateTotalPrice } from '@/util/utilsFunctions';
 import { useCart } from '@/hooks/useCart';
-import CarouselListStock from '@/components/shared/Carousels/CarouselListStock';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import TitlePage from '@/components/shared/Titles/TitlePage';
-import TitleSectionLeft from '@/components/shared/Titles/TitleSectionLeft';
-import TitleSectionRight from '@/components/shared/Titles/TitleSectionRight';
 import mocks from './mock';
 import { useAuth } from '@/hooks/useAuth';
 import stockRequests, { IStock } from '@/util/requests/products/stockRequests';
 import { ICategory, IProductInsert } from '@/hooks/useProducts';
-import Loading from '@/components/shared/Loaders/Loading';
 import Main from '@/components/shared/Main';
+import SectionCarousel from './SectionCarousel';
 
 export type IResponseStock = Record<string, CategoryWithStock>;
 
@@ -30,76 +27,7 @@ const MakeOrderPage: React.FC = () => {
 
   const { userInfo } = useAuth();
   const navigate = useNavigate();
-  const example: IResponseStock = {
-    'categoria 1': {
-      id: 4,
-      name: 'categoria 1',
-      description: 'descrição categoria 1',
-      stock: [
-        {
-          id: 6,
-          title: 'Product 1',
-          description: 'Description 1',
-          image: '',
-          price: '9.99',
-          quantity_for_unity: '1.5',
-          unit_of_measure: 'unit',
-          amount: 10,
-          categoryId: 4,
-          category: {
-            id: 4,
-            name: 'categoria 1',
-            description: 'descrição categoria 1'
-          }
-        }
-      ]
-    },
-    'categoria 2': {
-      id: 5,
-      name: 'categoria 2',
-      description: 'descrição categoria 2',
-      stock: [
-        {
-          id: 7,
-          title: 'Tamanho 1000ml',
-          description: 'Maior que temos',
-          image: 'asdasdasdasda',
-          price: '27',
-          quantity_for_unity: '1000',
-          unit_of_measure: 'ml',
-          amount: 12,
-          categoryId: 5,
-          category: {
-            id: 5,
-            name: 'categoria 2',
-            description: 'descrição categoria 2'
-          }
-        },
-        {
-          id: 8,
-          title: 'Biscoito',
-          description: 'Maior que temos',
-          image: 'asdasdasdasda',
-          price: '27',
-          quantity_for_unity: '2',
-          unit_of_measure: 'unit',
-          amount: 12,
-          categoryId: 5,
-          category: {
-            id: 5,
-            name: 'categoria 2',
-            description: 'descrição categoria 2'
-          }
-        }
-      ]
-    },
-    'categoria 3': {
-      id: 6,
-      name: 'categoria 3',
-      description: 'descrição categoria 3',
-      stock: []
-    }
-  };
+
   const [responseStock, setResponseStock] = useState<IResponseStock | null>(
     null
   );
@@ -134,14 +62,15 @@ const MakeOrderPage: React.FC = () => {
     plusIds: plusIds
   });
   useEffect(() => {
+    if (!responseStock) return console.log('responseStock é null');
     const totalPriceCupSize = calculateTotalPrice(
       cupSizeId,
-      mocks.exampleProductsOrder.sizes
+      responseStock['Tamanhos'].stock
     );
 
     const totalPricePlus = calculateTotalPrice(
       plusIds,
-      mocks.exampleProductsOrder.plus
+      responseStock['Adicionais'].stock
     );
 
     const total = totalPriceCupSize + totalPricePlus;
@@ -183,7 +112,6 @@ const MakeOrderPage: React.FC = () => {
       console.log(err);
     }
   }
-
   if (responseStock) {
     return (
       <MakeOrderPageStyle>
@@ -194,62 +122,57 @@ const MakeOrderPage: React.FC = () => {
         </ModalLoading>
 
         <TitlePage title={'Escolher pedido'} />
-        <TitleSectionLeft titleSession={'Primeiro um tamanho'} />
-        <TitleSectionRight titleSession={'Quanto maior, melhor'} />
-        <CarouselListStock
+        <SectionCarousel
+          titleSectionLeft={'Primeiro um tamanho'}
+          titleSectionRight={'Quanto maior, melhor'}
           margin_top={0}
           objctResponseAPI={responseStock['Tamanhos'].stock}
           setProductIds={setCupSizeId}
           productIds={cupSizeId}
-          amountSelection={1}
           showPrice={true}
         />
-        <TitleSectionLeft titleSession={'Agora os sabores'} />
 
-        <TitleSectionRight titleSession={'Quantos quiser'} />
-
-        <CarouselListStock
-          margin_top={50}
-          objctResponseAPI={responseStock['categoria 2'].stock}
+        <SectionCarousel
+          titleSectionLeft={'Agora os sabores'}
+          titleSectionRight={'Quantos quiser'}
+          objctResponseAPI={responseStock['Sabores'].stock}
           setProductIds={setFlavoursIds}
           productIds={flavoursIds}
-          amountSelection={responseStock['categoria 2'].stock.length}
+          amountSelection={responseStock['Sabores'].stock.length}
         />
-        <TitleSectionLeft titleSession={'Agora os complementos'} />
-        <TitleSectionRight titleSession={'Até 5 (cinco)'} />
-        <CarouselListStock
-          margin_top={50}
-          objctResponseAPI={responseStock['categoria 3'].stock}
+        <SectionCarousel
+          titleSectionLeft={'Agora os complementos'}
+          titleSectionRight={'Até 5 (cinco)'}
+          objctResponseAPI={responseStock['Complementos'].stock}
           setProductIds={setComplementsIds}
           productIds={complementsIds}
           amountSelection={5}
         />
-        <TitleSectionLeft titleSession={'Caldas'} />
-        <TitleSectionRight titleSession={'Quantas quiser'} />
-        <CarouselListStock
-          margin_top={50}
-          objctResponseAPI={responseStock['categoria 1'].stock}
+
+        <SectionCarousel
+          titleSectionLeft={'Caldas'}
+          titleSectionRight={'Quantas quiser'}
+          objctResponseAPI={responseStock['Caldas'].stock}
           setProductIds={setToppingsIds}
           productIds={toppingsIds}
-          amountSelection={responseStock['categoria 1'].stock.length}
+          amountSelection={responseStock['Caldas'].stock.length}
         />
-        <TitleSectionLeft titleSession={'Agora uma fruta'} />
-        <TitleSectionRight titleSession={'Porque a gente é saudável'} />
-        <CarouselListStock
-          margin_top={50}
-          objctResponseAPI={responseStock['categoria 2'].stock}
+
+        <SectionCarousel
+          titleSectionLeft={'Agora uma fruta'}
+          titleSectionRight={'Porque a gente é saudável'}
+          objctResponseAPI={responseStock['Frutas'].stock}
           setProductIds={setFruitId}
           productIds={fruitId}
-          amountSelection={1}
         />
-        <TitleSectionLeft titleSession={'Adicionais'} />
-        <TitleSectionRight titleSession={'A cereja do bolo'} />
-        <CarouselListStock
-          margin_top={50}
-          objctResponseAPI={responseStock['categoria 3'].stock}
+
+        <SectionCarousel
+          titleSectionLeft={'Adicionais'}
+          titleSectionRight={'A cereja do bolo'}
+          objctResponseAPI={responseStock['Adicionais'].stock}
           setProductIds={setPlusIds}
           productIds={plusIds}
-          amountSelection={responseStock['categoria 1'].stock.length}
+          amountSelection={responseStock['Adicionais'].stock.length}
           showPrice={true}
         />
 

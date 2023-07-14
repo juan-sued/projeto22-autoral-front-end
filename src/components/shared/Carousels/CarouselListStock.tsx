@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { formatListNames } from '@/util/utilsFunctions';
-import CardCarouselProduct from '../Cards/CardCarouselProduct';
 import { IStock } from '@/util/requests/products/stockRequests';
+import CardCarouselStock from '../Cards/CardCarouselStock';
 
-interface CarouselListStockProps {
-  margin_top: number;
+export interface CarouselListStockProps {
+  margin_top?: number;
   objctResponseAPI: IStock[];
   setProductIds?: (value: number[]) => void;
   productIds?: number[];
@@ -15,11 +15,11 @@ interface CarouselListStockProps {
 }
 
 const CarouselListStock: React.FC<CarouselListStockProps> = ({
-  margin_top,
+  margin_top = 50,
   objctResponseAPI = [],
   setProductIds,
   productIds = [],
-  amountSelection = 0,
+  amountSelection = 1,
   showPrice = false
 }) => {
   const [productsSelecteds, setProductsSelecteds] = useState<string[]>([]);
@@ -55,7 +55,6 @@ const CarouselListStock: React.FC<CarouselListStockProps> = ({
     setProductsSelecteds(filteredObject);
     return updatedProductIds;
   }
-  console.log(objctResponseAPI);
   return (
     <CarouselListContainer margin_top={margin_top}>
       <div className="listProductsAdd">
@@ -65,19 +64,19 @@ const CarouselListStock: React.FC<CarouselListStockProps> = ({
       </div>
       {objctResponseAPI.length === 0 ? (
         <div className="containerNoProduct">
-          <h1>O estoque acabou! :(</h1>
+          <h1>O estoque acabou! &#128553;</h1>
         </div>
       ) : (
         <div className="rowOfCardsContainer">
           {objctResponseAPI.map((order, index) => (
-            <CardCarouselProduct
+            <CardCarouselStock
               key={order.id}
               image={order.image}
               price={order.price}
               unit_of_measure={order.unit_of_measure}
               id={order.id}
               quantity_for_unity={order.quantity_for_unity}
-              incrementProduct={incrementProduct}
+              incrementStock={incrementProduct}
               title={order.title}
               showPrice={showPrice}
               isSelected={productIds.includes(order.id)}

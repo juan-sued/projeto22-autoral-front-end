@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface TitleSectionLeftProps {
-  titleSession: string;
+  titleSection: string;
   color?: string;
   fontSize?: string;
   fontWeight?: string;
@@ -10,7 +10,7 @@ interface TitleSectionLeftProps {
 }
 
 const TitleSectionLeft: React.FC<TitleSectionLeftProps> = ({
-  titleSession,
+  titleSection,
   color = '#1e0c22c2',
   fontSize = '30px',
   fontWeight = '600',
@@ -24,7 +24,7 @@ const TitleSectionLeft: React.FC<TitleSectionLeftProps> = ({
       colorLine={colorLine}
     >
       <div className="titleContainer">
-        <h2>{titleSession}</h2>
+        <h2>{titleSection}</h2>
         <div className="line"></div>
       </div>
     </TitleSectionLeftContainer>
@@ -50,7 +50,7 @@ const TitleSectionLeftContainer = styled.div<TitleSectionLeftContainerProps>`
   margin-left: -5px;
 
   .titleContainer {
-    width:auto;
+    width: auto;
     h2 {
       padding-left: 30px;
       font-size: ${props => props.fontSize};
@@ -70,8 +70,5 @@ const TitleSectionLeftContainer = styled.div<TitleSectionLeftContainerProps>`
       }
     }
   }
-
-
-};
 `;
 export default TitleSectionLeft;

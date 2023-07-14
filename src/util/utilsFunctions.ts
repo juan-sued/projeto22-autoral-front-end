@@ -1,4 +1,5 @@
 import { IProductBasic } from '@/hooks/useProducts';
+import { IStock } from './requests/products/stockRequests';
 
 const incrementStarsFeedback = (stars: string): string[] => {
   const arrStars: string[] = [];
@@ -54,7 +55,10 @@ function clearFields<T, Key extends keyof T>(entity: T) {
   return newEntity;
 }
 
-function calculateTotalPrice(ids: number[], products: IProductBasic[]): number {
+function calculateTotalPrice(
+  ids: number[],
+  products: (IProductBasic | IStock)[]
+): number {
   return ids
     .filter(productId => products.some(product => product.id === productId))
     .map(

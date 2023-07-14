@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { formatListNames } from '@/util/utilsFunctions';
 import CardCarouselOrdersAndProducts from '@/components/screens/Home_Page/components/CardCarouselOrdersAndProducts';
-import CardCarouselProduct from '../Cards/CardCarouselProduct';
 import PopsicleLoading from '../Loaders/PopsicleLoading';
 import TitleAndArrow from '../Titles/TitleAndArrow';
 import { IProductBasic } from '@/hooks/useProducts';
