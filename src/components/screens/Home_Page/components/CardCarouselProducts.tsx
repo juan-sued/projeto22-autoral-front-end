@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 import { useInView } from 'react-intersection-observer';
 
-interface CardCarouselOrdersAndProductsProps {
+interface CardCarouselProductsProps {
   image: string;
   name: string;
   price: number;
@@ -16,13 +16,13 @@ interface CardCarouselOrdersAndProductsProps {
   index: number;
 }
 
-export default function CardCarouselOrdersAndProducts({
+export default function CardCarouselProducts({
   image,
   name,
   price,
   id,
   index
-}: CardCarouselOrdersAndProductsProps) {
+}: CardCarouselProductsProps) {
   const priceFormatted = formatPrice(price);
   const { updateIsFavorited } = useProduct();
   const [clicked, setClicked] = useState(true);
@@ -46,7 +46,7 @@ export default function CardCarouselOrdersAndProducts({
     delay: 200,
     threshold: 0
   });
-  const imageBanner = image ? image : copoAcai;
+  const imageBanner = image.includes('https://') ? image : copoAcai;
   const delay = index / 10 + 0.5;
 
   if (isHidden) {

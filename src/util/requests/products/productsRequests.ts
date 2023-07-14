@@ -19,6 +19,14 @@ async function postProduct(
   }
 }
 
+async function updateFavorited(id: number): Promise<void> {
+  try {
+    await axiosI.patch(`/favoriteds/${id}`);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 async function postRegisterProduct(
   objNewProduct: IProductInsert
 ): Promise<IProductInsert> {
@@ -118,7 +126,8 @@ const productRequests = {
   getMoreOrders,
   getProductById,
   postRegisterProduct,
-  getFavoritedsByUserId
+  getFavoritedsByUserId,
+  updateFavorited
 };
 
 export default productRequests;

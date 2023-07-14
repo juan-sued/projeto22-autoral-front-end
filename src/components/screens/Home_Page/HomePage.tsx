@@ -16,58 +16,54 @@ import { useAuth } from '@/hooks/useAuth';
 import { IProductBasic, useProduct } from '@/hooks/useProducts';
 import { useEffect, useState } from 'react';
 import mocks from '../MakeOrder_Page/mock';
+import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 
 export default function HomePage() {
   const { userInfo, signed, signOut } = useAuth();
-  const [favoritedsList, setFavoritedsList] = useState<IProductBasic[] | null>(
-    null
-  );
 
-  const { productsAndCategories, getFavoritedsProducts } = useProduct();
+  const { productsAndCategories } = useProduct();
 
-  useEffect(() => {
-    if (signed) {
-      async () => {
-        const favorites = await getFavoritedsProducts(signOut);
-        setFavoritedsList(favorites);
-      };
-    }
-  }, [signed, productsAndCategories]);
-  console.log(productsAndCategories);
-  return (
-    <>
-      <SideBar />
-      <TitleStatus />
-      <Main margin_top={'100'}>
-        <WellcomeUser userInfo={userInfo} />
-        <CardOfert objHomeResponseAPI={mocks.exampleHomeContent} />
-        <Divider />
-        <PlaceMyOrderButton />
-        <Divider />
+  console.log(productsAndCategories?.products.favoriteds);
+  if (productsAndCategories) {
+    return (
+      <>
+        <SideBar />
+        <TitleStatus />
+        <Main margin_top={'100'}>
+          <WellcomeUser userInfo={userInfo} />
+          <CardOfert objHomeResponseAPI={mocks.exampleHomeContent} />
+          <Divider />
+          <PlaceMyOrderButton />
+          <Divider />
 
-        <CarouselListProduct
-          objctResponseAPI={productsAndCategories?.products}
-          titleSession={'Mais pedidos'}
-          margin_top={-50}
-        />
-
-        {signed ? (
           <CarouselListProduct
-            objctResponseAPI={favoritedsList ? favoritedsList : undefined}
-            titleSession={'Meus favoritos'}
+            objctResponseAPI={productsAndCategories?.products.notFavoriteds}
+            titleSession={'Mais pedidos'}
             margin_top={-50}
           />
-        ) : (
-          ''
-        )}
-        <FeedBacks titleSession={'Feedbacks'} />
 
-        <SocialsButtons />
+          {signed ? (
+            <CarouselListProduct
+              objctResponseAPI={productsAndCategories?.products.favoriteds}
+              titleSession={'Meus favoritos'}
+              margin_top={-50}
+            />
+          ) : (
+            ''
+          )}
+          <FeedBacks titleSession={'Feedbacks'} />
 
-        <OurHistory />
-      </Main>
+          <SocialsButtons />
 
-      <ImageArvoreAcai src={Arvore_de_acai} alt="" />
-    </>
-  );
+          <OurHistory />
+        </Main>
+
+        <ImageArvoreAcai src={Arvore_de_acai} alt="" />
+      </>
+    );
+  } else {
+    <Main margin_top="250">
+      <PopsicleLoading />
+    </Main>;
+  }
 }

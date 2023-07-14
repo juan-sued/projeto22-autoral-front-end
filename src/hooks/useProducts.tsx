@@ -1,9 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { axiosI } from '@/services/axios';
 import productRequests from '@/util/requests/products/productsRequests';
-import imageDefault from '@/assets/copoHome.jpg';
 import { IStock } from '@/util/requests/products/stockRequests';
-import { useAuth } from './useAuth';
 export interface IProductBasic {
   id: number;
   name: string;
@@ -41,15 +39,16 @@ export interface ICategory {
 }
 
 interface ProductsAndCategories {
-  products: IProductBasic[];
+  products: {
+    notFavoriteds: IProductBasic[];
+    favoriteds: IProductBasic[];
+  };
   categories: ICategory[];
 }
 
 interface ProductsContextType {
   productsAndCategories: ProductsAndCategories | null;
   updateIsFavorited: (productId: number) => void;
-  keyRequestProduct: boolean;
-  setKeyRequestProduct: (value: boolean) => void;
   getFavoritedsProducts: (
     signOut: () => void
   ) => Promise<IProductBasic[] | null>;
@@ -64,41 +63,79 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [productsAndCategories, setProductsAndCategories] =
     useState<ProductsAndCategories | null>(null);
-  const [keyRequestProduct, setKeyRequestProduct] = useState<boolean>(false);
 
   if (!productsAndCategories) getProductsAndCategories();
 
   async function getProductsAndCategories() {
     axiosI
-      .get('/products')
+      .get('/products/products-categories')
       .then(({ data }) => {
         setProductsAndCategories(data);
       })
       .catch(err => {
         const MOCK_ARR: ProductsAndCategories = {
+          products: {
+            notFavoriteds: [
+              {
+                id: 1,
+                name: 'Exemplo de Pedido',
+                image: 'fotoaquiasdiasda',
+                price: '27'
+              },
+              {
+                id: 2,
+                name: 'Exemplo de Pedido',
+                image: 'fotoaquiasdiasda',
+                price: '17.5'
+              }
+            ],
+            favoriteds: []
+          },
           categories: [
-            { id: 2, name: 'sabores de açaí', description: 'descrição foda' },
-            { id: 3, name: 'adicionais', description: 'descrição foda' },
-            { id: 4, name: 'caldas', description: 'descrição foda' }
-          ],
-          products: [
             {
-              id: 1,
-              name: 'produto 1',
-              image: imageDefault,
-              price: '27'
+              id: 4,
+              name: 'categoria 1',
+              description: 'descrição categoria 1'
             },
             {
-              id: 2,
-              name: 'produto 2',
-              image: imageDefault,
-              price: '20'
+              id: 5,
+              name: 'categoria 2',
+              description: 'descrição categoria 2'
             },
             {
-              id: 3,
-              name: 'produto 3',
-              image: imageDefault,
-              price: '17.20'
+              id: 6,
+              name: 'categoria 3',
+              description: 'descrição categoria 3'
+            },
+            {
+              id: 7,
+              name: 'Caldas',
+              description: 'Categoria para Caldas'
+            },
+            {
+              id: 8,
+              name: 'Frutas',
+              description: 'Categoria para Frutas'
+            },
+            {
+              id: 9,
+              name: 'Complementos',
+              description: 'Categoria para Complementos'
+            },
+            {
+              id: 10,
+              name: 'Adicionais',
+              description: 'Categoria para Adicionais'
+            },
+            {
+              id: 12,
+              name: 'Tamanhos',
+              description: 'Categoria para Tamanhos de copo'
+            },
+            {
+              id: 11,
+              name: 'Sabores',
+              description: 'Categoria para Sabores de açaí.'
             }
           ]
         };
@@ -111,8 +148,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 
   async function updateIsFavorited(productId: number) {
     try {
-      //await productRequests.updateIsFavorite(productId);
-      setKeyRequestProduct(!keyRequestProduct);
+      await productRequests.updateFavorited(productId);
+      getProductsAndCategories();
     } catch (error) {
       return new Error('Erro ao atualizar favorito');
     }
@@ -127,8 +164,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
       value={{
         productsAndCategories,
         updateIsFavorited,
-        keyRequestProduct,
-        setKeyRequestProduct,
+
         getFavoritedsProducts
       }}
     >
