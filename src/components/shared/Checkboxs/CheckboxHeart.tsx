@@ -5,14 +5,12 @@ interface CheckboxHeartProps {
   isFavorited: boolean;
   selectedProduct: () => void;
   clicked: boolean;
-  isHidden: boolean;
 }
 
 const CheckboxHeart: React.FC<CheckboxHeartProps> = ({
   isFavorited,
   clicked,
-  selectedProduct,
-  isHidden
+  selectedProduct
 }) => {
   if (isFavorited) {
     return (
@@ -22,9 +20,9 @@ const CheckboxHeart: React.FC<CheckboxHeartProps> = ({
             title="like"
             type="checkbox"
             className="like"
-            checked={clicked || isFavorited}
+            checked={isFavorited}
             onChange={selectedProduct}
-            disabled={isHidden}
+            disabled={clicked}
           />
           <img src={iconRemoveFavorite} alt="" className="iconRemove" />
         </div>
@@ -38,7 +36,7 @@ const CheckboxHeart: React.FC<CheckboxHeartProps> = ({
             title="like"
             type="checkbox"
             className="like"
-            checked={clicked || isFavorited}
+            checked={clicked}
             onChange={selectedProduct}
           />
           <div className="checkmark">
@@ -86,11 +84,10 @@ const CheckboxHeartStyle = styled.div`
     :hover {
       transform: scale(1.2);
       animation: shake 0.15s infinite;
-}
     }
-    :active {
-      transform: scale(0.8);
-    }
+  }
+  :active {
+    transform: scale(0.8);
   }
 
   .con-like .like {
@@ -141,18 +138,17 @@ const CheckboxHeartStyle = styled.div`
     display: block;
   }
 
-
-@keyframes shake {
-  0% {
-    transform:  translateX(0px) rotate(-5deg);
+  @keyframes shake {
+    0% {
+      transform: translateX(0px) rotate(-5deg);
+    }
+    50% {
+      transform: translateX(2px) rotate(2deg);
+    }
+    100% {
+      transform: translateX(0px) rotate(-5deg);
+    }
   }
-  50% {
-    transform:  translateX(2px) rotate(2deg);
-  }
-  100% {
-    transform:  translateX(0px) rotate(-5deg);
-  }
-}
 
   @keyframes kfr-filled {
     0% {

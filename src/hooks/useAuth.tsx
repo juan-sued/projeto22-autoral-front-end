@@ -40,6 +40,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (storagedUser && storagedToken) {
       axiosI.defaults.headers['Authorization'] = `Bearer ${storagedToken}`;
       setUserInfo(JSON.parse(storagedUser));
+    } else {
+      setUserInfo({
+        id: -1,
+        name: 'user default',
+        email: 'email default',
+        permissions: {
+          id: -1,
+          name: 'not logged',
+          access: 'not logged',
+          description: 'Usuário não logado'
+        }
+      });
     }
   }, []);
 
@@ -84,7 +96,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AuthContext.Provider
       value={{
-        signed: !!userInfo,
+        signed:
+          userInfo !== null &&
+          !userInfo.permissions.access.includes('not logged'),
         userInfo,
         signIn,
         signOut

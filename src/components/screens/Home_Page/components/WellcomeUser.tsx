@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-interface UserInfo {
-  name: string;
-}
-
 interface WellcomeUserProps {
-  userInfo: UserInfo | null;
+  name: string | null | undefined;
 }
 
-export default function WellcomeUser({ userInfo }: WellcomeUserProps) {
+const WellcomeUser: React.FC<WellcomeUserProps> = ({ name }) => {
   const hourCurrent = new Date().getHours();
 
   const [greetingMessage, setGreetingMessage] = useState('Bom dia');
@@ -24,35 +20,44 @@ export default function WellcomeUser({ userInfo }: WellcomeUserProps) {
     }
   }, []);
 
-  function shortName(): string | undefined {
-    if (userInfo !== null) {
-      const nameShorten = userInfo.name.split(' ');
-      return nameShorten[0];
-    }
+  function shortName(): string {
+    const nameShorten = name?.split(' ');
+    return nameShorten?.[0] ?? '';
   }
 
-  return (
-    <ContainerWellcomeUser>
-      <span className="container">
-        {userInfo === null ? (
-          ''
-        ) : (
+  if (name && name !== 'user default') {
+    return (
+      <ContainerWellcomeUser>
+        <span className="container">
           <h1 className="gooday">
             {greetingMessage}, {shortName()}!
           </h1>
-        )}
-
-        <p>
-          {greetingMessage === 'Bom dia'
-            ? 'Nada melhor que um Gellato para começar o dia cheio de energia.'
-            : greetingMessage === 'Boa tarde'
-            ? 'Hmm!!! essa tarde ta pedindo um açaí da Gellato!'
-            : 'Nada melhor que um Gellato terminar a noite bem.'}
-        </p>
-      </span>
-    </ContainerWellcomeUser>
-  );
-}
+          <p>
+            {greetingMessage === 'Bom dia'
+              ? 'Nada melhor que um Gellato para começar o dia cheio de energia.'
+              : greetingMessage === 'Boa tarde'
+              ? 'Hmm!!! essa tarde ta pedindo um açaí da Gellato!'
+              : 'Nada melhor que um Gellato terminar a noite bem.'}
+          </p>
+        </span>
+      </ContainerWellcomeUser>
+    );
+  } else {
+    return (
+      <ContainerWellcomeUser>
+        <span className="container">
+          <p>
+            {greetingMessage === 'Bom dia'
+              ? 'Nada melhor que um Gellato para começar o dia cheio de energia.'
+              : greetingMessage === 'Boa tarde'
+              ? 'Hmm!!! essa tarde ta pedindo um açaí da Gellato!'
+              : 'Nada melhor que um Gellato terminar a noite bem.'}
+          </p>
+        </span>
+      </ContainerWellcomeUser>
+    );
+  }
+};
 
 const ContainerWellcomeUser = styled.div`
   width: 100%;
@@ -87,4 +92,6 @@ const ContainerWellcomeUser = styled.div`
       line-height: 67px;
     }
   }
-}`;
+`;
+
+export default WellcomeUser;

@@ -13,24 +13,51 @@ import Main from '@/components/shared/Main';
 import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
-import { IProductBasic, useProduct } from '@/hooks/useProducts';
-import { useEffect, useState } from 'react';
+import { useProduct } from '@/hooks/useProducts';
 import mocks from '../MakeOrder_Page/mock';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
+import { useEffect } from 'react';
+import { axiosI } from '@/services/axios';
 
 export default function HomePage() {
   const { userInfo, signed, signOut } = useAuth();
+  console.log('signed: ', signed);
+  const { productsAndCategories, setProductsAndCategories, keyRequest } =
+    useProduct();
 
-  const { productsAndCategories } = useProduct();
+  useEffect(() => {
+    if (signed) {
+      axiosI
+        .get('/products/products-favorites-categories')
+        .then(({ data }) => {
+          setProductsAndCategories(data);
+        })
+        .catch(err => {
+          console.log(err);
+          console.error('erro ao pegar produtos', err);
+        });
+    } else {
+      axiosI
+        .get('/products/products-categories')
 
-  console.log(productsAndCategories?.products.favoriteds);
+        .then(({ data }) => {
+          setProductsAndCategories(data);
+        })
+        .catch(err => {
+          console.log(err);
+          console.error('erro ao pegar produtos', err);
+        });
+    }
+  }, [keyRequest]);
+
+  console.log(productsAndCategories);
   if (productsAndCategories) {
     return (
       <>
         <SideBar />
         <TitleStatus />
         <Main margin_top={'100'}>
-          <WellcomeUser userInfo={userInfo} />
+          <WellcomeUser name={userInfo?.name} />
           <CardOfert objHomeResponseAPI={mocks.exampleHomeContent} />
           <Divider />
           <PlaceMyOrderButton />
@@ -39,14 +66,13 @@ export default function HomePage() {
           <CarouselListProduct
             objctResponseAPI={productsAndCategories?.products.notFavoriteds}
             titleSession={'Mais pedidos'}
-            margin_top={-50}
           />
 
           {signed ? (
             <CarouselListProduct
               objctResponseAPI={productsAndCategories?.products.favoriteds}
               titleSession={'Meus favoritos'}
-              margin_top={-50}
+              isCarouselFavorited={true}
             />
           ) : (
             ''

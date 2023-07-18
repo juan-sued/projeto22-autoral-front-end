@@ -4,9 +4,9 @@ import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 const Routes: React.FC = () => {
   const { userInfo, signed } = useAuth();
-  if (signed && !userInfo?.isAdministrator) {
+  if (signed && userInfo?.permissions.access === 'low') {
     return <PrivateRoutes />;
-  } else if (signed && userInfo?.isAdministrator) {
+  } else if (signed && userInfo?.permissions.access === 'high') {
     return <AdministratorRoutes />;
   } else {
     return <PublicRoutes />;

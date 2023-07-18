@@ -7,6 +7,7 @@ import { useProduct } from '@/hooks/useProducts';
 import { useState } from 'react';
 
 import { useInView } from 'react-intersection-observer';
+import productRequests from '@/util/requests/products/productsRequests';
 
 interface CardCarouselProductsProps {
   image: string;
@@ -14,6 +15,7 @@ interface CardCarouselProductsProps {
   price: number;
   id: number;
   index: number;
+  isFavorited?: boolean;
 }
 
 export default function CardCarouselProducts({
@@ -21,24 +23,31 @@ export default function CardCarouselProducts({
   name,
   price,
   id,
-  index
+  index,
+  isFavorited = false
 }: CardCarouselProductsProps) {
-  const priceFormatted = formatPrice(price);
-  const { updateIsFavorited } = useProduct();
-  const [clicked, setClicked] = useState(true);
-  const [isHidden, setIsHidden] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
+  const priceFormatted = formatPrice(price);
+  const { keyRequest, setKeyRequest } = useProduct();
   function selectedProduct() {
     try {
-      setTimeout(() => {
-        setIsHidden(true);
-      }, 1000);
-      setClicked(!clicked);
       updateIsFavorited(id);
-
-      setIsHidden(false);
+      setKeyRequest(!keyRequest);
     } catch (error) {
       console.log('Erro ao favoritar', error);
+    }
+  }
+
+  async function updateIsFavorited(productId: number) {
+    try {
+      setClicked(true);
+      await productRequests.updateFavorited(productId);
+      setTimeout(() => {
+        setClicked(false);
+      }, 1500);
+    } catch (error) {
+      return new Error('Erro ao atualizar favorito');
     }
   }
 
@@ -47,36 +56,37 @@ export default function CardCarouselProducts({
     threshold: 0
   });
   const imageBanner = image.includes('https://') ? image : copoAcai;
-  const delay = index / 10 + 0.5;
+  const delay = index / 5 + 0.8;
 
-  if (isHidden) {
-    return null;
-  } else {
-    return (
-      <CardOfProductStyle ref={ref} inView={inView} delay={delay}>
-        <div className="bannerContainer">
-          <img className="banner" src={imageBanner} alt="" />
+  return (
+    <CardOfProductStyle
+      ref={ref}
+      inView={inView}
+      delay={delay}
+      selected={clicked}
+    >
+      <div className="bannerContainer">
+        <img className="banner" src={imageBanner} alt="" />
+      </div>
+      <div className="container">
+        <h1 className="title">{name}</h1>
+        <div className="priceProductContainer">
+          <p className="priceProduct">{priceFormatted}</p>
+          <CheckboxHeart
+            selectedProduct={selectedProduct}
+            clicked={clicked}
+            isFavorited={isFavorited}
+          />
         </div>
-        <div className="container">
-          <h1 className="title">{name}</h1>
-          <div className="priceProductContainer">
-            <p className="priceProduct">{priceFormatted}</p>
-            <CheckboxHeart
-              isHidden={isHidden}
-              selectedProduct={selectedProduct}
-              clicked={clicked}
-              isFavorited={true}
-            />
-          </div>
-        </div>
-      </CardOfProductStyle>
-    );
-  }
+      </div>
+    </CardOfProductStyle>
+  );
 }
 
 interface CardOfProductStyleProps {
   inView: boolean;
   delay: number;
+  selected: boolean;
 }
 const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
   height: 250px;
@@ -90,13 +100,19 @@ const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
   justify-content: space-between;
   align-items: center;
   color: white;
+
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   padding-top: 0;
-  opacity: 0;
+  opacity: 1;
   ${props =>
     props.inView
-      ? ` ;animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
+      ? `animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
       : ''}
+  ${props =>
+    props.selected
+      ? `animation: fadeClicked ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
+      : ''}
+
   .bannerContainer {
     width: 100%;
     overflow: hidden;
@@ -141,11 +157,24 @@ const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
   @keyframes fadeTranslate {
     0% {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(20px);
     }
     100% {
       opacity: 1;
       transform: translateY(-20px);
+    }
+  }
+
+  @keyframes fadeClicked {
+    0% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      position: relative;
+      display: none;
+      transform: translateY(-100px);
     }
   }
 `;

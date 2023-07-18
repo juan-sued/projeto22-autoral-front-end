@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import PopsicleLoading from '../Loaders/PopsicleLoading';
 import TitleAndArrow from '../Titles/TitleAndArrow';
 import { IProductBasic } from '@/hooks/useProducts';
 import CardCarouselProducts from '@/components/screens/Home_Page/components/CardCarouselProducts';
 
 interface CarouselListProductProps {
   titleSession?: string;
-  margin_top: number;
+  margin_top?: number;
   objctResponseAPI: IProductBasic[] | undefined;
+  isCarouselFavorited?: boolean;
 }
 
 const CarouselListProduct: React.FC<CarouselListProductProps> = ({
   titleSession,
-  margin_top,
-  objctResponseAPI = []
+  margin_top = -50,
+  objctResponseAPI = [],
+  isCarouselFavorited = false
 }) => {
   return (
     <CarouselListContainer margin_top={margin_top}>
@@ -34,6 +35,7 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
               price={Number(order.price)}
               id={order.id}
               index={index}
+              isFavorited={isCarouselFavorited}
             />
           ))}
         </div>
@@ -48,7 +50,6 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
   min-width: 100%;
   height: 100%;
   margin-right: 0;
-  min-height: 230px;
 
   .messageProduct {
     height: 200px;

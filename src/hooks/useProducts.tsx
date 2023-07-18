@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { axiosI } from '@/services/axios';
 import productRequests from '@/util/requests/products/productsRequests';
 import { IStock } from '@/util/requests/products/stockRequests';
+import { useAuth } from './useAuth';
 export interface IProductBasic {
   id: number;
   name: string;
@@ -48,10 +49,9 @@ interface ProductsAndCategories {
 
 interface ProductsContextType {
   productsAndCategories: ProductsAndCategories | null;
-  updateIsFavorited: (productId: number) => void;
-  getFavoritedsProducts: (
-    signOut: () => void
-  ) => Promise<IProductBasic[] | null>;
+  setProductsAndCategories: (value: ProductsAndCategories | null) => void;
+  keyRequest: boolean;
+  setKeyRequest: (value: boolean) => void;
 }
 
 const ProductsContext = createContext<ProductsContextType | undefined>(
@@ -63,97 +63,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [productsAndCategories, setProductsAndCategories] =
     useState<ProductsAndCategories | null>(null);
+  const [keyRequest, setKeyRequest] = useState(false);
 
-  if (!productsAndCategories) getProductsAndCategories();
-
-  async function getProductsAndCategories() {
-    axiosI
-      .get('/products/products-categories')
-      .then(({ data }) => {
-        setProductsAndCategories(data);
-      })
-      .catch(err => {
-        const MOCK_ARR: ProductsAndCategories = {
-          products: {
-            notFavoriteds: [
-              {
-                id: 1,
-                name: 'Exemplo de Pedido',
-                image: 'fotoaquiasdiasda',
-                price: '27'
-              },
-              {
-                id: 2,
-                name: 'Exemplo de Pedido',
-                image: 'fotoaquiasdiasda',
-                price: '17.5'
-              }
-            ],
-            favoriteds: []
-          },
-          categories: [
-            {
-              id: 4,
-              name: 'categoria 1',
-              description: 'descrição categoria 1'
-            },
-            {
-              id: 5,
-              name: 'categoria 2',
-              description: 'descrição categoria 2'
-            },
-            {
-              id: 6,
-              name: 'categoria 3',
-              description: 'descrição categoria 3'
-            },
-            {
-              id: 7,
-              name: 'Caldas',
-              description: 'Categoria para Caldas'
-            },
-            {
-              id: 8,
-              name: 'Frutas',
-              description: 'Categoria para Frutas'
-            },
-            {
-              id: 9,
-              name: 'Complementos',
-              description: 'Categoria para Complementos'
-            },
-            {
-              id: 10,
-              name: 'Adicionais',
-              description: 'Categoria para Adicionais'
-            },
-            {
-              id: 12,
-              name: 'Tamanhos',
-              description: 'Categoria para Tamanhos de copo'
-            },
-            {
-              id: 11,
-              name: 'Sabores',
-              description: 'Categoria para Sabores de açaí.'
-            }
-          ]
-        };
-
-        setProductsAndCategories(MOCK_ARR);
-
-        console.error('erro ao pegar produtos', err);
-      });
-  }
-
-  async function updateIsFavorited(productId: number) {
-    try {
-      await productRequests.updateFavorited(productId);
-      getProductsAndCategories();
-    } catch (error) {
-      return new Error('Erro ao atualizar favorito');
-    }
-  }
   async function getFavoritedsProducts(
     signOut: () => void
   ): Promise<IProductBasic[] | null> {
@@ -163,9 +74,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     <ProductsContext.Provider
       value={{
         productsAndCategories,
-        updateIsFavorited,
-
-        getFavoritedsProducts
+        setProductsAndCategories,
+        keyRequest,
+        setKeyRequest
       }}
     >
       {children}

@@ -44,7 +44,7 @@ export default function MyInformationPage() {
     return (
       <>
         <TitlePage title={'Minha informações'} to={'/'} />
-        <Main margin_top="0">
+        <Main margin_top="10">
           <ContainerCard>
             {userAndAddressesInfo ? (
               <CardIdentify
@@ -113,11 +113,10 @@ export default function MyInformationPage() {
 const ContainerCard = styled.div`
   padding: 15px;
   background-color: purple;
-  min-height: 350px;
   width: 90%;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
-  min-height: 300px;
+  min-height: 100vh;
   margin-bottom: 20px;
 
   button {

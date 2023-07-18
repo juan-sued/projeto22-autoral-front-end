@@ -19,9 +19,9 @@ async function postProduct(
   }
 }
 
-async function updateFavorited(id: number): Promise<void> {
+async function updateFavorited(productId: number): Promise<void> {
   try {
-    await axiosI.patch(`/favoriteds/${id}`);
+    await axiosI.patch(`/products/favoriteds/${productId}`);
   } catch (err) {
     console.error(err);
   }
