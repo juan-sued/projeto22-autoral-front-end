@@ -5,7 +5,7 @@ import TitleStatus from './components/TitleStatus';
 import WellcomeUser from './components/WellcomeUser';
 import SideBar from './components/sideBar';
 import { ImageArvoreAcai } from './styles';
-
+import { IoClose } from 'react-icons/io5';
 import CarouselListProduct from '@/components/shared/Carousels/CarouselListProduct';
 import Divider from '@/components/shared/Dividers/Divider';
 import FeedBacks from '@/components/shared/Feedback/Feedbacks';
@@ -16,15 +16,17 @@ import { useAuth } from '@/hooks/useAuth';
 import { useProduct } from '@/hooks/useProducts';
 import mocks from '../MakeOrder_Page/mock';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { axiosI } from '@/services/axios';
+import styled from 'styled-components';
+import PopUp from '@/components/shared/Popups/PopUp';
 
 export default function HomePage() {
   const { userInfo, signed, signOut } = useAuth();
-  console.log('signed: ', signed);
   const { productsAndCategories, setProductsAndCategories, keyRequest } =
     useProduct();
 
+  const [notAuthorized, setNotAuthorized] = useState(false);
   useEffect(() => {
     if (signed) {
       axiosI
@@ -33,7 +35,8 @@ export default function HomePage() {
           setProductsAndCategories(data);
         })
         .catch(err => {
-          console.log(err);
+          if (err.response && err.response.status === 401)
+            setNotAuthorized(true);
           console.error('erro ao pegar produtos', err);
         });
     } else {
@@ -44,16 +47,25 @@ export default function HomePage() {
           setProductsAndCategories(data);
         })
         .catch(err => {
-          console.log(err);
+          if (err.response && err.response.status === 401)
+            setNotAuthorized(true);
+
           console.error('erro ao pegar produtos', err);
         });
     }
   }, [keyRequest]);
 
-  console.log(productsAndCategories);
   if (productsAndCategories) {
     return (
       <>
+        {notAuthorized ? (
+          <PopUp title="Não autorizado!">
+            <p>Opss! Parece que você precisa de login para isso.</p>
+          </PopUp>
+        ) : (
+          ''
+        )}
+
         <SideBar />
         <TitleStatus />
         <Main margin_top={'100'}>
