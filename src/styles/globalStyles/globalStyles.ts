@@ -76,6 +76,10 @@ overflow-y: hidden;
  
   --purple-bold: rgb(142, 28, 90);
 
+  button{
+    border: none;
+    font-family: 'Josefin Slab', serif;
+  }
 
 input:focus{
 outline: none;
@@ -87,7 +91,16 @@ outline: none;
   border: solid 1px rgb(142, 28, 90,0.5);
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
 }
-  
+@keyframes fadeSmallBig {
+    0% {
+      opacity: 0;
+      scale: 0;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+  }
 `;
 
 export default GlobalStyles;

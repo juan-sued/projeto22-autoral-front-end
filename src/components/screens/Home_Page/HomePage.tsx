@@ -18,15 +18,15 @@ import mocks from '../MakeOrder_Page/mock';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import { useEffect, useState } from 'react';
 import { axiosI } from '@/services/axios';
-import styled from 'styled-components';
 import PopUp from '@/components/shared/Popups/PopUp';
+import PopUpError from '@/components/shared/Popups/PopUpError';
 
 export default function HomePage() {
-  const { userInfo, signed, signOut } = useAuth();
+  const { userInfo, signed, signOut, errorResponse, setErrorResponse } =
+    useAuth();
   const { productsAndCategories, setProductsAndCategories, keyRequest } =
     useProduct();
 
-  const [notAuthorized, setNotAuthorized] = useState(false);
   useEffect(() => {
     if (signed) {
       axiosI
@@ -35,8 +35,8 @@ export default function HomePage() {
           setProductsAndCategories(data);
         })
         .catch(err => {
-          if (err.response && err.response.status === 401)
-            setNotAuthorized(true);
+          setErrorResponse(err.response.status);
+
           console.error('erro ao pegar produtos', err);
         });
     } else {
@@ -47,8 +47,7 @@ export default function HomePage() {
           setProductsAndCategories(data);
         })
         .catch(err => {
-          if (err.response && err.response.status === 401)
-            setNotAuthorized(true);
+          setErrorResponse(err.response.status);
 
           console.error('erro ao pegar produtos', err);
         });
@@ -58,10 +57,10 @@ export default function HomePage() {
   if (productsAndCategories) {
     return (
       <>
-        {notAuthorized ? (
-          <PopUp title="Não autorizado!">
+        {errorResponse === 401 ? (
+          <PopUpError title="Não autorizado!">
             <p>Opss! Parece que você precisa de login para isso.</p>
-          </PopUp>
+          </PopUpError>
         ) : (
           ''
         )}

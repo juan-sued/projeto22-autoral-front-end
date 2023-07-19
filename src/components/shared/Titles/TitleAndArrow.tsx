@@ -74,7 +74,7 @@ const TitleAndArrowContainer = styled.div<TitleAndArrowContainerProps>`
 
   img {
     width: ${props => props.fontSize};
+    opacity: 0.6;
   }
-};
 `;
 export default TitleAndArrow;

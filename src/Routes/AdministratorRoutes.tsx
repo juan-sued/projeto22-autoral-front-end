@@ -7,6 +7,7 @@ import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
 import React from 'react';
 import StockPage from '@/components/screens/Stock_Page/StockPage';
 import MakeOrderPage from '@/components/screens/MakeOrder_Page';
+import ProductViewPage from '@/components/screens/Product_View_Page/index';
 //criar pagina erro com     <Route path="*" element={<NotFoundPage />} />
 
 const AdministratorRoutes: React.FC = () => (
@@ -18,6 +19,7 @@ const AdministratorRoutes: React.FC = () => (
     <Route path="/my-informations-page" element={<MyInformationPage />} />
     <Route path="/stock" element={<StockPage />} />
     <Route path="/make-order" element={<MakeOrderPage />} />
+    <Route path="/product/:id" element={<ProductViewPage />} />
   </Routes>
 );
 export default AdministratorRoutes;

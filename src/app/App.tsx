@@ -8,16 +8,16 @@ import Routes from '@/Routes';
 
 const App: React.FC = () => {
   return (
-    <CartProvider>
-      <GlobalStyles />
-      <BrowserRouter>
-        <AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <GlobalStyles />
           <ProductProvider>
             <Routes />
           </ProductProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </CartProvider>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 

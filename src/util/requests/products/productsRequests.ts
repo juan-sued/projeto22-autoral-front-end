@@ -2,6 +2,7 @@ import { IProductBasic } from './../../../hooks/useProducts';
 import mocks from '@/components/screens/MakeOrder_Page/mock';
 import { axiosI } from '@/services/axios';
 import { IProductInsert, IProductById } from '@/hooks/useProducts';
+import { StatusCode, useAuth } from '@/hooks/useAuth';
 
 type TPostProduct = Omit<IProductInsert, 'id'>;
 
@@ -19,12 +20,14 @@ async function postProduct(
   }
 }
 
-async function updateFavorited(productId: number): Promise<void> {
-  try {
-    await axiosI.patch(`/products/favoriteds/${productId}`);
-  } catch (err) {
-    console.error(err);
-  }
+async function updateFavorited(
+  productId: number,
+  setErrorResponse: (statusCode: StatusCode) => void
+): Promise<void> {
+  await axiosI.patch(`/products/favoriteds/${productId}`).catch(err => {
+    setErrorResponse(err.response.status);
+    console.error('erro ao pegar produtos', err);
+  });
 }
 
 async function postRegisterProduct(

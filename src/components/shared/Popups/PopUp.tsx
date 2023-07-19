@@ -1,3 +1,4 @@
+import { useAuth } from '@/hooks/useAuth';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
@@ -8,30 +9,26 @@ interface PopUpProps {
 }
 
 export default function PopUp({ children, title }: PopUpProps) {
-  const [closePopUp, setClosePopUp] = useState(true);
+  const { setErrorResponse } = useAuth();
+  const [toggleClosePopUp, setToggleClosePopUp] = useState(true);
+
+  function closePopUp() {
+    setToggleClosePopUp(!toggleClosePopUp);
+    setErrorResponse(200);
+  }
 
   return (
-    <PopUpStyle close={closePopUp}>
+    <PopUpStyle close={toggleClosePopUp}>
       <div className="PopUpContainer">
         <div className="closePopUpContainer">
           <div className="titlePopUpContainer">
             <h1 className="titlePopUp">{title}</h1>
           </div>
-          <button
-            className="closePopUp"
-            onClick={() => setClosePopUp(!closePopUp)}
-          >
+          <button className="closePopUp" onClick={closePopUp}>
             <IoClose />
           </button>
         </div>
-        <div className="contentPopUp">
-          <div className="contentText">{children}</div>
-
-          <div className="contentPopUpButtons">
-            <button className="close">Fechar</button>
-            <button className="login">Login</button>
-          </div>
-        </div>
+        <div className="contentPopUp">{children}</div>
       </div>
     </PopUpStyle>
   );
@@ -49,6 +46,7 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
 
   place-items: center;
   display: ${props => (props.close ? 'grid' : 'none')};
+
   button {
     border: none;
     border-radius: 4px;
@@ -75,7 +73,7 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     max-width: 700px;
     padding: 15px;
-
+    animation: fadeSmallBig normal 0.5s;
     .closePopUpContainer {
       width: 100%;
       display: flex;
@@ -109,27 +107,6 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     .contentPopUp {
       width: 100%;
       height: 100%;
-
-      .contentText {
-        display: grid;
-        height: 150px;
-        place-content: center;
-
-        p {
-          text-align: center;
-          font-size: 17px;
-        }
-      }
-
-      .contentPopUpButtons {
-        display: flex;
-        gap: 20px;
-        justify-content: space-around;
-        button {
-          width: 100%;
-          max-width: 250px;
-        }
-      }
     }
   }
 `;

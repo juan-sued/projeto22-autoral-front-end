@@ -5,6 +5,7 @@ import LoginPage from '@/components/screens/Login_Page/Login_Page';
 import MyInformationPage from '@/components/screens/MyInformations_Page/MyInformation';
 import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
 import MakeOrderPage from '@/components/screens/MakeOrder_Page';
+import ProductViewPage from '@/components/screens/Product_View_Page/index';
 
 const PrivateRoutes: React.FC = () => (
   <Routes>
@@ -14,6 +15,7 @@ const PrivateRoutes: React.FC = () => (
     <Route path="/cart" element={<Cart />} />
     <Route path="/my-informations-page" element={<MyInformationPage />} />
     <Route path="/make-order" element={<MakeOrderPage />} />
+    <Route path="/product/:id" element={<ProductViewPage />} />
   </Routes>
 );
 export default PrivateRoutes;

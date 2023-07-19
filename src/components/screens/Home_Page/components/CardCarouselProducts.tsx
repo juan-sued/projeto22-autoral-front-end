@@ -8,6 +8,8 @@ import { useState } from 'react';
 
 import { useInView } from 'react-intersection-observer';
 import productRequests from '@/util/requests/products/productsRequests';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface CardCarouselProductsProps {
   image: string;
@@ -26,9 +28,12 @@ export default function CardCarouselProducts({
   index,
   isFavorited = false
 }: CardCarouselProductsProps) {
+  const { setErrorResponse, errorResponse } = useAuth();
+  const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
 
   const priceFormatted = formatPrice(price);
+
   const { keyRequest, setKeyRequest } = useProduct();
   function selectedProduct() {
     try {
@@ -42,11 +47,11 @@ export default function CardCarouselProducts({
   async function updateIsFavorited(productId: number) {
     try {
       setClicked(true);
-      await productRequests.updateFavorited(productId);
+      await productRequests.updateFavorited(productId, setErrorResponse);
       setTimeout(() => {
         setClicked(false);
       }, 1500);
-    } catch (error) {
+    } catch (err) {
       return new Error('Erro ao atualizar favorito');
     }
   }
@@ -64,6 +69,7 @@ export default function CardCarouselProducts({
       inView={inView}
       delay={delay}
       selected={clicked}
+      onClick={() => navigate(`/product/${id}`)}
     >
       <div className="bannerContainer">
         <img className="banner" src={imageBanner} alt="" />
@@ -103,7 +109,8 @@ const CardOfProductStyle = styled.div<CardOfProductStyleProps>`
 
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
   padding-top: 0;
-  opacity: 1;
+  opacity: 0;
+
   ${props =>
     props.inView
       ? `animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`

@@ -14,6 +14,8 @@ export interface User {
   };
 }
 
+export type StatusCode = 200 | 201 | 401 | 409 | 400 | 422 | 500;
+
 interface AuthContextType {
   signed: boolean;
   userInfo: User | null;
@@ -23,6 +25,8 @@ interface AuthContextType {
     setSignIndata: any
   ) => Promise<void>;
   signOut: () => void;
+  errorResponse: StatusCode;
+  setErrorResponse: (statusCode: StatusCode) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,6 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [userInfo, setUserInfo] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [errorResponse, setErrorResponse] = useState<StatusCode>(200);
 
   useEffect(() => {
     const storagedUser = localStorage.getItem('TBAuthUser');
@@ -89,6 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const signOut = () => {
     navigate('/sign-in');
     setUserInfo(null);
+    setErrorResponse(200);
     localStorage.removeItem('TBAuthUser');
     localStorage.removeItem('TBAuthToken');
   };
@@ -101,7 +107,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           !userInfo.permissions.access.includes('not logged'),
         userInfo,
         signIn,
-        signOut
+        signOut,
+        errorResponse,
+        setErrorResponse
       }}
     >
       {children}

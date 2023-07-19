@@ -41,6 +41,8 @@ const BackPage = styled.div`
     justify-content: start;
     align-items: center;
     border: none;
+    background-color: transparent;
+
     :hover {
       cursor: pointer;
     }

@@ -182,16 +182,6 @@ const CardAddressStyle = styled.div<{ displayToggle: boolean }>`
   height: auto;
   animation: normal 0.5s fadeSmallBig;
 
-  @keyframes fadeSmallBig {
-    0% {
-      opacity: 0;
-      scale: 0;
-    }
-    100% {
-      opacity: 1;
-      scale: 1;
-    }
-  }
   section {
     display: flex;
     width: 100%;
