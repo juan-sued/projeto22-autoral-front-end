@@ -1,14 +1,7 @@
 import styled from 'styled-components';
 import TitleAndArrow from '../Titles/TitleAndArrow';
-import LottieAnimation from '../Animations/LottieAnimation';
 
-interface OurHistoryProps {
-  titleSession: string;
-  color: string;
-  fontWeight: string;
-  fontSize: string;
-  colorLine: string;
-}
+interface OurHistoryProps {}
 
 export default function OurHistory() {
   return (
