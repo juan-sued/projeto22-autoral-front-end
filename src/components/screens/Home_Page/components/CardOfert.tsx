@@ -1,18 +1,14 @@
 import styled from 'styled-components';
 import Image_Acai_Fruta from '@/assets/acaifruta2.png';
 import Loading from '@/components/shared/Loaders/Loading';
-import ButtonSubmitHover from '@/components/shared/Buttons/ButtonSubmitHover';
 import ButtonPlant from '@/components/shared/Buttons/ButtonPlant';
+import { IProductBasic } from '@/hooks/useProducts';
 
 interface CardOfertProps {
-  objHomeResponseAPI: {
-    listMyFavoriteds: {
-      image: string;
-    }[];
-  };
+  product: IProductBasic | undefined;
 }
 
-export default function CardOfert({ objHomeResponseAPI }: CardOfertProps) {
+export default function CardOfert({ product }: CardOfertProps) {
   return (
     <CardOfertContainer>
       <div className="book">
@@ -29,11 +25,8 @@ export default function CardOfert({ objHomeResponseAPI }: CardOfertProps) {
           <div className="containerInter">
             <h2 className="titleCardOfert">Oferta do dia</h2>
             <div className="purplecircle">
-              {objHomeResponseAPI.listMyFavoriteds.length > 0 ? (
-                <img
-                  src={objHomeResponseAPI.listMyFavoriteds[0].image}
-                  alt=""
-                />
+              {product ? (
+                <img src={product.image} alt="" />
               ) : (
                 <Loading width={'40'} />
               )}

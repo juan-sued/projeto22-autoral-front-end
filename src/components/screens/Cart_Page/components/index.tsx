@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import requestOrder from './requestOrder';
 
-import { CartProduct, CartProductCustomized, useCart } from '@/hooks/useCart';
+import { CartProduct, useCart } from '@/hooks/useCart';
 
 import { useAuth } from '@/hooks/useAuth';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
@@ -19,15 +19,15 @@ interface CartProps {
   isSigned?: boolean;
 }
 export interface OrderData {
-  products: (CartProduct | CartProductCustomized)[];
+  products: CartProduct[];
   details: {
     total: number;
     subTotal: number;
   };
 }
 
-const Cart: React.FC<CartProps> = ({ message, isSigned = false }) => {
-  const { userInfo, signOut } = useAuth();
+const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
+  const { signOut } = useAuth();
 
   const { cart, setCart } = useCart();
 

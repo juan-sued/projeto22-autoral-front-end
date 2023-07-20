@@ -16,6 +16,7 @@
     "@mui/material": "^5.13.3",
     "dayjs": "^1.11.8",
     "intl": "^1.2.5",
+    "lottie-react-web": "^2.2.2",
     "material-icons": "^1.13.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

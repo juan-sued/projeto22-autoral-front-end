@@ -1,8 +1,8 @@
 import { IProductBasic } from './../../../hooks/useProducts';
-import mocks from '@/components/screens/MakeOrder_Page/mock';
 import { axiosI } from '@/services/axios';
 import { IProductInsert, IProductById } from '@/hooks/useProducts';
 import { StatusCode, useAuth } from '@/hooks/useAuth';
+import { IStockBasic } from './stockRequests';
 
 type TPostProduct = Omit<IProductInsert, 'id'>;
 
@@ -32,22 +32,21 @@ async function updateFavorited(
 
 async function postRegisterProduct(
   objNewProduct: IProductInsert
-): Promise<IProductInsert> {
+): Promise<void> {
   try {
     const { data } = await axiosI.post(`products/`, objNewProduct);
 
     return data;
   } catch (err) {
     console.error(err);
-    return mocks.exampleNewOrderCustomized;
   }
 }
 
 async function getProductsByCharacter(
   character: string
-): Promise<IProductBasic[] | null> {
+): Promise<IStockBasic[] | null> {
   try {
-    const { data } = await axiosI.get(`/products/title?char=${character}`);
+    const { data } = await axiosI.get(`/stock/title?char=${character}`);
 
     return data;
   } catch (err) {

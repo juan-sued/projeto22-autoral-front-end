@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import TitleAndArrow from '../Titles/TitleAndArrow';
+import LottieAnimation from '../Animations/LottieAnimation';
 
 interface OurHistoryProps {
   titleSession: string;
@@ -38,8 +39,6 @@ export default function OurHistory() {
           </p>
         </div>
       </div>
-
-      <div className="developed">Em desenvolvimento por Juan Sued</div>
     </Container>
   );
 }
@@ -49,19 +48,8 @@ const Container = styled.div`
   width: 100%;
 
   position: relative;
-  bottom: 500px;
+  bottom: 250px;
 
-  .developed {
-    width: 100%;
-    text-align: center;
-    color: white;
-    height: 20%;
-    font-size: 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   h2 {
     color: white;
   }

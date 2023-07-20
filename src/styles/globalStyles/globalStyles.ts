@@ -79,6 +79,9 @@ overflow-y: hidden;
   button{
     border: none;
     font-family: 'Josefin Slab', serif;
+    :hover{
+      cursor: pointer;
+    }
   }
 
 input:focus{
@@ -99,6 +102,50 @@ outline: none;
     100% {
       opacity: 1;
       scale: 1;
+    }
+  }
+  @keyframes fadeTranslate {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes fadeTranslateXLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+  @keyframes fadeTranslateXRight {
+    0% {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+
+  @keyframes fadeClicked {
+    0% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      position: relative;
+      display: none;
+      transform: translateY(-100px);
     }
   }
 `;

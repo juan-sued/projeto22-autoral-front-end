@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import CardProduct from './CardProduct';
-import { Product } from '@/hooks/useProducts';
+import { IStockBasic } from '@/util/requests/products/stockRequests';
 
 interface ListCardProps {
-  responseProducts: Product[];
+  responseProducts: IStockBasic[];
 }
 
 export default function ListCard({ responseProducts }: ListCardProps) {
@@ -11,7 +11,7 @@ export default function ListCard({ responseProducts }: ListCardProps) {
     <ListCardStyle>
       <div className="list">
         {responseProducts.map((product, index) => (
-          <CardProduct key={index} link={product.image} name={product.name} />
+          <CardProduct key={index} link={product.image} name={product.title} />
         ))}
       </div>
     </ListCardStyle>
@@ -37,7 +37,5 @@ const ListCardStyle = styled.div`
     @media screen and (min-width: 414px) {
       width: auto;
     }
-  }
- 
   }
 `;

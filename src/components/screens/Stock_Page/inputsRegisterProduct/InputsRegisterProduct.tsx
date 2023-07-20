@@ -27,7 +27,7 @@ export default function InputsRegisterProduct() {
   };
   const [selectedCategory, setSelectedCategory] = useState(0);
 
-  const [objNewProduct, setObjNewProduct] = useState<ObjNewProduct>({
+  const [objNewProduct, setObjNewProduct] = useState<any>({
     category: '',
     name: '',
     amount: '',
@@ -54,10 +54,10 @@ export default function InputsRegisterProduct() {
 
     //================ Validação de nova categoria =================>
 
-    const categories = productsAndCategories.categoriesList;
+    const categories = productsAndCategories?.categories;
 
     if (objNewProduct.category) {
-      const isCategoryRegistered = categories.find(
+      const isCategoryRegistered = categories?.find(
         category => category.name === objNewProduct.category
       );
 
@@ -79,11 +79,7 @@ export default function InputsRegisterProduct() {
       setStateButton('err');
       return alert('Deve selecionar uma unidade de medida');
     }
-    productRequests.postRegisterProduct(
-      objNewProduct,
-      setObjNewProduct,
-      success
-    );
+    productRequests.postRegisterProduct(objNewProduct);
   }
 
   if (stateButton === 'err' && objNewProduct.price.length > 0) {

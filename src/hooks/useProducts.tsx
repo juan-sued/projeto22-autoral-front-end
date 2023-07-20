@@ -21,7 +21,7 @@ export interface IProductInsert {
   fruitId: number;
   plusIds: number[];
 }
-export type TStockObj = { stock: IStock };
+export type TStockObj = { [categoryName: string]: IStock[] };
 
 export interface IProductById {
   id: number;
@@ -30,7 +30,7 @@ export interface IProductById {
   price: string;
   cupSizeId: number;
   cupSize: IStock;
-  stock: TStockObj[];
+  stock: TStockObj;
 }
 
 export interface ICategory {

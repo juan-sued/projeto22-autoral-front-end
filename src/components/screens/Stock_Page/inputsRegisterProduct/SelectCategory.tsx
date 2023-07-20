@@ -22,8 +22,8 @@ export default function SelectCategory({
         <option disabled value="">
           Categorias
         </option>
-        {productsAndCategories.categoriesList !== undefined &&
-          productsAndCategories.categoriesList.map((category, index) => (
+        {productsAndCategories &&
+          productsAndCategories.categories.map((category, index) => (
             <option key={index} value={category.id}>
               {category.name}
             </option>
@@ -55,4 +55,4 @@ const SelectCategoryStyle = styled.div`
     margin-top: 5px;
     border: none;
   }
-}`;
+`;

@@ -9,7 +9,6 @@ import { useCart } from '@/hooks/useCart';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import TitlePage from '@/components/shared/Titles/TitlePage';
-import mocks from './mock';
 import { useAuth } from '@/hooks/useAuth';
 import stockRequests, { IStock } from '@/util/requests/products/stockRequests';
 import { ICategory, IProductInsert } from '@/hooks/useProducts';

@@ -14,12 +14,11 @@ import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
 import { useProduct } from '@/hooks/useProducts';
-import mocks from '../MakeOrder_Page/mock';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import { useEffect, useState } from 'react';
 import { axiosI } from '@/services/axios';
-import PopUp from '@/components/shared/Popups/PopUp';
 import PopUpError from '@/components/shared/Popups/PopUpError';
+import AuthorMessage from '@/components/shared/dev/AuthorMessager';
 
 export default function HomePage() {
   const { userInfo, signed, signOut, errorResponse, setErrorResponse } =
@@ -69,7 +68,9 @@ export default function HomePage() {
         <TitleStatus />
         <Main margin_top={'100'}>
           <WellcomeUser name={userInfo?.name} />
-          <CardOfert objHomeResponseAPI={mocks.exampleHomeContent} />
+          <CardOfert
+            product={productsAndCategories.products.notFavoriteds[0]}
+          />
           <Divider />
           <PlaceMyOrderButton />
           <Divider />
@@ -93,6 +94,8 @@ export default function HomePage() {
           <SocialsButtons />
 
           <OurHistory />
+
+          <AuthorMessage />
         </Main>
 
         <ImageArvoreAcai src={Arvore_de_acai} alt="" />

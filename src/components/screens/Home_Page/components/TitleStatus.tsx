@@ -47,4 +47,4 @@ const TitleStatusStyle = styled.div<{ color: string }>`
     background-color: gray;
     z-index: -1;
   }
-}`;
+`;
