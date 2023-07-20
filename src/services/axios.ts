@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosI = axios.create({
-  baseURL: 'http://localhost:4000'
+  baseURL: 'https://gellato-acaiteria.vercel.app/'
 });
 const axiosBasic = axios.create({
   baseURL: 'http://'
