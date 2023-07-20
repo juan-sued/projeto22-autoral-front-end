@@ -170,13 +170,15 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     }
 
     .buttonAddCart {
-      transition: all 0.6s ease;
+      transition: all 0.4s ease;
 
-      width: ${props => (props.enable ? '50' : '100')}%;
+      min-width: ${props => (props.enable ? '50' : '100')}%;
 
       .text {
         animation: ${props =>
-          props.enable ? 'fadeAnimation 2s ease-in' : 'none'};
+          props.enable
+            ? 'fadeAnimation 1s ease-in forwards'
+            : 'fadeOutAnimation 1s ease-in forwards'};
       }
     }
     .buttonDelete {
@@ -189,11 +191,20 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     }
   }
 
-  @keyframes fadeAnimation {
-    0% {
+  @keyframes fadeOutAnimation {
+    from {
       opacity: 0;
     }
-    100% {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeAnimation {
+    from {
+      opacity: 0;
+    }
+    to {
       opacity: 1;
     }
   }
@@ -204,21 +215,18 @@ interface TotalProps {
 }
 
 export const Total = styled.div<TotalProps>`
-      transition: all 2s ease;
-    display: ${props => (props.enable ? 'flex' : 'none')};
-    align-items: baseline;
-    animation: ${props => (props.enable ? 'fadeAnimation 2s ease-in' : 'none')};
-     
+  transition: all 2s ease;
+  display: ${props => (props.enable ? 'flex' : 'none')};
+  align-items: baseline;
+  animation: ${props => (props.enable ? 'fadeAnimation 2s ease-in' : 'none')};
 
   span {
     color: #999;
     font-weight: bold;
-    
   }
 
   strong {
     font-size: 25px;
     margin-left: 5px;
   }
-}
 `;

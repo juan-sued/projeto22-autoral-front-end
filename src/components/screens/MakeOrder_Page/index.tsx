@@ -124,7 +124,6 @@ const MakeOrderPage: React.FC = () => {
         <SectionCarousel
           titleSectionLeft={'Primeiro um tamanho'}
           titleSectionRight={'Quanto maior, melhor'}
-          margin_top={0}
           objctResponseAPI={responseStock['Tamanhos'].stock}
           setProductIds={setCupSizeId}
           productIds={cupSizeId}

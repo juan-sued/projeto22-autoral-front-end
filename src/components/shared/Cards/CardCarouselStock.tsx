@@ -133,6 +133,11 @@ const CardOfStock = styled.div<CardOfStockProps>`
       font-weight: 700;
       text-align: center;
       margin-bottom: 10px;
+      width: 100%;
+
+      white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+      overflow: hidden; /* Oculta o conteúdo que excede o tamanho do contêiner */
+      text-overflow: ellipsis;
     }
   }
 
