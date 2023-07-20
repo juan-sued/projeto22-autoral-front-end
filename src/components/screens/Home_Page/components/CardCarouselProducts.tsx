@@ -69,9 +69,11 @@ export default function CardCarouselProducts({
       inView={inView}
       delay={delay}
       selected={clicked}
-      onClick={() => navigate(`/product/${id}`)}
     >
-      <div className="bannerContainer">
+      <div
+        className="bannerContainer"
+        onClick={() => navigate(`/product/${id}`)}
+      >
         <img className="banner" src={imageBanner} alt="" />
       </div>
       <div className="container">

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Image_Acai_Fruta from '@/assets/acaifruta2.png';
+import defaultCup from '@/assets/copoHome.jpg';
+
 import Loading from '@/components/shared/Loaders/Loading';
 import ButtonPlant from '@/components/shared/Buttons/ButtonPlant';
 import { IProductBasic } from '@/hooks/useProducts';
@@ -9,6 +11,10 @@ interface CardOfertProps {
 }
 
 export default function CardOfert({ product }: CardOfertProps) {
+  console.log(product);
+  const validImage = product?.image.includes('https://')
+    ? product.image
+    : defaultCup;
   return (
     <CardOfertContainer>
       <div className="book">
@@ -26,7 +32,7 @@ export default function CardOfert({ product }: CardOfertProps) {
             <h2 className="titleCardOfert">Oferta do dia</h2>
             <div className="purplecircle">
               {product ? (
-                <img src={product.image} alt="" />
+                <img src={validImage} alt="" />
               ) : (
                 <Loading width={'40'} />
               )}
@@ -89,8 +95,8 @@ const CardOfertContainer = styled.div`
     }
 
     .purplecircle {
-      min-height: 123px;
-      width: 133px;
+      height: 120px;
+      width: 120px;
       background-color: #bc984d;
       border-radius: 1000px;
       display: flex;

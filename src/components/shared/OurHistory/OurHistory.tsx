@@ -37,11 +37,9 @@ export default function OurHistory() {
 }
 
 const Container = styled.div`
-  height: 500px;
   width: 100%;
 
   position: relative;
-  bottom: 250px;
 
   h2 {
     color: white;
@@ -50,8 +48,7 @@ const Container = styled.div`
   .cardsHistory {
     width: 100%;
 
-    padding: 10px;
-    margin-top: 80px;
+    padding: 10px 10px 0px 10px;
 
     .cardHistory {
       margin-bottom: 20px;

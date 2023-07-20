@@ -148,6 +148,7 @@ outline: none;
       transform: translateY(-100px);
     }
   }
+
 `;
 
 export default GlobalStyles;

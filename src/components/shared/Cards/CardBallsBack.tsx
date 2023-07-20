@@ -46,7 +46,7 @@ const CardBallsBackStyle = styled.div<CardBallsBackStyleProps>`
   .card-inner {
     width: inherit;
     height: inherit;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(10px);
     border-radius: 8px;
@@ -62,7 +62,7 @@ const CardBallsBackStyle = styled.div<CardBallsBackStyleProps>`
   .circle {
     width: 50px;
     height: 50px;
-    background: linear-gradient(
+    background: radial-gradient(
       ${props => props.colorBalls},
       ${props => props.colorBalls}
     );

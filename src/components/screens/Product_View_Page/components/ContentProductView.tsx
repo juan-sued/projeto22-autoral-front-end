@@ -37,7 +37,7 @@ interface ContentProductViewStyleProps {
 }
 
 const ContentProductViewStyle = styled.div<ContentProductViewStyleProps>`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.7)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
     url(${props => props.backgroundImage});
   background-size: cover;
   background-position: center;

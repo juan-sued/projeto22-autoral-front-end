@@ -5,7 +5,6 @@ import TitleStatus from './components/TitleStatus';
 import WellcomeUser from './components/WellcomeUser';
 import SideBar from './components/sideBar';
 import { ImageArvoreAcai } from './styles';
-import { IoClose } from 'react-icons/io5';
 import CarouselListProduct from '@/components/shared/Carousels/CarouselListProduct';
 import Divider from '@/components/shared/Dividers/Divider';
 import FeedBacks from '@/components/shared/Feedback/Feedbacks';
@@ -15,14 +14,13 @@ import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
 import { useProduct } from '@/hooks/useProducts';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { axiosI } from '@/services/axios';
 import PopUpError from '@/components/shared/Popups/PopUpError';
 import AuthorMessage from '@/components/shared/dev/AuthorMessager';
 
 export default function HomePage() {
-  const { userInfo, signed, signOut, errorResponse, setErrorResponse } =
-    useAuth();
+  const { userInfo, signed, errorResponse, setErrorResponse } = useAuth();
   const { productsAndCategories, setProductsAndCategories, keyRequest } =
     useProduct();
 
