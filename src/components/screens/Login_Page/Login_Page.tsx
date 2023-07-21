@@ -32,7 +32,7 @@ const LoginPage: React.FC = () => {
           </video>
         </ContainerVideo>
 
-        <Main margin_top={'90'}>
+        <Main margin_top={'90px'}>
           <Logo src={logo} alt="" />
           <SingInForm />
           <Link to="/sign-up">

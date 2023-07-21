@@ -1,30 +1,31 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface PopUpProps {
   children: React.ReactNode;
   title: string;
+  buttonBack?: boolean;
+  hiddenPopUp: boolean;
+  onClick: () => void;
 }
 
-export default function PopUp({ children, title }: PopUpProps) {
-  const { setErrorResponse } = useAuth();
-  const [toggleClosePopUp, setToggleClosePopUp] = useState(true);
-
-  function closePopUp() {
-    setToggleClosePopUp(!toggleClosePopUp);
-    setErrorResponse(200);
-  }
-
+export default function PopUp({
+  children,
+  title,
+  hiddenPopUp,
+  onClick
+}: PopUpProps) {
   return (
-    <PopUpStyle close={toggleClosePopUp}>
+    <PopUpStyle close={hiddenPopUp}>
       <div className="PopUpContainer">
         <div className="closePopUpContainer">
           <div className="titlePopUpContainer">
             <h1 className="titlePopUp">{title}</h1>
           </div>
-          <button className="closePopUp" onClick={closePopUp}>
+          <button className="closePopUp" onClick={onClick}>
             <IoClose />
           </button>
         </div>
@@ -67,12 +68,11 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
 
   .PopUpContainer {
     background-color: white;
-    width: 90vw;
-    min-height: 200px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    max-width: 700px;
-    padding: 15px;
+    padding: 20px;
+    width: auto;
+    max-width: 90vw;
     animation: fadeSmallBig normal 0.5s;
     .closePopUpContainer {
       width: 100%;
@@ -107,6 +107,11 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     .contentPopUp {
       width: 100%;
       height: 100%;
+      padding: 20px;
+      min-height: 100px;
+      display: grid;
+      place-items: center;
+      gap: 20px;
     }
   }
 `;

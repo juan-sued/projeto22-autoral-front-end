@@ -149,6 +149,8 @@ outline: none;
     }
   }
 
+
+ 
 `;
 
 export default GlobalStyles;

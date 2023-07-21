@@ -3,13 +3,20 @@ import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
 import PopUp from './PopUp';
+import { useNavigate } from 'react-router-dom';
 
 interface PopUpErrorProps {
   children: React.ReactNode;
   title: string;
+  buttonBack?: boolean;
 }
 
-export default function PopUpError({ children, title }: PopUpErrorProps) {
+export default function PopUpError({
+  children,
+  title,
+  buttonBack
+}: PopUpErrorProps) {
+  const navigate = useNavigate();
   const { setErrorResponse, signOut } = useAuth();
   const [toggleClosePopUp, setToggleClosePopUp] = useState(true);
 
@@ -18,14 +25,16 @@ export default function PopUpError({ children, title }: PopUpErrorProps) {
     setErrorResponse(200);
   }
 
+  const actionClose = buttonBack ? () => navigate(-1) : closePopUp;
+
   return (
-    <PopUp title={title}>
+    <PopUp title={title} onClick={actionClose} hiddenPopUp={toggleClosePopUp}>
       <ContentPopUpStyle>
         <div className="contentText">{children}</div>
 
         <div className="contentPopUpButtons">
-          <button className="close" onClick={closePopUp}>
-            Fechar
+          <button className="close" onClick={actionClose}>
+            {buttonBack ? 'Voltar' : 'Fechar'}
           </button>
           <button className="login" onClick={signOut}>
             Login

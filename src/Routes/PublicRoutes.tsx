@@ -8,16 +8,16 @@ import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
 import React from 'react';
 import MakeOrderPage from '@/components/screens/MakeOrder_Page';
 import ProductViewPage from '@/components/screens/Product_View_Page/index';
+import NotFoundPage from '@/components/screens/Errors/MessageNotFound';
 
 const PublicRoutes: React.FC = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/sign-in" element={<LoginPage />} />
     <Route path="/sign-up" element={<RegisterPage />} />
-    <Route path="/cart" element={<Cart />} />
-    <Route path="/my-informations-page" element={<MyInformationPage />} />
     <Route path="/make-order" element={<MakeOrderPage />} />
     <Route path="/product/:id" element={<ProductViewPage />} />
+    <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
 

@@ -60,7 +60,7 @@ export default function StockPage() {
         sendSearch={searchProducts}
       />
 
-      <Main margin_top={'80'}>
+      <Main margin_top={'80px'}>
         <ListCard responseProducts={responseProducts} />
       </Main>
 

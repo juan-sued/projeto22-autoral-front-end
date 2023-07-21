@@ -17,7 +17,7 @@ export default function RegisterPage() {
         backgroundColorGrand={'#1C2156'}
       >
         <ImageBoxIceCream src={imageBoxIceCream} alt="" />
-        <Main margin_top={'90'}>
+        <Main margin_top={'90px'}>
           <Logo src={logo} alt="" />
           <InputsRegister />
           <Link to="/sign-in">

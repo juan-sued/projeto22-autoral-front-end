@@ -114,6 +114,8 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
   .rowOfCardsContainer {
     margin-top: ${props => props.margin_top}px;
     width: 100%;
+    overflow-y: hidden;
+
     height: 100%;
     display: flex;
     justify-content: start;
@@ -123,7 +125,7 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
     padding-left: 13px;
     margin-right: 0px;
     padding-top: 150px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
   }
 `;
 

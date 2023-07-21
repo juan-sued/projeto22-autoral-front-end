@@ -70,7 +70,6 @@ export default function CardIdentify({
     event.preventDefault();
     setStateButton('loading');
     const objFormated = excludeEmpty(updateDataUser);
-    console.log(objFormated);
 
     userRequests.requestUpdateUser({
       objFormated,

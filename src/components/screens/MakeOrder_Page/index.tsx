@@ -187,7 +187,7 @@ const MakeOrderPage: React.FC = () => {
   } else {
     return (
       <MakeOrderPageStyle>
-        <Main margin_top="250">
+        <Main margin_top="40vh">
           <PopsicleLoading />
         </Main>
       </MakeOrderPageStyle>

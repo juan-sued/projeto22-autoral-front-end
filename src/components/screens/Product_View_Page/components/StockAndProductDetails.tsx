@@ -27,8 +27,8 @@ const StockAndProductsDetails: React.ForwardRefRenderFunction<
           <CardProfileSocials />
         </div>
         <div className="containerCard">
-          <TitleSectionMid titleSection="Likes" />
-          <CardBallsBack colorBalls={'#00f6ff'} content={'52'} />
+          <TitleSectionMid titleSection="Favoritado por" />
+          <CardBallsBack colorBalls={'#ff00d4'} content={'52'} />
         </div>
       </div>
       <ContentStockView product={product} />
@@ -47,7 +47,7 @@ const StockAndProductsDetailsStyle = styled.section<StockAndProductsDetailsStyle
   margin-top: -150px;
 
   background-color: #2f002f;
-
+  //#00f6ff
   .glassEffect {
     padding: 20px;
     width: fit-content;
