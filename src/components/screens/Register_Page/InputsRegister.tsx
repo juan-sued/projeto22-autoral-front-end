@@ -62,6 +62,7 @@ export default function SignUpForm() {
           name="name"
           type="text"
           value={signUpData.name}
+          minLength={3}
           onChange={handleChangText}
           required
         />
@@ -79,6 +80,7 @@ export default function SignUpForm() {
           type="password"
           value={signUpData.password}
           onChange={handleChangText}
+          minLength={6}
           required
         />
         <InputClass
