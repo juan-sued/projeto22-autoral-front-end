@@ -44,7 +44,7 @@ export default function MyInformationPage() {
     return (
       <>
         <TitlePage title={'Minha informações'} to={'/'} />
-        <Main margin_top="10">
+        <Main margin_top="10px">
           <ContainerCard>
             {userAndAddressesInfo ? (
               <CardIdentify
@@ -101,7 +101,7 @@ export default function MyInformationPage() {
   return (
     <>
       <TitlePage title={'Minha informações'} to={'/'} />
-      <Main margin_top="0">
+      <Main>
         <ContainerCard>
           <Loading marginTop={'120px'} />
         </ContainerCard>

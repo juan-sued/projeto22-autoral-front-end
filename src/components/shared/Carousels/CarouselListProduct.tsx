@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import TitleAndArrow from '../Titles/TitleAndArrow';
 import { IProductBasic } from '@/hooks/useProducts';
-import CardCarouselProducts from '@/components/screens/Home_Page/components/CardCarouselProducts';
+import CardCarouselProducts from '../Cards/CardCarouselProducts';
 
 interface CarouselListProductProps {
   titleSession?: string;
@@ -47,7 +47,6 @@ const CarouselListProduct: React.FC<CarouselListProductProps> = ({
 const CarouselListContainer = styled.div<{ margin_top: number }>`
   margin-top: 50px;
   width: 100%;
-  min-width: 100%;
   height: 100%;
   margin-right: 0;
 
@@ -67,11 +66,11 @@ const CarouselListContainer = styled.div<{ margin_top: number }>`
     justify-content: start;
     align-items: center;
     overflow-x: scroll;
-
+    overflow-y: hidden;
     padding-left: 13px;
     margin-right: 0px;
     padding-top: 150px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
   }
 `;
 

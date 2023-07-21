@@ -11,7 +11,6 @@ interface CardOfertProps {
 }
 
 export default function CardOfert({ product }: CardOfertProps) {
-  console.log(product);
   const validImage = product?.image.includes('https://')
     ? product.image
     : defaultCup;

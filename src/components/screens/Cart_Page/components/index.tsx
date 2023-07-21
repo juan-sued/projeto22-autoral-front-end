@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import ItemProductTable from '../ItemProductTable';
-import MessageNotFound from '@/components/shared/Errors/MessageNotFound';
+import MessageNotFound from '@/components/screens/Errors/MessageNotFound';
 
 interface CartProps {
   message?: string;
@@ -62,17 +62,14 @@ const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
     []
   );
   function selectProductInCart(id: number) {
-    // Verifica se o produto já está selecionado
     const isSelected = productsIdsSelecteds.includes(id);
 
     if (isSelected) {
-      // Remove o produto da lista de produtos selecionados
       const updatedSelecteds = productsIdsSelecteds.filter(
         productId => productId !== id
       );
       setProductsIdsSelecteds(updatedSelecteds);
     } else {
-      // Adiciona o produto à lista de produtos selecionados
       const updatedSelecteds = [...productsIdsSelecteds, id];
       setProductsIdsSelecteds(updatedSelecteds);
     }

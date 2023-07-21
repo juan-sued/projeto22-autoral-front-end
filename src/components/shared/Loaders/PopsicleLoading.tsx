@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export default function PopsicleLoading() {
   return (
     <PopsicleLoadingStyle>
-      <div className="loader"></div>
+      <div className="spinner">
+        <div className="loader"></div>
+      </div>
     </PopsicleLoadingStyle>
   );
 }
@@ -13,7 +15,14 @@ const PopsicleLoadingStyle = styled.div`
   width: 100%;
   display: grid;
   place-items: center;
-  animation: spin 7s reverse infinite;
+  .spinner {
+    height: auto;
+    width: 90px;
+    display: grid;
+    place-items: center;
+    animation: spin 7s reverse infinite;
+  }
+
   .loader {
     transform: scale(0.4) rotate(320deg);
     height: 150px;

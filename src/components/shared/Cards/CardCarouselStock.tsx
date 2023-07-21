@@ -120,6 +120,7 @@ const CardOfStock = styled.div<CardOfStockProps>`
     props.inView
       ? ` animation: fadeTranslate ${props.delay}s ease-in-out;animation-fill-mode: forwards;`
       : ''}
+  cursor: pointer;
 
   .containerTitle {
     width: 100%;

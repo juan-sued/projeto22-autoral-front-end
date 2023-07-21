@@ -6,6 +6,7 @@ import MyInformationPage from '@/components/screens/MyInformations_Page/MyInform
 import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
 import MakeOrderPage from '@/components/screens/MakeOrder_Page';
 import ProductViewPage from '@/components/screens/Product_View_Page/index';
+import NotFoundPage from '@/components/screens/Errors/MessageNotFound';
 
 const PrivateRoutes: React.FC = () => (
   <Routes>
@@ -16,6 +17,7 @@ const PrivateRoutes: React.FC = () => (
     <Route path="/my-informations-page" element={<MyInformationPage />} />
     <Route path="/make-order" element={<MakeOrderPage />} />
     <Route path="/product/:id" element={<ProductViewPage />} />
+    <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
 export default PrivateRoutes;

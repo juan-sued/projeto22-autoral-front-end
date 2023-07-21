@@ -1,6 +1,7 @@
 import { TbShoppingCartPlus } from 'react-icons/tb';
 import styled from 'styled-components';
 import imageDefault from '@/assets/copoHome.jpg';
+import { useCart } from '@/hooks/useCart';
 interface ContentProductViewProps {
   image: string;
   priceFormatted: string;
@@ -12,6 +13,7 @@ const ContentProductView: React.FC<ContentProductViewProps> = ({
   priceFormatted,
   handleScroll
 }) => {
+  const {} = useCart();
   return (
     <ContentProductViewStyle
       backgroundImage={image.includes('https://') ? image : imageDefault}

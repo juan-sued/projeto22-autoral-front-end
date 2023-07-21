@@ -214,7 +214,7 @@ export default function ProductViewPage() {
     <ProductViewPageStyle>
       <div ref={topPageRef} />
       <TitlePage title={example.name} />
-      <Main margin_top="0">
+      <Main>
         <ContentProductView
           image={example.image}
           priceFormatted={priceFormatted}

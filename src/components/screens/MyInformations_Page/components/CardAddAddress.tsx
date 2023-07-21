@@ -43,7 +43,6 @@ export default function CardAddAddress({
         cep: cep.replace(/-/g, '')
       };
 
-      console.log(createDataAddress);
       addressesRequests.getCep(
         createDataAddressFormated,
         setCreateDataAddress,

@@ -25,7 +25,7 @@ export default function SideBar() {
     }
   }
 
-  const { cart, setCart } = useCart();
+  const { cart } = useCart();
 
   const cartFormatted = cart?.map(product => ({
     ...product,
@@ -77,7 +77,6 @@ export default function SideBar() {
   ];
 
   // adiciona buttons de administrador
-  console.log(userInfo);
   if (userInfo?.permissions.access.toLocaleLowerCase().includes('high')) {
     listButtonsSideBar.splice(
       1,

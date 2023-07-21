@@ -64,7 +64,7 @@ export default function HomePage() {
 
         <SideBar />
         <TitleStatus />
-        <Main margin_top={'100'}>
+        <Main margin_top={'100px'}>
           <WellcomeUser name={userInfo?.name} />
           <CardOfert
             product={productsAndCategories.products.notFavoriteds[0]}
@@ -100,7 +100,7 @@ export default function HomePage() {
       </>
     );
   } else {
-    <Main margin_top="250">
+    <Main margin_top="40vh">
       <PopsicleLoading />
     </Main>;
   }
