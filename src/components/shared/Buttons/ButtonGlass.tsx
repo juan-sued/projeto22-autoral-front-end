@@ -3,16 +3,16 @@ import styled from 'styled-components';
 
 interface ButtonGlassProps {
   onClick: (id: number) => void;
-  id: number;
+  id?: number;
   title: string;
-  index: number;
+  index?: number;
 }
 
 const ButtonGlass: React.FC<ButtonGlassProps> = ({
   onClick,
-  id,
+  id = 0,
   title,
-  index
+  index = 0
 }) => {
   const { ref, inView } = useInView({
     delay: 200,

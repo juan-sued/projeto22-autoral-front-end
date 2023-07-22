@@ -1,7 +1,5 @@
-import { IStock } from '@/util/requests/products/stockRequests';
 import styled from 'styled-components';
 import SectionGlass from './SectionGlass';
-import { useEffect, useRef } from 'react';
 import { IProductById } from '@/hooks/useProducts';
 
 interface ContentStockViewProps {

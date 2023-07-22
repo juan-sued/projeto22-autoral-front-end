@@ -8,11 +8,7 @@ interface Feedback {
   feedback: string;
 }
 
-interface FeedBacksProps {
-  titleSession: string;
-}
-
-export default function FeedBacks({ titleSession }: FeedBacksProps) {
+export default function FeedBacks() {
   const arrayFeedbacks: Feedback[] = [
     {
       name: 'Alessandra Meireles',
@@ -41,7 +37,7 @@ export default function FeedBacks({ titleSession }: FeedBacksProps) {
 
   return (
     <Container>
-      <TitleAndArrow titleSession={titleSession} />
+      <TitleAndArrow titleSession={'Feedbacks'} />
       <FeedBacksContainer>
         {arrayFeedbacks.map((feedback, index) => (
           <CardFeedback

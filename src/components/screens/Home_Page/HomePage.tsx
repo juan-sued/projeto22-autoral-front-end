@@ -10,7 +10,6 @@ import Divider from '@/components/shared/Dividers/Divider';
 import FeedBacks from '@/components/shared/Feedback/Feedbacks';
 import Main from '@/components/shared/Main';
 import OurHistory from '@/components/shared/OurHistory/OurHistory';
-import SocialsButtons from '@/components/shared/SocialsButtons/SocialsButtons';
 import { useAuth } from '@/hooks/useAuth';
 import { useProduct } from '@/hooks/useProducts';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
@@ -87,9 +86,7 @@ export default function HomePage() {
           ) : (
             ''
           )}
-          <FeedBacks titleSession={'Feedbacks'} />
-
-          <SocialsButtons />
+          <FeedBacks />
 
           <OurHistory />
 

@@ -16,6 +16,7 @@ const MainStyle = styled.main<{ margin_top: string }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   margin-top: ${props => props.margin_top};
   position: absolute;
   z-index: 1;

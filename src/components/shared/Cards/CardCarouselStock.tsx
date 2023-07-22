@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { formatPrice } from '@/util/format';
 import { useInView } from 'react-intersection-observer';
-import imageCup from '@/assets/copoHome.jpg';
+import imageCup from '@/assets/copoacai.svg';
 import { IStock } from '@/util/requests/products/stockRequests';
 interface CardCarouselStockProps
   extends Omit<IStock, 'category' | 'description' | 'amount' | 'categoryId'> {

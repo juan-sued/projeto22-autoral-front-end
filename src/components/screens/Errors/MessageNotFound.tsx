@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ButtonPlant from '../../shared/Buttons/ButtonPlant';
 import PopUpError from '@/components/shared/Popups/PopUpError';
 import { useAuth } from '@/hooks/useAuth';
 
