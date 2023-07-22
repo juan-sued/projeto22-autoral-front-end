@@ -76,6 +76,5 @@ const ModalStyle = styled.div`
       }
     }
   }
-};
 `;
 export default Modal;

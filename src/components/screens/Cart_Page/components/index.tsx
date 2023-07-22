@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { formatPrice } from '@/util/format';
 
 import { Container } from './styles';
@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/useAuth';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import ItemProductTable from '../ItemProductTable';
-import MessageNotFound from '@/components/screens/Errors/MessageNotFound';
+import PopUp from '@/components/shared/Popups/PopUp';
 
 interface CartProps {
   message?: string;
@@ -82,7 +82,14 @@ const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
       <Container>
         <ProductTable>
           {cartFormatted.length === 0 ? (
-            <MessageNotFound />
+            <PopUp
+              to="/make-order"
+              title="Opss!"
+              buttonTitle="Realizar pedido!"
+            >
+              <p>Parece que seu carrinho está vazio... &#128553;</p>
+              <p>Vamos rechear? &#129316;</p>
+            </PopUp>
           ) : (
             cartFormatted.map((product, index) => (
               <ItemProductTable

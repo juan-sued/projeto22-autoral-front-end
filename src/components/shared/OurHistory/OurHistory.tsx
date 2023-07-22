@@ -6,13 +6,7 @@ interface OurHistoryProps {}
 export default function OurHistory() {
   return (
     <Container>
-      <TitleAndArrow
-        titleSession={'Nossa História'}
-        color={'white'}
-        fontWeight={'700'}
-        fontSize={'50px'}
-        colorLine={'white'}
-      />
+      <TitleAndArrow titleSession={'Nossa História'} />
 
       <div className="cardsHistory">
         <div className="cardHistory">
@@ -38,17 +32,16 @@ export default function OurHistory() {
 
 const Container = styled.div`
   width: 100%;
-
-  position: relative;
-
+  margin-top: 50px;
+  display: grid;
+  gap: 30px;
   h2 {
     color: white;
   }
 
   .cardsHistory {
     width: 100%;
-
-    padding: 10px 10px 0px 10px;
+    padding: 20px;
 
     .cardHistory {
       margin-bottom: 20px;

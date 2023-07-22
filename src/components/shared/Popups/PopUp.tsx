@@ -7,33 +7,58 @@ import styled from 'styled-components';
 interface PopUpProps {
   children: React.ReactNode;
   title: string;
-  buttonBack?: boolean;
-  hiddenPopUp: boolean;
-  onClick: () => void;
+  buttonTitle?: string;
+  to?: string;
 }
 
 export default function PopUp({
   children,
   title,
-  hiddenPopUp,
-  onClick
+
+  buttonTitle,
+  to
 }: PopUpProps) {
-  return (
-    <PopUpStyle close={hiddenPopUp}>
-      <div className="PopUpContainer">
-        <div className="closePopUpContainer">
+  const navigate = useNavigate();
+  const [togglePopUp, setTogglePopUp] = useState<boolean>(true);
+
+  if (buttonTitle && to) {
+    return (
+      <PopUpStyle close={togglePopUp}>
+        <div className="PopUpContainer">
+          <div className="closePopUpContainer">
+            <div className="titlePopUpContainer">
+              <h1 className="titlePopUp">{title}</h1>
+            </div>
+
+            <button
+              className="closePopUp"
+              onClick={() => setTogglePopUp(state => !state)}
+            >
+              <IoClose />
+            </button>
+          </div>
+          <div className="contentPopUp">
+            {children}
+            <button onClick={() => navigate(to)}>{buttonTitle}</button>
+          </div>
+        </div>
+      </PopUpStyle>
+    );
+  } else {
+    return (
+      <PopUpStyle close={togglePopUp}>
+        <div className="PopUpContainer">
           <div className="titlePopUpContainer">
             <h1 className="titlePopUp">{title}</h1>
           </div>
-          <button className="closePopUp" onClick={onClick}>
-            <IoClose />
-          </button>
+
+          <div className="contentPopUp">{children}</div>
         </div>
-        <div className="contentPopUp">{children}</div>
-      </div>
-    </PopUpStyle>
-  );
+      </PopUpStyle>
+    );
+  }
 }
+
 interface PopUpStyleProps {
   close: boolean;
 }
@@ -41,6 +66,8 @@ interface PopUpStyleProps {
 const PopUpStyle = styled.div<PopUpStyleProps>`
   background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 1000;
@@ -55,10 +82,11 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     place-items: center;
     padding: 10px;
     transition: all 0.2s ease-in;
+    font-size: 16px;
 
     :hover {
       cursor: pointer;
-      box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
     }
 
     :active {
@@ -70,21 +98,23 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     background-color: white;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     width: auto;
     max-width: 90vw;
     animation: fadeSmallBig normal 0.5s;
+
     .closePopUpContainer {
       width: 100%;
       display: flex;
       justify-content: space-between;
-
       .closePopUp {
-        max-width: 33px;
-        max-height: 33px;
+        width: 33px;
+        height: 33px;
+        padding: 9px;
+
         :hover {
           cursor: pointer;
-          box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
         }
 
         :active {
@@ -108,10 +138,11 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
       width: 100%;
       height: 100%;
       padding: 20px;
-      min-height: 100px;
+      min-height: 120px;
       display: grid;
       place-items: center;
       gap: 20px;
+      font-size: 20px;
     }
   }
 `;

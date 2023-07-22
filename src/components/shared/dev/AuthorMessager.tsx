@@ -13,7 +13,7 @@ const AuthorMessageStyle = styled.div`
   .developed {
     width: 100%;
     text-align: center;
-    color: white;
+    color: black;
     height: 20%;
     font-size: 20px;
 
