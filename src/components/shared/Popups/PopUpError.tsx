@@ -17,24 +17,16 @@ export default function PopUpError({
   buttonBack
 }: PopUpErrorProps) {
   const navigate = useNavigate();
-  const { setErrorResponse, signOut } = useAuth();
-  const [toggleClosePopUp, setToggleClosePopUp] = useState(true);
-
-  function closePopUp() {
-    setToggleClosePopUp(!toggleClosePopUp);
-    setErrorResponse(200);
-  }
-
-  const actionClose = buttonBack ? () => navigate(-1) : closePopUp;
+  const { signOut } = useAuth();
 
   return (
-    <PopUp title={title} onClick={actionClose} hiddenPopUp={toggleClosePopUp}>
+    <PopUp title={title}>
       <ContentPopUpStyle>
         <div className="contentText">{children}</div>
 
         <div className="contentPopUpButtons">
-          <button className="close" onClick={actionClose}>
-            {buttonBack ? 'Voltar' : 'Fechar'}
+          <button className="close" onClick={() => navigate(-1)}>
+            Voltar
           </button>
           <button className="login" onClick={signOut}>
             Login
