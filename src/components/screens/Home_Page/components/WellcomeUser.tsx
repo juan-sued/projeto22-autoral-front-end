@@ -8,7 +8,7 @@ interface WellcomeUserProps {
 const WellcomeUser: React.FC<WellcomeUserProps> = ({ name }) => {
   const hourCurrent = new Date().getHours();
 
-  const [greetingMessage, setGreetingMessage] = useState('Bom dia');
+  const [greetingMessage, setGreetingMessage] = useState('');
 
   useEffect(() => {
     if (hourCurrent >= 6 && hourCurrent <= 11) {
@@ -25,6 +25,7 @@ const WellcomeUser: React.FC<WellcomeUserProps> = ({ name }) => {
     return nameShorten?.[0] ?? '';
   }
 
+  if (!greetingMessage) return <ContainerWellcomeUser></ContainerWellcomeUser>;
   if (name && name !== 'user default') {
     return (
       <ContainerWellcomeUser>
@@ -61,12 +62,13 @@ const WellcomeUser: React.FC<WellcomeUserProps> = ({ name }) => {
 
 const ContainerWellcomeUser = styled.div`
   width: 100%;
-
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-items: center;
+  animation: fadeTranslate 0.8s forwards;
 
   .container {
     min-width: 260px;

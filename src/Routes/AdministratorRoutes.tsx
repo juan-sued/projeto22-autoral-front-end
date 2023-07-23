@@ -1,14 +1,29 @@
+import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Cart from '@/components/screens/Cart_Page/components';
-import HomePage from '@/components/screens/Home_Page/HomePage';
-import LoginPage from '@/components/screens/Login_Page/Login_Page';
-import MyInformationPage from '@/components/screens/MyInformations_Page/MyInformation';
-import RegisterPage from '@/components/screens/Register_Page/RegisterPage';
-import React from 'react';
-import StockPage from '@/components/screens/Stock_Page/StockPage';
-import MakeOrderPage from '@/components/screens/MakeOrder_Page';
-import ProductViewPage from '@/components/screens/Product_View_Page/index';
-import NotFoundPage from '@/components/screens/Errors/MessageNotFound';
+
+// Importar os componentes usando lazy
+const Cart = lazy(() => import('@/components/screens/Cart_Page/components'));
+const HomePage = lazy(() => import('@/components/screens/Home_Page/HomePage'));
+const LoginPage = lazy(
+  () => import('@/components/screens/Login_Page/Login_Page')
+);
+const MyInformationPage = lazy(
+  () => import('@/components/screens/MyInformations_Page/MyInformation')
+);
+const RegisterPage = lazy(
+  () => import('@/components/screens/Register_Page/RegisterPage')
+);
+const StockPage = lazy(
+  () => import('@/components/screens/Stock_Page/StockPage')
+);
+const MakeOrderPage = lazy(() => import('@/components/screens/MakeOrder_Page'));
+const ProductViewPage = lazy(
+  () => import('@/components/screens/Product_View_Page/index')
+);
+const NotFoundPage = lazy(
+  () => import('@/components/screens/Errors/MessageNotFound')
+);
 
 const AdministratorRoutes: React.FC = () => (
   <Routes>
@@ -23,4 +38,5 @@ const AdministratorRoutes: React.FC = () => (
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );
+
 export default AdministratorRoutes;

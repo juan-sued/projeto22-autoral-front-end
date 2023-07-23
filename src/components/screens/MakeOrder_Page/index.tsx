@@ -14,6 +14,7 @@ import stockRequests, { IStock } from '@/util/requests/products/stockRequests';
 import { ICategory, IProductInsert } from '@/hooks/useProducts';
 import Main from '@/components/shared/Main';
 import SectionCarousel from './SectionCarousel';
+import LoadingPage from '@/components/shared/Loaders/LoadingPage';
 
 export type IResponseStock = Record<string, CategoryWithStock>;
 
@@ -114,12 +115,6 @@ const MakeOrderPage: React.FC = () => {
   if (responseStock) {
     return (
       <MakeOrderPageStyle>
-        <ModalLoading stateButton={stateButton}>
-          <div className="containerModal">
-            <PopsicleLoading />
-          </div>
-        </ModalLoading>
-
         <TitlePage title={'Escolher pedido'} />
         <SectionCarousel
           titleSectionLeft={'Primeiro um tamanho'}
@@ -185,40 +180,11 @@ const MakeOrderPage: React.FC = () => {
       </MakeOrderPageStyle>
     );
   } else {
-    return (
-      <MakeOrderPageStyle>
-        <Main margin_top="40vh">
-          <PopsicleLoading />
-        </Main>
-      </MakeOrderPageStyle>
-    );
+    return <LoadingPage />;
   }
 };
 
 export default MakeOrderPage;
-
-interface ModalLoading {
-  stateButton: string;
-}
-
-const ModalLoading = styled.div<ModalLoading>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: ${props => (props.stateButton === 'loading' ? 'flex' : 'none')};
-  align-items: center;
-  justify-content: center;
-
-  .containerModal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-  }
-`;
 
 const MakeOrderPageStyle = styled.div`
   padding-bottom: 80px;

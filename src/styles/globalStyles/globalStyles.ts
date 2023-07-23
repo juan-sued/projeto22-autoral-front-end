@@ -94,6 +94,12 @@ outline: none;
   border: solid 1px rgb(142, 28, 90,0.5);
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3);
 }
+
+
+
+strong{
+  font-weight: 600;
+}
 @keyframes fadeSmallBig {
     0% {
       opacity: 0;
