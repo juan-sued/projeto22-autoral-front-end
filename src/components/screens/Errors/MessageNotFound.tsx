@@ -1,20 +1,16 @@
 import styled from 'styled-components';
-import PopUpError from '@/components/shared/Popups/PopUpError';
-import { useAuth } from '@/hooks/useAuth';
+
+import PopUp from '@/components/shared/Popups/PopUp';
 
 export default function MessageNotFound() {
-  const { signed } = useAuth();
-
   return (
     <MessageNotFoundStyle>
-      <PopUpError title="Opss!" buttonBack={true}>
+      <PopUp title="Opss!" buttonBack={true} buttonClose={false}>
         <p>
-          Desculpe, parece que
-          {signed
-            ? ' essa página não existe.'
-            : ' você não tem acesso a está página.'}
+          Desculpe, mas parece que você <strong>não tem acesso</strong> ou essa
+          página não existe.
         </p>
-      </PopUpError>
+      </PopUp>
     </MessageNotFoundStyle>
   );
 }

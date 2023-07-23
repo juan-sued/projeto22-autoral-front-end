@@ -15,8 +15,10 @@ import { useProduct } from '@/hooks/useProducts';
 import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import { useEffect } from 'react';
 import { axiosI } from '@/services/axios';
-import PopUpError from '@/components/shared/Popups/PopUpError';
+
 import AuthorMessage from '@/components/shared/dev/AuthorMessager';
+import PopUp from '@/components/shared/Popups/PopUp';
+import LoadingPage from '@/components/shared/Loaders/LoadingPage';
 
 export default function HomePage() {
   const { userInfo, signed, errorResponse, setErrorResponse } = useAuth();
@@ -54,9 +56,9 @@ export default function HomePage() {
     return (
       <>
         {errorResponse === 401 ? (
-          <PopUpError title="Não autorizado!">
-            <p>Opss! Parece que você precisa de login para isso.</p>
-          </PopUpError>
+          <PopUp title="Opss!" buttonTitle="Login" to="/sign-in">
+            <p>Você precisa estar logado para poder favoritar.</p>
+          </PopUp>
         ) : (
           ''
         )}
@@ -97,8 +99,6 @@ export default function HomePage() {
       </>
     );
   } else {
-    <Main margin_top="40vh">
-      <PopsicleLoading />
-    </Main>;
+    <LoadingPage />;
   }
 }

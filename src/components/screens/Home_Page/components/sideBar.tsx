@@ -20,8 +20,10 @@ export default function SideBar() {
 
   function shortName() {
     if (userInfo) {
+      if (userInfo.name.includes('user default'))
+        return 'Faça login para uma experiência completa.';
       const nameShorten = userInfo.name.split(' ');
-      return nameShorten[0] + ' ' + nameShorten[1];
+      return nameShorten[0] + ' ' + nameShorten[1] ?? '';
     }
   }
 
@@ -52,6 +54,9 @@ export default function SideBar() {
     };
 
   const selectedButton = (text: { nameIcon: string; nameText: string }) => {
+    setState({
+      right: false
+    });
     if (text.nameIcon === 'shopping_cart') {
       navigate('/cart');
     } else if (text.nameIcon === 'logout') {
@@ -76,7 +81,6 @@ export default function SideBar() {
     { nameIcon: 'shopping_cart', nameText: 'Meu carrinho' }
   ];
 
-  // adiciona buttons de administrador
   if (userInfo?.permissions.access.toLocaleLowerCase().includes('high')) {
     listButtonsSideBar.splice(
       1,

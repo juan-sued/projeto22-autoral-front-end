@@ -8,20 +8,29 @@ interface PopUpProps {
   children: React.ReactNode;
   title: string;
   buttonTitle?: string;
-  to?: string;
+  to?: any;
+  buttonClose?: boolean;
+  buttonBack?: boolean;
 }
 
 export default function PopUp({
   children,
   title,
-
-  buttonTitle,
-  to
+  buttonClose = true,
+  buttonBack = false,
+  to = buttonBack ? -1 : '',
+  buttonTitle = buttonBack ? 'Voltar' : ''
 }: PopUpProps) {
   const navigate = useNavigate();
+  const { setErrorResponse } = useAuth();
   const [togglePopUp, setTogglePopUp] = useState<boolean>(true);
+  function closePopUp() {
+    () => setTogglePopUp(state => !state);
+    if (to) navigate(to);
+    setErrorResponse(200);
+  }
 
-  if (buttonTitle && to) {
+  if (buttonClose) {
     return (
       <PopUpStyle close={togglePopUp}>
         <div className="PopUpContainer">
@@ -30,16 +39,13 @@ export default function PopUp({
               <h1 className="titlePopUp">{title}</h1>
             </div>
 
-            <button
-              className="closePopUp"
-              onClick={() => setTogglePopUp(state => !state)}
-            >
+            <button className="closePopUp" onClick={closePopUp}>
               <IoClose />
             </button>
           </div>
           <div className="contentPopUp">
             {children}
-            <button onClick={() => navigate(to)}>{buttonTitle}</button>
+            <button onClick={closePopUp}>{buttonTitle}</button>
           </div>
         </div>
       </PopUpStyle>
@@ -52,7 +58,10 @@ export default function PopUp({
             <h1 className="titlePopUp">{title}</h1>
           </div>
 
-          <div className="contentPopUp">{children}</div>
+          <div className="contentPopUp">
+            {children}
+            <button onClick={closePopUp}>{buttonTitle}</button>
+          </div>
         </div>
       </PopUpStyle>
     );
@@ -71,7 +80,6 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
   width: 100%;
   height: 100%;
   z-index: 1000;
-
   place-items: center;
   display: ${props => (props.close ? 'grid' : 'none')};
 
@@ -83,6 +91,8 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     padding: 10px;
     transition: all 0.2s ease-in;
     font-size: 16px;
+    width: 100%;
+    max-width: 200px;
 
     :hover {
       cursor: pointer;
@@ -102,6 +112,8 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
     width: auto;
     max-width: 90vw;
     animation: fadeSmallBig normal 0.5s;
+    gap: 20px;
+    display: grid;
 
     .closePopUpContainer {
       width: 100%;
@@ -138,11 +150,11 @@ const PopUpStyle = styled.div<PopUpStyleProps>`
       width: 100%;
       height: 100%;
       padding: 20px;
-      min-height: 120px;
       display: grid;
       place-items: center;
-      gap: 20px;
       font-size: 20px;
+      gap: 30px;
+      text-align: center;
     }
   }
 `;

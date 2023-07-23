@@ -228,5 +228,6 @@ export const Total = styled.div<TotalProps>`
   strong {
     font-size: 25px;
     margin-left: 5px;
+    font-weight: 400;
   }
 `;
