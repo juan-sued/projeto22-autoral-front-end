@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import { formatPrice } from '@/util/format';
 
 import { Container } from './styles';
@@ -16,7 +16,6 @@ import PopUp from '@/components/shared/Popups/PopUp';
 
 interface CartProps {
   message?: string;
-  isSigned?: boolean;
 }
 export interface OrderData {
   products: CartProduct[];
@@ -26,8 +25,8 @@ export interface OrderData {
   };
 }
 
-const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
-  const { signOut } = useAuth();
+const Cart: React.FC<CartProps> = () => {
+  const { signOut, signed } = useAuth();
 
   const { cart, setCart } = useCart();
 
@@ -83,9 +82,9 @@ const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
         <ProductTable>
           {cartFormatted.length === 0 ? (
             <PopUp
-              to="/make-order"
               title="Opss!"
               buttonTitle="Realizar pedido!"
+              to="/make-order"
             >
               <p>Parece que seu carrinho está vazio... &#128553;</p>
               <p>Vamos rechear? &#129316;</p>
@@ -107,7 +106,7 @@ const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
         </ProductTable>
         <FooterWithPriceAndButton
           isCart={true}
-          isSigned={isSigned}
+          isSigned={signed}
           handleCreateOrder={handleCreateOrder}
           total={formatPrice(total)}
           productsIdsSelecteds={productsIdsSelecteds}
@@ -119,7 +118,7 @@ const Cart: React.FC<CartProps> = ({ isSigned = false }) => {
 };
 
 const Back = styled.div`
-  background-color: '#EEEDF4';
+  background-color: #eeedf4;
   position: fixed;
   min-height: 100%;
   min-width: 100%;
