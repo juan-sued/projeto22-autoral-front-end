@@ -29,6 +29,7 @@ const PublicRoutes: React.FC = () => (
     <Route path="/sign-up" element={<RegisterPage />} />
     <Route path="/make-order" element={<MakeOrderPage />} />
     <Route path="/product/:id" element={<ProductViewPage />} />
+    <Route path="/cart" element={<Cart />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 );

@@ -1,22 +1,14 @@
 import styled from 'styled-components';
 interface CheckboxBlockProps {
-  selectProductInCart: (value: number) => void;
-  id: number;
+  checked: boolean;
 }
 
-const CheckboxBlock: React.FC<CheckboxBlockProps> = ({
-  selectProductInCart,
-  id
-}) => {
+const CheckboxBlock: React.FC<CheckboxBlockProps> = ({ checked = false }) => {
   return (
     <CheckboxBlockStyle>
       <div className="content">
         <label className="checkBox">
-          <input
-            id="ch1"
-            type="checkbox"
-            onChange={() => selectProductInCart(id)}
-          />
+          <input id="ch1" type="checkbox" checked={checked} />
           <div className="transition"></div>
         </label>
       </div>

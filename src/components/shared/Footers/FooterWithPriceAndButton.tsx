@@ -47,18 +47,30 @@ export default function FooterWithPriceAndButton({
     alert('necessário adicionar ao menos um tamanho e sabor');
   }
   if (isCart && productsIdsSelecteds?.length === 0) {
-    return (
-      <FooterWithPriceAndButtonStyle enable={enable}>
-        <footer>
-          {isSigned ? (
+    if (isSigned) {
+      return (
+        <FooterWithPriceAndButtonStyle enable={enable}>
+          <footer>
             <button
               disabled={stateButton === 'loading' ? true : false}
               type="button"
               onClick={handleCreateOrder}
+              className="finallyOrder"
             >
               {stateButton === 'loading' ? <Loading /> : 'Finalizar Compra'}
             </button>
-          ) : (
+
+            <Total enable={enable}>
+              <span>TOTAL</span>
+              <strong>{total}</strong>
+            </Total>
+          </footer>
+        </FooterWithPriceAndButtonStyle>
+      );
+    } else {
+      return (
+        <FooterWithPriceAndButtonStyle enable={enable}>
+          <footer>
             <button
               disabled={stateButton === 'loading' ? true : false}
               type="button"
@@ -66,14 +78,15 @@ export default function FooterWithPriceAndButton({
             >
               {stateButton === 'loading' ? <Loading /> : 'Fazer login'}
             </button>
-          )}
-          <Total enable={enable}>
-            <span>TOTAL</span>
-            <strong>{total}</strong>
-          </Total>
-        </footer>
-      </FooterWithPriceAndButtonStyle>
-    );
+
+            <Total enable={enable}>
+              <span>TOTAL</span>
+              <strong>{total}</strong>
+            </Total>
+          </footer>
+        </FooterWithPriceAndButtonStyle>
+      );
+    }
   } else if (
     enable &&
     productsIdsSelecteds &&
@@ -107,15 +120,13 @@ export default function FooterWithPriceAndButton({
             type="button"
             onClick={enable ? handleCreateOrder : message}
           >
-            <p className="text">
-              {stateButton === 'loading' ? (
-                <Loading />
-              ) : enable ? (
-                'Adicionar ao carrinho'
-              ) : (
-                'Escolha ao menos um tamanho e sabor'
-              )}
-            </p>
+            {stateButton === 'loading' ? (
+              <Loading />
+            ) : enable ? (
+              <p className="text"> Adicionar ao carrinho</p>
+            ) : (
+              <p className="text"> Escolha ao menos um tamanho e sabor</p>
+            )}
           </button>
           <Total enable={enable}>
             <span>TOTAL</span>
@@ -128,6 +139,7 @@ export default function FooterWithPriceAndButton({
 }
 interface FooterWithPriceAndButtonStyleProps {
   enable: boolean;
+  isPossibleFinally?: boolean;
 }
 const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStyleProps>`
   z-index: 100000;
@@ -147,6 +159,9 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 2px 2px 0px 0px;
 
+    .finallyOrder {
+      width: 300px;
+    }
     button {
       background: #7159c1;
       color: #fff;

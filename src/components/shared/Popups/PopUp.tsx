@@ -24,9 +24,11 @@ export default function PopUp({
   const navigate = useNavigate();
   const { setErrorResponse } = useAuth();
   const [togglePopUp, setTogglePopUp] = useState<boolean>(true);
-  function closePopUp() {
-    () => setTogglePopUp(state => !state);
-    if (to) navigate(to);
+
+  function closePopUp(onlyClose?: boolean) {
+    setTogglePopUp(state => !state);
+
+    if (to && !onlyClose) navigate(to);
     setErrorResponse(200);
   }
 
@@ -39,13 +41,13 @@ export default function PopUp({
               <h1 className="titlePopUp">{title}</h1>
             </div>
 
-            <button className="closePopUp" onClick={closePopUp}>
+            <button className="closePopUp" onClick={() => closePopUp(true)}>
               <IoClose />
             </button>
           </div>
           <div className="contentPopUp">
             {children}
-            <button onClick={closePopUp}>{buttonTitle}</button>
+            <button onClick={() => closePopUp()}>{buttonTitle}</button>
           </div>
         </div>
       </PopUpStyle>
@@ -60,7 +62,7 @@ export default function PopUp({
 
           <div className="contentPopUp">
             {children}
-            <button onClick={closePopUp}>{buttonTitle}</button>
+            <button onClick={() => closePopUp()}>{buttonTitle}</button>
           </div>
         </div>
       </PopUpStyle>

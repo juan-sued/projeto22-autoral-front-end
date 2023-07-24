@@ -5,7 +5,6 @@ import { useCart } from '@/hooks/useCart';
 import imageAcai from '@/assets/copoHome.jpg';
 import CheckboxBlock from '@/components/shared/Checkboxs/CheckboxBlock';
 import { useState } from 'react';
-
 interface ItemProductTableProps {
   image: string;
   name: string;
@@ -47,9 +46,15 @@ function ItemProductTable({
     updateProductAmount({ productId: id, amount: amount - 1 });
   }
 
+  const [checked, setChecked] = useState(false);
+  function selectedCard() {
+    setChecked(state => !state);
+    selectProductInCart(id);
+  }
+
   return (
-    <ItemProductTableStyle>
-      <CheckboxBlock selectProductInCart={selectProductInCart} id={id} />
+    <ItemProductTableStyle onClick={selectedCard} isChecked={checked}>
+      <CheckboxBlock checked={checked} />
       <img src={image ? image : imageAcai} alt="" />
       <div className="containerContent">
         <div className="title">{name}</div>
@@ -79,23 +84,36 @@ function ItemProductTable({
   );
 }
 
-export const ItemProductTableStyle = styled.div`
+interface ItemProductTableStyleProps {
+  isChecked: boolean;
+}
+
+export const ItemProductTableStyle = styled.div<ItemProductTableStyleProps>`
   width: 100%;
   display: flex;
-  margin-top: 20px;
+
   align-items: center;
-  height: 90px;
-
   border-radius: 5px;
+  transition: all 0.1s ease-in;
 
+  background-color: ${props => (props.isChecked ? 'white' : 'transparent')};
+
+  :hover {
+    background-color: white;
+    box-shadow: ${props =>
+      props.isChecked
+        ? 'transparent'
+        : 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'};
+
+    cursor: pointer;
+  }
   img {
-    height: 100%;
+    height: 90px;
     border-radius: 20px;
   }
   .containerContent {
     width: 100%;
     padding: 10px 0px 10px 10px;
-    max-width: 195px;
 
     .title {
       width: 100%;
@@ -124,6 +142,8 @@ export const ItemProductTableStyle = styled.div`
           border-radius: 6px;
           height: 25px;
           width: 25px;
+          display: grid;
+          place-items: center;
         }
 
         .countProduct {
