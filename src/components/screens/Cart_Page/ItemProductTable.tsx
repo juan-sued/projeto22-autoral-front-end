@@ -53,8 +53,8 @@ function ItemProductTable({
   }
 
   return (
-    <ItemProductTableStyle onClick={selectedCard} isChecked={checked}>
-      <CheckboxBlock checked={checked} />
+    <ItemProductTableStyle isChecked={checked}>
+      <CheckboxBlock checked={checked} onClick={selectedCard} />
       <img src={image ? image : imageAcai} alt="" />
       <div className="containerContent">
         <div className="title">{name}</div>
@@ -144,6 +144,7 @@ export const ItemProductTableStyle = styled.div<ItemProductTableStyleProps>`
           width: 25px;
           display: grid;
           place-items: center;
+          z-index: 1000;
         }
 
         .countProduct {

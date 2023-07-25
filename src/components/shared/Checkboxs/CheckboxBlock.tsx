@@ -1,14 +1,16 @@
 import styled from 'styled-components';
-interface CheckboxBlockProps {
-  checked: boolean;
-}
+import { ComponentProps } from 'react';
+type CheckboxBlockProps = ComponentProps<'input'>;
 
-const CheckboxBlock: React.FC<CheckboxBlockProps> = ({ checked = false }) => {
+const CheckboxBlock: React.FC<CheckboxBlockProps> = ({
+  checked = false,
+  ...props
+}) => {
   return (
     <CheckboxBlockStyle>
       <div className="content">
         <label className="checkBox">
-          <input id="ch1" type="checkbox" checked={checked} />
+          <input id="ch1" type="checkbox" {...props} />
           <div className="transition"></div>
         </label>
       </div>

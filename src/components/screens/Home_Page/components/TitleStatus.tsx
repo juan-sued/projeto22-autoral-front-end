@@ -29,6 +29,7 @@ const TitleStatusStyle = styled.div<{ color: string }>`
   position: absolute;
   left: 0;
   top: 24px;
+  animation: fadeTranslateXRight 0.8s forwards;
 
   p {
     color: ${props =>

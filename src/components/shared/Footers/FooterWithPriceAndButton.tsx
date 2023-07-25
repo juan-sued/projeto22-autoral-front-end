@@ -160,7 +160,8 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     border-radius: 2px 2px 0px 0px;
 
     .finallyOrder {
-      width: 300px;
+      width: 100%;
+      margin-right: 10px;
     }
     button {
       background: #7159c1;
