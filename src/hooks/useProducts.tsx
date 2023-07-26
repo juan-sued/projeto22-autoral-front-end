@@ -1,8 +1,6 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { axiosI } from '@/services/axios';
+import { createContext, useContext, useState } from 'react';
 import productRequests from '@/util/requests/products/productsRequests';
 import { IStock } from '@/util/requests/products/stockRequests';
-import { useAuth } from './useAuth';
 export interface IProductBasic {
   id: number;
   name: string;
@@ -18,7 +16,7 @@ export interface IProductInsert {
   flavoursIds: number[];
   complementsIds: number[];
   toppingsIds: number[];
-  fruitId: number;
+  fruitId: number | null;
   plusIds: number[];
 }
 export type TStockObj = { [categoryName: string]: IStock[] };

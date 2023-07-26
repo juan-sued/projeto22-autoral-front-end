@@ -1,5 +1,4 @@
-import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Importar os componentes usando lazy
@@ -8,9 +7,7 @@ const HomePage = lazy(() => import('@/components/screens/Home_Page/HomePage'));
 const LoginPage = lazy(
   () => import('@/components/screens/Login_Page/Login_Page')
 );
-const MyInformationPage = lazy(
-  () => import('@/components/screens/MyInformations_Page/MyInformation')
-);
+
 const RegisterPage = lazy(
   () => import('@/components/screens/Register_Page/RegisterPage')
 );

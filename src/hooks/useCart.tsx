@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { IProductInsert } from './useProducts';
+import { IProductById, IProductInsert } from './useProducts';
 
 interface UpdateProductAmount {
   productId: number;
@@ -7,7 +7,7 @@ interface UpdateProductAmount {
 }
 
 interface CartContextType {
-  addProduct: (productId: number) => Promise<void>;
+  addProduct: (productAdd: IProductById) => Promise<void>;
   addProductOrderInCart: (objectNewOrder: IProductInsert) => void;
   updateProductAmount: ({
     productId,
@@ -51,25 +51,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       console.log('error', error);
     }
   }
-
-  async function addProduct(productId: number) {
+  async function addProduct(productAdd: IProductById) {
     try {
       const cartUpdated: CartProduct[] = [...cart];
       const foundProductInCart = cartUpdated.find(
-        product => product.id === productId
+        product => product.id === productAdd.id
       );
-      if (!foundProductInCart) return alert('Produto não presente no carrinho');
-
-      const updatedProduct = { ...foundProductInCart };
-
-      updatedProduct.amountInCart++;
-      const index = cartUpdated.indexOf(foundProductInCart);
-      cartUpdated[index] = updatedProduct;
+      if (foundProductInCart) {
+        foundProductInCart.amountInCart++;
+      } else {
+        let fruitID = null;
+        if (productAdd.stock['Frutas'] && productAdd.stock['Frutas'][0]) {
+          fruitID = productAdd.stock['Frutas'][0].id;
+        }
+        const newProduct: CartProduct = {
+          id: productAdd.id,
+          name: productAdd.name,
+          image: productAdd.image,
+          price: Number(productAdd.price),
+          cupSizeId: productAdd.cupSizeId,
+          fruitId: fruitID,
+          flavoursIds:
+            productAdd.stock['Sabores']?.map(stock => stock.id) ?? [],
+          complementsIds:
+            productAdd.stock['Complementos']?.map(stock => stock.id) ?? [],
+          toppingsIds: productAdd.stock['Caldas']?.map(stock => stock.id) ?? [],
+          plusIds: productAdd.stock['Adicionais']?.map(stock => stock.id) ?? []
+        };
+        cartUpdated.push(newProduct);
+      }
 
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
-      console.log('error', error);
+      if (error) console.log('error', error);
     }
   }
 

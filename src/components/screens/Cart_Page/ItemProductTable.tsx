@@ -100,12 +100,6 @@ export const ItemProductTableStyle = styled.div<ItemProductTableStyleProps>`
 
   :hover {
     background-color: white;
-    box-shadow: ${props =>
-      props.isChecked
-        ? 'transparent'
-        : 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'};
-
-    cursor: pointer;
   }
   img {
     height: 90px;

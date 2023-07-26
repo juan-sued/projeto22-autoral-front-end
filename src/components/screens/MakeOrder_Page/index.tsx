@@ -62,7 +62,7 @@ const MakeOrderPage: React.FC = () => {
     plusIds: plusIds
   });
   useEffect(() => {
-    if (!responseStock) return console.log('responseStock é null');
+    if (!responseStock) return;
     const totalPriceCupSize = calculateTotalPrice(
       cupSizeId,
       responseStock['Tamanhos'].stock
@@ -95,7 +95,7 @@ const MakeOrderPage: React.FC = () => {
         ? 'Açaí - ' + userInfo?.name
         : 'Açaí';
       const idInCart = cart.length + 1 * 100000000;
-      const updatedObjNewOrder = {
+      const updatedObjNewOrder: IProductInsert = {
         id: idInCart,
         image: '',
         price: totalPrice,
