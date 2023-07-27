@@ -50,7 +50,7 @@ const MakeOrderPage: React.FC = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [name, setName] = useState<string>('');
   const [objNewOrder, setObjNewOrder] = useState<IProductInsert>({
-    id: 0,
+    id: '',
     image: '',
     price: totalPrice,
     name: name,
@@ -79,7 +79,7 @@ const MakeOrderPage: React.FC = () => {
   }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
 
   useEffect(() => {
-    if (objNewOrder && objNewOrder.id > 0) {
+    if (objNewOrder && objNewOrder.id !== '') {
       addProductOrderInCart(objNewOrder);
       navigate('/cart');
     }
@@ -94,9 +94,8 @@ const MakeOrderPage: React.FC = () => {
         : userInfo?.name !== undefined
         ? 'Açaí - ' + userInfo?.name
         : 'Açaí';
-      const idInCart = cart.length + 1 * 100000000;
       const updatedObjNewOrder: IProductInsert = {
-        id: idInCart,
+        id: `idInCart-${cart.length + 1}`,
         image: '',
         price: totalPrice,
         name: nameProduct,

@@ -14,7 +14,7 @@ const ContentProductView: React.FC<ContentProductViewProps> = ({
   priceFormatted,
   handleScroll
 }) => {
-  const { addProduct } = useCart();
+  const { addProductExiting } = useCart();
   return (
     <ContentProductViewStyle
       backgroundImage={
@@ -23,7 +23,10 @@ const ContentProductView: React.FC<ContentProductViewProps> = ({
     >
       <div className="containerButtonsHeader">
         <div className="glassEffect">{priceFormatted}</div>
-        <button className="glassEffect" onClick={() => addProduct(product)}>
+        <button
+          className="glassEffect"
+          onClick={() => addProductExiting(product)}
+        >
           <TbShoppingCartPlus size={25} />
         </button>
       </div>

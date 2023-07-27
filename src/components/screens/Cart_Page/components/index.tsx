@@ -57,10 +57,10 @@ const Cart: React.FC<CartProps> = () => {
     requestOrder(orderData, signOut, success);
   }
 
-  const [productsIdsSelecteds, setProductsIdsSelecteds] = useState<number[]>(
-    []
-  );
-  function selectProductInCart(id: number) {
+  const [productsIdsSelecteds, setProductsIdsSelecteds] = useState<
+    (number | string)[]
+  >([]);
+  function selectProductInCart(id: number | string) {
     const isSelected = productsIdsSelecteds.includes(id);
 
     if (isSelected) {

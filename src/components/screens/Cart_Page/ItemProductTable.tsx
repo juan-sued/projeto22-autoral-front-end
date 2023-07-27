@@ -11,8 +11,8 @@ interface ItemProductTableProps {
   price: string;
   description: string;
   amount: number;
-  id: number;
-  selectProductInCart: (value: number) => void;
+  id: number | string;
+  selectProductInCart: (value: number | string) => void;
 }
 
 function ItemProductTable({
@@ -30,7 +30,7 @@ function ItemProductTable({
     id,
     amount
   }: {
-    id: number;
+    id: number | string;
     amount: number;
   }) {
     updateProductAmount({ productId: id, amount: amount + 1 });
@@ -40,7 +40,7 @@ function ItemProductTable({
     id,
     amount
   }: {
-    id: number;
+    id: number | string;
     amount: number;
   }) {
     updateProductAmount({ productId: id, amount: amount - 1 });
@@ -55,7 +55,7 @@ function ItemProductTable({
   return (
     <ItemProductTableStyle isChecked={checked}>
       <CheckboxBlock checked={checked} onClick={selectedCard} />
-      <img src={image ? image : imageAcai} alt="" />
+      <img src={image.includes('https://') ? image : imageAcai} alt="" />
       <div className="containerContent">
         <div className="title">{name}</div>
         <div className="subContainer">
@@ -138,7 +138,6 @@ export const ItemProductTableStyle = styled.div<ItemProductTableStyleProps>`
           width: 25px;
           display: grid;
           place-items: center;
-          z-index: 1000;
         }
 
         .countProduct {

@@ -2,18 +2,18 @@ import { createContext, useContext, useState } from 'react';
 import { IProductById, IProductInsert } from './useProducts';
 
 interface UpdateProductAmount {
-  productId: number;
+  productId: number | string;
   amount: number;
 }
 
 interface CartContextType {
-  addProduct: (productAdd: IProductById) => Promise<void>;
+  addProductExiting: (productAdd: IProductById) => Promise<void>;
   addProductOrderInCart: (objectNewOrder: IProductInsert) => void;
   updateProductAmount: ({
     productId,
     amount
   }: UpdateProductAmount) => Promise<void>;
-  removeAllProductsSelecteds: (productsIds: number[]) => void;
+  removeAllProductsSelecteds: (productsIds: (number | string)[]) => void;
   cart: CartProduct[];
 
   setCart: (cart: CartProduct[]) => void;
@@ -35,48 +35,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
     return [];
   });
+  console.log('carrinho:', cart);
 
   async function addProductOrderInCart(objectNewOrder: IProductInsert) {
     try {
       const cartUpdated: CartProduct[] = [...cart];
-
-      const newProduct: CartProduct = {
-        ...objectNewOrder,
-        amountInCart: 1
-      };
-      cartUpdated.push(newProduct);
-      setCart(cartUpdated);
-      localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
-    } catch (error) {
-      console.log('error', error);
-    }
-  }
-  async function addProduct(productAdd: IProductById) {
-    try {
-      const cartUpdated: CartProduct[] = [...cart];
       const foundProductInCart = cartUpdated.find(
-        product => product.id === productAdd.id
+        product => product.id === objectNewOrder.id
       );
+
       if (foundProductInCart) {
+        // Se o produto já estiver no carrinho, atualize a quantidade
         foundProductInCart.amountInCart++;
       } else {
-        let fruitID = null;
-        if (productAdd.stock['Frutas'] && productAdd.stock['Frutas'][0]) {
-          fruitID = productAdd.stock['Frutas'][0].id;
-        }
+        // Se o produto não estiver no carrinho, adicione um novo item
         const newProduct: CartProduct = {
-          id: productAdd.id,
-          name: productAdd.name,
-          image: productAdd.image,
-          price: Number(productAdd.price),
-          cupSizeId: productAdd.cupSizeId,
-          fruitId: fruitID,
-          flavoursIds:
-            productAdd.stock['Sabores']?.map(stock => stock.id) ?? [],
-          complementsIds:
-            productAdd.stock['Complementos']?.map(stock => stock.id) ?? [],
-          toppingsIds: productAdd.stock['Caldas']?.map(stock => stock.id) ?? [],
-          plusIds: productAdd.stock['Adicionais']?.map(stock => stock.id) ?? []
+          ...objectNewOrder,
+          amountInCart: 1
         };
         cartUpdated.push(newProduct);
       }
@@ -84,7 +59,34 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
-      if (error) console.log('error', error);
+      console.log('error', error);
+    }
+  }
+
+  async function addProductExiting(productAdd: IProductById): Promise<void> {
+    // responsavel formatar o produto e enviar para addProductOrder
+    try {
+      let fruitID = null;
+      if (productAdd.stock['Frutas'])
+        fruitID = productAdd.stock['Frutas'][0]?.id;
+
+      const newProduct: IProductInsert = {
+        id: productAdd.id,
+        name: productAdd.name,
+        image: productAdd.image,
+        price: Number(productAdd.price),
+        cupSizeId: productAdd.cupSizeId,
+        fruitId: fruitID,
+        flavoursIds: productAdd.stock['Sabores']?.map(stock => stock.id) ?? [],
+        complementsIds:
+          productAdd.stock['Complementos']?.map(stock => stock.id) ?? [],
+        toppingsIds: productAdd.stock['Caldas']?.map(stock => stock.id) ?? [],
+        plusIds: productAdd.stock['Adicionais']?.map(stock => stock.id) ?? []
+      };
+
+      addProductOrderInCart(newProduct);
+    } catch (error) {
+      if (error) console.log('Erro ao formatar produto', error);
     }
   }
 
@@ -92,7 +94,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     productId,
     amount
   }: {
-    productId: number;
+    productId: number | string;
     amount: number;
   }) {
     try {
@@ -115,7 +117,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  async function removeAllProductsSelecteds(productIds: number[]) {
+  async function removeAllProductsSelecteds(productIds: (number | string)[]) {
     try {
       const cartUpdated = cart.filter(
         product => !productIds.includes(product.id)
@@ -131,7 +133,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     <CartContext.Provider
       value={{
         cart,
-        addProduct,
+        addProductExiting,
         updateProductAmount,
         removeAllProductsSelecteds,
         setCart,
