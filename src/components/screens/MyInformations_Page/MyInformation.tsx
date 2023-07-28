@@ -1,5 +1,4 @@
 import { useAuth } from '@/hooks/useAuth';
-import pagesRequests from '@/util/requests/pages/pagesRequests';
 import { useEffect, useRef, useState } from 'react';
 import { MdAdd } from 'react-icons/md';
 import styled from 'styled-components';
