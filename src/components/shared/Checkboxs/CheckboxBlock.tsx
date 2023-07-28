@@ -20,7 +20,7 @@ const CheckboxBlock: React.FC<CheckboxBlockProps> = ({
 export default CheckboxBlock;
 
 const CheckboxBlockStyle = styled.div`
-  width: 90px;
+  max-width: auto;
   display: grid;
   place-items: center;
 
@@ -41,7 +41,7 @@ const CheckboxBlockStyle = styled.div`
     width: 20px;
     height: 20px;
     border: 3px solid rgba(255, 255, 255, 0);
-    border-radius: 5px;
+    border-radius: 100px;
     position: relative;
     overflow: hidden;
     box-shadow: 0px 0px 0px 2px purple;

@@ -66,17 +66,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   async function addProductExiting(productAdd: IProductById): Promise<void> {
     // responsavel formatar o produto e enviar para addProductOrder
     try {
-      let fruitID = null;
-      if (productAdd.stock['Frutas'])
-        fruitID = productAdd.stock['Frutas'][0]?.id;
-
       const newProduct: IProductInsert = {
         id: productAdd.id,
         name: productAdd.name,
         image: productAdd.image,
         price: Number(productAdd.price),
         cupSizeId: productAdd.cupSizeId,
-        fruitId: fruitID,
+        fruitsId: productAdd.stock['Frutas']?.map(stock => stock.id) ?? [],
         flavoursIds: productAdd.stock['Sabores']?.map(stock => stock.id) ?? [],
         complementsIds:
           productAdd.stock['Complementos']?.map(stock => stock.id) ?? [],

@@ -53,8 +53,9 @@ const Cart: React.FC<CartProps> = () => {
       setCart([]);
       localStorage.removeItem('gellatoCart');
     };
+    console.log(orderData);
 
-    requestOrder(orderData, signOut, success);
+    //s requestOrder(orderData, signOut, success);
   }
 
   const [productsIdsSelecteds, setProductsIdsSelecteds] = useState<

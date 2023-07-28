@@ -16,7 +16,7 @@ export interface IProductInsert {
   flavoursIds: number[];
   complementsIds: number[];
   toppingsIds: number[];
-  fruitId: number | null;
+  fruitsId: number[];
   plusIds: number[];
 }
 export type TStockObj = { [categoryName: string]: IStock[] };

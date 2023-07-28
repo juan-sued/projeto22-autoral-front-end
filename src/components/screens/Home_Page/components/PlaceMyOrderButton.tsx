@@ -66,5 +66,4 @@ const PlaceMyOrderContainer = styled.div`
       width: 140px;
     }
   }
-};
 `;
