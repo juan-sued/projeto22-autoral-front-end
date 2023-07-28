@@ -7,12 +7,10 @@ import { formatPrice } from '@/util/format';
 import { calculateTotalPrice } from '@/util/utilsFunctions';
 import { useCart } from '@/hooks/useCart';
 import FooterWithPriceAndButton from '@/components/shared/Footers/FooterWithPriceAndButton';
-import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import { useAuth } from '@/hooks/useAuth';
 import stockRequests, { IStock } from '@/util/requests/products/stockRequests';
 import { ICategory, IProductInsert } from '@/hooks/useProducts';
-import Main from '@/components/shared/Main';
 import SectionCarousel from './SectionCarousel';
 import LoadingPage from '@/components/shared/Loaders/LoadingPage';
 
@@ -45,12 +43,12 @@ const MakeOrderPage: React.FC = () => {
   const [flavoursIds, setFlavoursIds] = useState<number[]>([]);
   const [complementsIds, setComplementsIds] = useState<number[]>([]);
   const [toppingsIds, setToppingsIds] = useState<number[]>([]);
-  const [fruitId, setFruitId] = useState<number[]>([]);
+  const [fruitsId, setFruitsId] = useState<number[]>([]);
   const [plusIds, setPlusIds] = useState<number[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [name, setName] = useState<string>('');
   const [objNewOrder, setObjNewOrder] = useState<IProductInsert>({
-    id: 0,
+    id: '',
     image: '',
     price: totalPrice,
     name: name,
@@ -58,11 +56,11 @@ const MakeOrderPage: React.FC = () => {
     flavoursIds: flavoursIds,
     complementsIds: complementsIds,
     toppingsIds: toppingsIds,
-    fruitId: fruitId[0],
+    fruitsId: fruitsId,
     plusIds: plusIds
   });
   useEffect(() => {
-    if (!responseStock) return console.log('responseStock é null');
+    if (!responseStock) return;
     const totalPriceCupSize = calculateTotalPrice(
       cupSizeId,
       responseStock['Tamanhos'].stock
@@ -76,10 +74,10 @@ const MakeOrderPage: React.FC = () => {
     const total = totalPriceCupSize + totalPricePlus;
 
     setTotalPrice(total);
-  }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitId, plusIds]);
+  }, [cupSizeId, flavoursIds, complementsIds, toppingsIds, fruitsId, plusIds]);
 
   useEffect(() => {
-    if (objNewOrder && objNewOrder.id > 0) {
+    if (objNewOrder && objNewOrder.id !== '') {
       addProductOrderInCart(objNewOrder);
       navigate('/cart');
     }
@@ -94,9 +92,8 @@ const MakeOrderPage: React.FC = () => {
         : userInfo?.name !== undefined
         ? 'Açaí - ' + userInfo?.name
         : 'Açaí';
-      const idInCart = cart.length + 1 * 100000000;
-      const updatedObjNewOrder = {
-        id: idInCart,
+      const updatedObjNewOrder: IProductInsert = {
+        id: `idInCart-${cart.length + 1}`,
         image: '',
         price: totalPrice,
         name: nameProduct,
@@ -104,7 +101,7 @@ const MakeOrderPage: React.FC = () => {
         flavoursIds: flavoursIds,
         complementsIds: complementsIds,
         toppingsIds: toppingsIds,
-        fruitId: fruitId[0],
+        fruitsId: fruitsId,
         plusIds: plusIds
       };
       setObjNewOrder(updatedObjNewOrder);
@@ -155,8 +152,8 @@ const MakeOrderPage: React.FC = () => {
           titleSectionLeft={'Agora uma fruta'}
           titleSectionRight={'Porque a gente é saudável'}
           objctResponseAPI={responseStock['Frutas'].stock}
-          setProductIds={setFruitId}
-          productIds={fruitId}
+          setProductIds={setFruitsId}
+          productIds={fruitsId}
         />
 
         <SectionCarousel

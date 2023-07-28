@@ -10,7 +10,7 @@ interface FooterWithPriceAndButtonProps {
   total: string;
   handleCreateOrder: () => void;
   stateButton?: string;
-  productsIdsSelecteds?: number[];
+  productsIdsSelecteds?: (number | string)[];
   setProductsIdsSelecteds?: (value: number[]) => void;
   setStateButton?: (value: string) => void;
   enableAdd?: boolean;
@@ -158,9 +158,11 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
     padding: 20px;
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 2px 2px 0px 0px;
+    gap: 10px;
 
     .finallyOrder {
-      width: 300px;
+      width: 100%;
+      margin-right: 10px;
     }
     button {
       background: #7159c1;
@@ -171,12 +173,10 @@ const FooterWithPriceAndButtonStyle = styled.div<FooterWithPriceAndButtonStylePr
       font-weight: bold;
       text-transform: uppercase;
       transition: background 0.2s;
-      width: 155px;
       z-index: 3;
-      min-height: 50px;
+      height: 50px;
       display: grid;
       place-items: center;
-      max-height: 50px;
 
       &:hover {
         cursor: pointer;

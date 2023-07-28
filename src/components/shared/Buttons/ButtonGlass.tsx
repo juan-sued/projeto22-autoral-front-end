@@ -16,7 +16,8 @@ const ButtonGlass: React.FC<ButtonGlassProps> = ({
 }) => {
   const { ref, inView } = useInView({
     delay: 200,
-    threshold: 0
+    threshold: 0,
+    triggerOnce: true
   });
 
   const isPar = index % 2 === 0;

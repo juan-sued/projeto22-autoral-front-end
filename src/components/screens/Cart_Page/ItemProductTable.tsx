@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { MdAdd, MdRemove } from 'react-icons/md';
 
 import { useCart } from '@/hooks/useCart';
-import imageAcai from '@/assets/copoHome.jpg';
+import imageAcai from '@/assets/bowacaiamores.png';
 import CheckboxBlock from '@/components/shared/Checkboxs/CheckboxBlock';
 import { useState } from 'react';
 interface ItemProductTableProps {
@@ -11,8 +11,8 @@ interface ItemProductTableProps {
   price: string;
   description: string;
   amount: number;
-  id: number;
-  selectProductInCart: (value: number) => void;
+  id: number | string;
+  selectProductInCart: (value: number | string) => void;
 }
 
 function ItemProductTable({
@@ -30,7 +30,7 @@ function ItemProductTable({
     id,
     amount
   }: {
-    id: number;
+    id: number | string;
     amount: number;
   }) {
     updateProductAmount({ productId: id, amount: amount + 1 });
@@ -40,7 +40,7 @@ function ItemProductTable({
     id,
     amount
   }: {
-    id: number;
+    id: number | string;
     amount: number;
   }) {
     updateProductAmount({ productId: id, amount: amount - 1 });
@@ -53,9 +53,12 @@ function ItemProductTable({
   }
 
   return (
-    <ItemProductTableStyle onClick={selectedCard} isChecked={checked}>
-      <CheckboxBlock checked={checked} />
-      <img src={image ? image : imageAcai} alt="" />
+    <ItemProductTableStyle isChecked={checked}>
+      <div className="containerCheck">
+        <CheckboxBlock checked={checked} onClick={selectedCard} />
+      </div>
+
+      <img src={image.includes('https://') ? image : imageAcai} alt="" />
       <div className="containerContent">
         <div className="title">{name}</div>
         <div className="subContainer">
@@ -91,29 +94,29 @@ interface ItemProductTableStyleProps {
 export const ItemProductTableStyle = styled.div<ItemProductTableStyleProps>`
   width: 100%;
   display: flex;
+  height: 140px;
 
   align-items: center;
   border-radius: 5px;
   transition: all 0.1s ease-in;
+  padding: 10px;
 
   background-color: ${props => (props.isChecked ? 'white' : 'transparent')};
+  gap: 5px;
 
   :hover {
     background-color: white;
-    box-shadow: ${props =>
-      props.isChecked
-        ? 'transparent'
-        : 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'};
+  }
 
-    cursor: pointer;
+  .containerCheck {
+    height: 100%;
   }
   img {
-    height: 90px;
+    height: 85px;
     border-radius: 20px;
   }
   .containerContent {
     width: 100%;
-    padding: 10px 0px 10px 10px;
 
     .title {
       width: 100%;

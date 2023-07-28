@@ -1,7 +1,7 @@
 import { IProductBasic } from './../../../hooks/useProducts';
 import { axiosI } from '@/services/axios';
 import { IProductInsert, IProductById } from '@/hooks/useProducts';
-import { StatusCode, useAuth } from '@/hooks/useAuth';
+import { StatusCode } from '@/hooks/useAuth';
 import { IStockBasic } from './stockRequests';
 
 type TPostProduct = Omit<IProductInsert, 'id'>;

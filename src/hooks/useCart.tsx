@@ -1,19 +1,19 @@
 import { createContext, useContext, useState } from 'react';
-import { IProductInsert } from './useProducts';
+import { IProductById, IProductInsert } from './useProducts';
 
 interface UpdateProductAmount {
-  productId: number;
+  productId: number | string;
   amount: number;
 }
 
 interface CartContextType {
-  addProduct: (productId: number) => Promise<void>;
+  addProductExiting: (productAdd: IProductById) => Promise<void>;
   addProductOrderInCart: (objectNewOrder: IProductInsert) => void;
   updateProductAmount: ({
     productId,
     amount
   }: UpdateProductAmount) => Promise<void>;
-  removeAllProductsSelecteds: (productsIds: number[]) => void;
+  removeAllProductsSelecteds: (productsIds: (number | string)[]) => void;
   cart: CartProduct[];
 
   setCart: (cart: CartProduct[]) => void;
@@ -35,16 +35,27 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
     return [];
   });
+  console.log('carrinho:', cart);
 
   async function addProductOrderInCart(objectNewOrder: IProductInsert) {
     try {
       const cartUpdated: CartProduct[] = [...cart];
+      const foundProductInCart = cartUpdated.find(
+        product => product.id === objectNewOrder.id
+      );
 
-      const newProduct: CartProduct = {
-        ...objectNewOrder,
-        amountInCart: 1
-      };
-      cartUpdated.push(newProduct);
+      if (foundProductInCart) {
+        // Se o produto já estiver no carrinho, atualize a quantidade
+        foundProductInCart.amountInCart++;
+      } else {
+        // Se o produto não estiver no carrinho, adicione um novo item
+        const newProduct: CartProduct = {
+          ...objectNewOrder,
+          amountInCart: 1
+        };
+        cartUpdated.push(newProduct);
+      }
+
       setCart(cartUpdated);
       localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
     } catch (error) {
@@ -52,24 +63,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  async function addProduct(productId: number) {
+  async function addProductExiting(productAdd: IProductById): Promise<void> {
+    // responsavel formatar o produto e enviar para addProductOrder
     try {
-      const cartUpdated: CartProduct[] = [...cart];
-      const foundProductInCart = cartUpdated.find(
-        product => product.id === productId
-      );
-      if (!foundProductInCart) return alert('Produto não presente no carrinho');
+      const newProduct: IProductInsert = {
+        id: productAdd.id,
+        name: productAdd.name,
+        image: productAdd.image,
+        price: Number(productAdd.price),
+        cupSizeId: productAdd.cupSizeId,
+        fruitsId: productAdd.stock['Frutas']?.map(stock => stock.id) ?? [],
+        flavoursIds: productAdd.stock['Sabores']?.map(stock => stock.id) ?? [],
+        complementsIds:
+          productAdd.stock['Complementos']?.map(stock => stock.id) ?? [],
+        toppingsIds: productAdd.stock['Caldas']?.map(stock => stock.id) ?? [],
+        plusIds: productAdd.stock['Adicionais']?.map(stock => stock.id) ?? []
+      };
 
-      const updatedProduct = { ...foundProductInCart };
-
-      updatedProduct.amountInCart++;
-      const index = cartUpdated.indexOf(foundProductInCart);
-      cartUpdated[index] = updatedProduct;
-
-      setCart(cartUpdated);
-      localStorage.setItem('gellatoCart', JSON.stringify(cartUpdated));
+      addProductOrderInCart(newProduct);
     } catch (error) {
-      console.log('error', error);
+      if (error) console.log('Erro ao formatar produto', error);
     }
   }
 
@@ -77,7 +90,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     productId,
     amount
   }: {
-    productId: number;
+    productId: number | string;
     amount: number;
   }) {
     try {
@@ -100,7 +113,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }
 
-  async function removeAllProductsSelecteds(productIds: number[]) {
+  async function removeAllProductsSelecteds(productIds: (number | string)[]) {
     try {
       const cartUpdated = cart.filter(
         product => !productIds.includes(product.id)
@@ -116,7 +129,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     <CartContext.Provider
       value={{
         cart,
-        addProduct,
+        addProductExiting,
         updateProductAmount,
         removeAllProductsSelecteds,
         setCart,

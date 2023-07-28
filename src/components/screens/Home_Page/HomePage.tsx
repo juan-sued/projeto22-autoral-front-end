@@ -52,7 +52,9 @@ export default function HomePage() {
     }
   }, [keyRequest]);
 
-  if (productsAndCategories) {
+  if (productsAndCategories === null) {
+    return <LoadingPage />;
+  } else {
     return (
       <>
         {errorResponse === 401 ? (
@@ -98,7 +100,5 @@ export default function HomePage() {
         <ImageArvoreAcai src={Arvore_de_acai} alt="" />
       </>
     );
-  } else {
-    <LoadingPage />;
   }
 }

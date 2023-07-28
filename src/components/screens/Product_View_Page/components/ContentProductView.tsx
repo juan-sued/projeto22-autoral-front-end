@@ -2,27 +2,33 @@ import { TbShoppingCartPlus } from 'react-icons/tb';
 import styled from 'styled-components';
 import imageDefault from '@/assets/copoHome.jpg';
 import { useCart } from '@/hooks/useCart';
+import { IProductById } from '@/hooks/useProducts';
 interface ContentProductViewProps {
-  image: string;
   priceFormatted: string;
   handleScroll: () => void;
+  product: IProductById;
 }
 
 const ContentProductView: React.FC<ContentProductViewProps> = ({
-  image,
+  product,
   priceFormatted,
   handleScroll
 }) => {
-  const {} = useCart();
+  const { addProductExiting } = useCart();
   return (
     <ContentProductViewStyle
-      backgroundImage={image.includes('https://') ? image : imageDefault}
+      backgroundImage={
+        product.image?.includes('https://') ? product.image : imageDefault
+      }
     >
       <div className="containerButtonsHeader">
         <div className="glassEffect">{priceFormatted}</div>
-        <div className="glassEffect">
+        <button
+          className="glassEffect"
+          onClick={() => addProductExiting(product)}
+        >
           <TbShoppingCartPlus size={25} />
-        </div>
+        </button>
       </div>
 
       <div className="containerButton">
@@ -56,6 +62,7 @@ const ContentProductViewStyle = styled.div<ContentProductViewStyleProps>`
   animation: fadeTranslate 0.5s ease-in-out;
   animation-fill-mode: forwards;
   margin-top: 50px;
+
   .glassEffect {
     padding: 20px;
     width: fit-content;
@@ -70,16 +77,21 @@ const ContentProductViewStyle = styled.div<ContentProductViewStyleProps>`
     display: grid;
     place-items: center;
     transition: all 0.2s ease-in-out;
-    animation: fadeTranslate 0.5s ease-in-out;
-    animation-fill-mode: forwards;
+
     :hover {
       cursor: pointer;
-      transform: scale(1.06);
+      transform: scale(1.04);
     }
   }
   .containerButtonsHeader {
     display: flex;
     justify-content: space-between;
+    button {
+      color: white;
+      :active {
+        transform: scale(0.9);
+      }
+    }
   }
 
   .material-icons-round {
@@ -95,6 +107,10 @@ const ContentProductViewStyle = styled.div<ContentProductViewStyleProps>`
       width: 100%;
 
       font-weight: 400;
+
+      :active {
+        transform: scale(0.9);
+      }
     }
   }
 `;

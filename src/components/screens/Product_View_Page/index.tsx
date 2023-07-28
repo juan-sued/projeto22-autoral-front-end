@@ -216,7 +216,7 @@ export default function ProductViewPage() {
       <TitlePage title={example.name} />
       <Main>
         <ContentProductView
-          image={example.image}
+          product={example}
           priceFormatted={priceFormatted}
           handleScroll={handleScroll}
         />
