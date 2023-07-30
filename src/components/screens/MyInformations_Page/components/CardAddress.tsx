@@ -16,7 +16,7 @@ interface CardAddressProps {
   cep: string;
   createdAt: string;
   updatedAt: string;
-  idAddress: string;
+  idAddress: number;
   requestKey: boolean;
   setRequestKey: (value: boolean) => void;
   city: string;

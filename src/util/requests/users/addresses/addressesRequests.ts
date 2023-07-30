@@ -97,7 +97,7 @@ async function deleteAddress(
 interface RequestUpdateAddressProps {
   success: () => void;
   setStateButton: (value: '' | 'err' | 'loading') => void;
-  idAddress: string;
+  idAddress: number;
   updateDataAddress: UpdateDataAddress;
   setUpdateDataAddress: (value: UpdateDataAddress) => void;
 }
