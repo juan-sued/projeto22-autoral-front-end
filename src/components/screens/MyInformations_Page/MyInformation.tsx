@@ -11,16 +11,18 @@ import Main from '@/components/shared/Main';
 import TitlePage from '@/components/shared/Titles/TitlePage';
 import userRequests from '@/util/requests/users/userRequests';
 
-interface Address {
+export interface Address {
+  id: number;
+  userId: number;
   street: string;
   number: string;
   city: string;
   neighborhood: string;
   state: string;
   cep: string;
+  addressesDetail: null;
   createdAt: string;
   updatedAt: string;
-  id: string;
 }
 
 export interface UserAndAddressesInfo extends UserDetails {
