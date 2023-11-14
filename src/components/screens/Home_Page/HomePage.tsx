@@ -1,7 +1,6 @@
-import Arvore_de_acai from '@/assets/arvoreacai.svg';
 import CardOfert from './components/CardOfert';
 import PlaceMyOrderButton from './components/PlaceMyOrderButton';
-import TitleStatus from './components/TitleStatus';
+import Arvore_de_acai from '@/assets/arvoreacai.svg';
 import WellcomeUser from './components/WellcomeUser';
 import SideBar from './components/sideBar';
 import { ImageArvoreAcai } from './styles';
@@ -12,13 +11,13 @@ import Main from '@/components/shared/Main';
 import OurHistory from '@/components/shared/OurHistory/OurHistory';
 import { useAuth } from '@/hooks/useAuth';
 import { useProduct } from '@/hooks/useProducts';
-import PopsicleLoading from '@/components/shared/Loaders/PopsicleLoading';
 import { useEffect } from 'react';
 import { axiosI } from '@/services/axios';
 
 import AuthorMessage from '@/components/shared/dev/AuthorMessager';
 import PopUp from '@/components/shared/Popups/PopUp';
 import LoadingPage from '@/components/shared/Loaders/LoadingPage';
+import TitleStatus from './components/TitleStatus';
 
 export default function HomePage() {
   const { userInfo, signed, errorResponse, setErrorResponse } = useAuth();
@@ -45,7 +44,8 @@ export default function HomePage() {
           setProductsAndCategories(data);
         })
         .catch(err => {
-          setErrorResponse(err.response.status);
+
+          setErrorResponse(err.response?.status);
 
           console.error('erro ao pegar produtos', err);
         });

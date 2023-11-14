@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.3",
+    "axios": "^1.6.1",
     "dayjs": "^1.11.8",
     "intl": "^1.2.5",
     "material-icons": "^1.13.7",

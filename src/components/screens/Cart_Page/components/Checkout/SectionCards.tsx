@@ -8,14 +8,13 @@ import { FaMapMarked, FaMoneyBill } from 'react-icons/fa';
 import { BsPencilSquare } from 'react-icons/bs';
 import { Address } from '@/components/screens/MyInformations_Page/MyInformation';
 
-interface SectionCardsProps {}
 
 export interface IMethodPayment {
   id: number;
   title: string;
   lastForDigits: string;
 }
-export default function SectionCards({}: SectionCardsProps) {
+export default function SectionCards() {
   const [toggleCardAddress, setToggleCardAddress] = useState(false);
 
   function handlerToggleCardAddress() {
@@ -125,9 +124,8 @@ export default function SectionCards({}: SectionCardsProps) {
   );
 }
 
-interface SectionCardsStyleProps {}
 
-const SectionCardsStyle = styled.section<SectionCardsStyleProps>`
+const SectionCardsStyle = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: start;

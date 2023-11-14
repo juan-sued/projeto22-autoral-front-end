@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-interface SectionTotalProps {}
 
-export default function SectionTotal({}: SectionTotalProps) {
+export default function SectionTotal() {
   const [toggleViewPrices, setToggleViewPrices] = useState(false);
 
   //transformar os cards em components
@@ -68,7 +67,7 @@ function RowPrice({
   price,
   functionAction
 }: RowPriceProps) {
-  let color: string = 'black';
+  let color = 'black';
   const titleDefault = title.toLowerCase().trim();
   switch (titleDefault) {
     case 'cupom':

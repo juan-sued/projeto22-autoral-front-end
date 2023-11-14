@@ -20,17 +20,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('/service_worker.ts')
-            .then()
-            .catch(error => {
-              console.error('Falha ao registrar o Service Worker:', error);
-            });
-        });
-      }
-    </script>
   </body>
 </html>
